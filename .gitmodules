@@ -1,4 +1,0 @@
-[submodule "HyperSpace"]
-	path = HyperSpace
-	url = https://github.com/pznikola/HyperSpace.git
-	branch = main
