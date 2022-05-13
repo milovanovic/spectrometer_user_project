@@ -1,0 +1,3 @@
+[submodule "HyperSpace"]
+	path = HyperSpace
+	url = git@github.com:pznikola/HyperSpace.git
