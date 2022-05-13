@@ -107,28 +107,29 @@ module user_proj_example (
     wire [15:0] w_outStream_data;
     wire        w_outStream_last;
 
-    assign io_oeb[0]    = 1'b0;    //fix pin to output
-    assign io_oeb[10:1] = 10'h3ff; //fix pins to inputs
-    assign io_out[10:1] = 10'h333; // drive unused outputs
+// Assign inStream signals
+    assign io_oeb[37:28] = 10'h3ff; //fix pins to inputs
+    assign io_out[37:28] = 10'h333; // drive unused outputs
+    assign io_oeb[27]    = 1'b0;    //fix pin to output
 
-    assign io_out[0]            = w_inStream_ready;
-    assign w_inStream_valid     = io_in[1];
-    assign w_inStream_data[7:0] = io_in[9:2];
-    assign w_inStream_last      = io_in[10];
+    assign io_out[27]           = w_inStream_ready;
+    assign w_inStream_valid     = io_in[28];
+    assign w_inStream_last      = io_in[29];
+    assign w_inStream_data[7:0] = {io_in[30], io_in[31], io_in[32], io_in[33], io_in[34], io_in[35], io_in[36], io_in[37]};
 
 // Assign outStream signals
-    assign io_oeb[11]    = 1'b1;      // fix pin to input
-    assign io_oeb[29:12] = 18'h00000; // fix pins to outputs
-    assign io_out[11]    = 1'b1;      // drive unused outputs  
+    assign io_oeb[18]   = 1'b1;      // fix pin to input
+    assign io_out[18]   = 1'b1;      // drive unused outputs  
+    assign io_oeb[17:0] = 18'h00000; // fix pins to outputs
 
-    assign w_outStream_ready = io_in[11];
-    assign io_out[12]        = w_outStream_valid;
-    assign io_out[28:13]     = w_outStream_data[15:0];
-    assign io_out[29]        = w_outStream_last;
+    assign w_outStream_ready = io_in[18];
+    assign io_out[17]        = w_outStream_valid;
+    assign io_out[16]        = w_outStream_last;
+    assign io_out[15:0]      = w_outStream_data[15:0];
 
 // Drive remaining io pins
-    assign io_out[`MPRJ_IO_PADS-1:30] = 8'h66;
-    assign io_oeb[`MPRJ_IO_PADS-1:30] = 8'hFF;
+    assign io_out[26:19] = 8'h66;
+    assign io_oeb[26:19] = 8'hFF;
 
 // Drive LA with zeroes
     assign la_data_out = {128{1'b0}};
