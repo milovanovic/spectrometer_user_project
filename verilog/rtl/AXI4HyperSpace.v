@@ -9232,7 +9232,7 @@ module AXI4FFTBlock(
   output        auto_mem_in_aw_ready,
   input         auto_mem_in_aw_valid,
   input         auto_mem_in_aw_bits_id,
-  input  [30:0] auto_mem_in_aw_bits_addr,
+  input  [29:0] auto_mem_in_aw_bits_addr,
   output        auto_mem_in_w_ready,
   input         auto_mem_in_w_valid,
   input         auto_mem_in_b_ready,
@@ -9241,7 +9241,7 @@ module AXI4FFTBlock(
   output        auto_mem_in_ar_ready,
   input         auto_mem_in_ar_valid,
   input         auto_mem_in_ar_bits_id,
-  input  [30:0] auto_mem_in_ar_bits_addr,
+  input  [29:0] auto_mem_in_ar_bits_addr,
   input         auto_mem_in_r_ready,
   output        auto_mem_in_r_valid,
   output        auto_mem_in_r_bits_id,
@@ -9285,7 +9285,7 @@ module AXI4FFTBlock(
   wire  _T_2; // @[RegisterRouter.scala 40:39]
   wire  _T_4; // @[RegisterRouter.scala 42:29]
   wire  _T_47_ready; // @[RegisterRouter.scala 59:16 Decoupled.scala 290:17]
-  wire [30:0] _T_11; // @[RegisterRouter.scala 48:19]
+  wire [29:0] _T_11; // @[RegisterRouter.scala 48:19]
   wire  _T_53; // @[RegisterRouter.scala 59:16]
   wire  _T_5; // @[RegisterRouter.scala 42:26]
   wire  _T_171; // @[RegisterRouter.scala 59:16]
@@ -10051,7 +10051,7 @@ module AXI4LogMagMuxBlock(
   output        auto_mem_in_aw_ready,
   input         auto_mem_in_aw_valid,
   input         auto_mem_in_aw_bits_id,
-  input  [30:0] auto_mem_in_aw_bits_addr,
+  input  [29:0] auto_mem_in_aw_bits_addr,
   output        auto_mem_in_w_ready,
   input         auto_mem_in_w_valid,
   input  [31:0] auto_mem_in_w_bits_data,
@@ -10062,7 +10062,7 @@ module AXI4LogMagMuxBlock(
   output        auto_mem_in_ar_ready,
   input         auto_mem_in_ar_valid,
   input         auto_mem_in_ar_bits_id,
-  input  [30:0] auto_mem_in_ar_bits_addr,
+  input  [29:0] auto_mem_in_ar_bits_addr,
   input  [2:0]  auto_mem_in_ar_bits_size,
   input         auto_mem_in_r_ready,
   output        auto_mem_in_r_valid,
@@ -10107,7 +10107,7 @@ module AXI4LogMagMuxBlock(
   wire  _T_3; // @[RegisterRouter.scala 40:26]
   wire  _T_4; // @[RegisterRouter.scala 42:29]
   wire  _T_47_ready; // @[RegisterRouter.scala 59:16 Decoupled.scala 290:17]
-  wire [30:0] _T_11; // @[RegisterRouter.scala 48:19]
+  wire [29:0] _T_11; // @[RegisterRouter.scala 48:19]
   wire  _T_53; // @[RegisterRouter.scala 59:16]
   wire  _T_5; // @[RegisterRouter.scala 42:26]
   wire [1:0] _T_14; // @[OneHot.scala 65:12]
@@ -20252,7 +20252,7 @@ module AXI4CFARBlock(
   output        auto_mem_in_aw_ready,
   input         auto_mem_in_aw_valid,
   input         auto_mem_in_aw_bits_id,
-  input  [30:0] auto_mem_in_aw_bits_addr,
+  input  [29:0] auto_mem_in_aw_bits_addr,
   output        auto_mem_in_w_ready,
   input         auto_mem_in_w_valid,
   input  [31:0] auto_mem_in_w_bits_data,
@@ -20263,7 +20263,7 @@ module AXI4CFARBlock(
   output        auto_mem_in_ar_ready,
   input         auto_mem_in_ar_valid,
   input         auto_mem_in_ar_bits_id,
-  input  [30:0] auto_mem_in_ar_bits_addr,
+  input  [29:0] auto_mem_in_ar_bits_addr,
   input  [2:0]  auto_mem_in_ar_bits_size,
   input         auto_mem_in_r_ready,
   output        auto_mem_in_r_valid,
@@ -20332,7 +20332,7 @@ module AXI4CFARBlock(
   wire  _T_14; // @[RegisterRouter.scala 40:26]
   wire  _T_15; // @[RegisterRouter.scala 42:29]
   wire  _T_58_ready; // @[RegisterRouter.scala 59:16 Decoupled.scala 290:17]
-  wire [30:0] _T_22; // @[RegisterRouter.scala 48:19]
+  wire [29:0] _T_22; // @[RegisterRouter.scala 48:19]
   wire [2:0] _T_312; // @[Cat.scala 29:58]
   wire [5:0] _T_62; // @[RegisterRouter.scala 59:16]
   wire  _T_74; // @[RegisterRouter.scala 59:16]
@@ -21696,7 +21696,7 @@ module AXI4Xbar(
   output        auto_in_aw_ready,
   input         auto_in_aw_valid,
   input         auto_in_aw_bits_id,
-  input  [30:0] auto_in_aw_bits_addr,
+  input  [29:0] auto_in_aw_bits_addr,
   output        auto_in_w_ready,
   input         auto_in_w_valid,
   input  [31:0] auto_in_w_bits_data,
@@ -21708,7 +21708,7 @@ module AXI4Xbar(
   output        auto_in_ar_ready,
   input         auto_in_ar_valid,
   input         auto_in_ar_bits_id,
-  input  [30:0] auto_in_ar_bits_addr,
+  input  [29:0] auto_in_ar_bits_addr,
   input  [2:0]  auto_in_ar_bits_size,
   input         auto_in_r_ready,
   output        auto_in_r_valid,
@@ -21718,7 +21718,7 @@ module AXI4Xbar(
   input         auto_out_2_aw_ready,
   output        auto_out_2_aw_valid,
   output        auto_out_2_aw_bits_id,
-  output [30:0] auto_out_2_aw_bits_addr,
+  output [29:0] auto_out_2_aw_bits_addr,
   input         auto_out_2_w_ready,
   output        auto_out_2_w_valid,
   output [31:0] auto_out_2_w_bits_data,
@@ -21729,7 +21729,7 @@ module AXI4Xbar(
   input         auto_out_2_ar_ready,
   output        auto_out_2_ar_valid,
   output        auto_out_2_ar_bits_id,
-  output [30:0] auto_out_2_ar_bits_addr,
+  output [29:0] auto_out_2_ar_bits_addr,
   output [2:0]  auto_out_2_ar_bits_size,
   output        auto_out_2_r_ready,
   input         auto_out_2_r_valid,
@@ -21738,7 +21738,7 @@ module AXI4Xbar(
   input         auto_out_1_aw_ready,
   output        auto_out_1_aw_valid,
   output        auto_out_1_aw_bits_id,
-  output [30:0] auto_out_1_aw_bits_addr,
+  output [29:0] auto_out_1_aw_bits_addr,
   input         auto_out_1_w_ready,
   output        auto_out_1_w_valid,
   output [31:0] auto_out_1_w_bits_data,
@@ -21749,7 +21749,7 @@ module AXI4Xbar(
   input         auto_out_1_ar_ready,
   output        auto_out_1_ar_valid,
   output        auto_out_1_ar_bits_id,
-  output [30:0] auto_out_1_ar_bits_addr,
+  output [29:0] auto_out_1_ar_bits_addr,
   output [2:0]  auto_out_1_ar_bits_size,
   output        auto_out_1_r_ready,
   input         auto_out_1_r_valid,
@@ -21758,7 +21758,7 @@ module AXI4Xbar(
   input         auto_out_0_aw_ready,
   output        auto_out_0_aw_valid,
   output        auto_out_0_aw_bits_id,
-  output [30:0] auto_out_0_aw_bits_addr,
+  output [29:0] auto_out_0_aw_bits_addr,
   input         auto_out_0_w_ready,
   output        auto_out_0_w_valid,
   output        auto_out_0_b_ready,
@@ -21767,7 +21767,7 @@ module AXI4Xbar(
   input         auto_out_0_ar_ready,
   output        auto_out_0_ar_valid,
   output        auto_out_0_ar_bits_id,
-  output [30:0] auto_out_0_ar_bits_addr,
+  output [29:0] auto_out_0_ar_bits_addr,
   output        auto_out_0_r_ready,
   input         auto_out_0_r_valid,
   input         auto_out_0_r_bits_id,
@@ -21781,27 +21781,27 @@ module AXI4Xbar(
   wire  awIn_0_io_deq_ready; // @[Xbar.scala 55:47]
   wire  awIn_0_io_deq_valid; // @[Xbar.scala 55:47]
   wire [2:0] awIn_0_io_deq_bits; // @[Xbar.scala 55:47]
-  wire [31:0] _T_1; // @[Parameters.scala 137:49]
-  wire [31:0] _T_3; // @[Parameters.scala 137:52]
+  wire [30:0] _T_1; // @[Parameters.scala 137:49]
+  wire [30:0] _T_3; // @[Parameters.scala 137:52]
   wire  requestARIO_0_0; // @[Parameters.scala 137:67]
-  wire [30:0] _T_5; // @[Parameters.scala 137:31]
-  wire [31:0] _T_6; // @[Parameters.scala 137:49]
-  wire [31:0] _T_8; // @[Parameters.scala 137:52]
+  wire [29:0] _T_5; // @[Parameters.scala 137:31]
+  wire [30:0] _T_6; // @[Parameters.scala 137:49]
+  wire [30:0] _T_8; // @[Parameters.scala 137:52]
   wire  requestARIO_0_1; // @[Parameters.scala 137:67]
-  wire [30:0] _T_10; // @[Parameters.scala 137:31]
-  wire [31:0] _T_11; // @[Parameters.scala 137:49]
-  wire [31:0] _T_13; // @[Parameters.scala 137:52]
+  wire [29:0] _T_10; // @[Parameters.scala 137:31]
+  wire [30:0] _T_11; // @[Parameters.scala 137:49]
+  wire [30:0] _T_13; // @[Parameters.scala 137:52]
   wire  requestARIO_0_2; // @[Parameters.scala 137:67]
-  wire [31:0] _T_16; // @[Parameters.scala 137:49]
-  wire [31:0] _T_18; // @[Parameters.scala 137:52]
+  wire [30:0] _T_16; // @[Parameters.scala 137:49]
+  wire [30:0] _T_18; // @[Parameters.scala 137:52]
   wire  requestAWIO_0_0; // @[Parameters.scala 137:67]
-  wire [30:0] _T_20; // @[Parameters.scala 137:31]
-  wire [31:0] _T_21; // @[Parameters.scala 137:49]
-  wire [31:0] _T_23; // @[Parameters.scala 137:52]
+  wire [29:0] _T_20; // @[Parameters.scala 137:31]
+  wire [30:0] _T_21; // @[Parameters.scala 137:49]
+  wire [30:0] _T_23; // @[Parameters.scala 137:52]
   wire  requestAWIO_0_1; // @[Parameters.scala 137:67]
-  wire [30:0] _T_25; // @[Parameters.scala 137:31]
-  wire [31:0] _T_26; // @[Parameters.scala 137:49]
-  wire [31:0] _T_28; // @[Parameters.scala 137:52]
+  wire [29:0] _T_25; // @[Parameters.scala 137:31]
+  wire [30:0] _T_26; // @[Parameters.scala 137:49]
+  wire [30:0] _T_28; // @[Parameters.scala 137:52]
   wire  requestAWIO_0_2; // @[Parameters.scala 137:67]
   wire  requestROI_0_0; // @[Parameters.scala 47:9]
   wire  requestROI_1_0; // @[Parameters.scala 47:9]
@@ -22092,27 +22092,27 @@ module AXI4Xbar(
     .io_deq_bits(awIn_0_io_deq_bits)
   );
   assign _T_1 = {1'b0,$signed(auto_in_ar_bits_addr)}; // @[Parameters.scala 137:49]
-  assign _T_3 = $signed(_T_1) & 32'sh600; // @[Parameters.scala 137:52]
-  assign requestARIO_0_0 = $signed(_T_3) == 32'sh0; // @[Parameters.scala 137:67]
-  assign _T_5 = auto_in_ar_bits_addr ^ 31'h200; // @[Parameters.scala 137:31]
+  assign _T_3 = $signed(_T_1) & 31'sh300; // @[Parameters.scala 137:52]
+  assign requestARIO_0_0 = $signed(_T_3) == 31'sh0; // @[Parameters.scala 137:67]
+  assign _T_5 = auto_in_ar_bits_addr ^ 30'h100; // @[Parameters.scala 137:31]
   assign _T_6 = {1'b0,$signed(_T_5)}; // @[Parameters.scala 137:49]
-  assign _T_8 = $signed(_T_6) & 32'sh600; // @[Parameters.scala 137:52]
-  assign requestARIO_0_1 = $signed(_T_8) == 32'sh0; // @[Parameters.scala 137:67]
-  assign _T_10 = auto_in_ar_bits_addr ^ 31'h400; // @[Parameters.scala 137:31]
+  assign _T_8 = $signed(_T_6) & 31'sh300; // @[Parameters.scala 137:52]
+  assign requestARIO_0_1 = $signed(_T_8) == 31'sh0; // @[Parameters.scala 137:67]
+  assign _T_10 = auto_in_ar_bits_addr ^ 30'h200; // @[Parameters.scala 137:31]
   assign _T_11 = {1'b0,$signed(_T_10)}; // @[Parameters.scala 137:49]
-  assign _T_13 = $signed(_T_11) & 32'sh600; // @[Parameters.scala 137:52]
-  assign requestARIO_0_2 = $signed(_T_13) == 32'sh0; // @[Parameters.scala 137:67]
+  assign _T_13 = $signed(_T_11) & 31'sh300; // @[Parameters.scala 137:52]
+  assign requestARIO_0_2 = $signed(_T_13) == 31'sh0; // @[Parameters.scala 137:67]
   assign _T_16 = {1'b0,$signed(auto_in_aw_bits_addr)}; // @[Parameters.scala 137:49]
-  assign _T_18 = $signed(_T_16) & 32'sh600; // @[Parameters.scala 137:52]
-  assign requestAWIO_0_0 = $signed(_T_18) == 32'sh0; // @[Parameters.scala 137:67]
-  assign _T_20 = auto_in_aw_bits_addr ^ 31'h200; // @[Parameters.scala 137:31]
+  assign _T_18 = $signed(_T_16) & 31'sh300; // @[Parameters.scala 137:52]
+  assign requestAWIO_0_0 = $signed(_T_18) == 31'sh0; // @[Parameters.scala 137:67]
+  assign _T_20 = auto_in_aw_bits_addr ^ 30'h100; // @[Parameters.scala 137:31]
   assign _T_21 = {1'b0,$signed(_T_20)}; // @[Parameters.scala 137:49]
-  assign _T_23 = $signed(_T_21) & 32'sh600; // @[Parameters.scala 137:52]
-  assign requestAWIO_0_1 = $signed(_T_23) == 32'sh0; // @[Parameters.scala 137:67]
-  assign _T_25 = auto_in_aw_bits_addr ^ 31'h400; // @[Parameters.scala 137:31]
+  assign _T_23 = $signed(_T_21) & 31'sh300; // @[Parameters.scala 137:52]
+  assign requestAWIO_0_1 = $signed(_T_23) == 31'sh0; // @[Parameters.scala 137:67]
+  assign _T_25 = auto_in_aw_bits_addr ^ 30'h200; // @[Parameters.scala 137:31]
   assign _T_26 = {1'b0,$signed(_T_25)}; // @[Parameters.scala 137:49]
-  assign _T_28 = $signed(_T_26) & 32'sh600; // @[Parameters.scala 137:52]
-  assign requestAWIO_0_2 = $signed(_T_28) == 32'sh0; // @[Parameters.scala 137:67]
+  assign _T_28 = $signed(_T_26) & 31'sh300; // @[Parameters.scala 137:52]
+  assign requestAWIO_0_2 = $signed(_T_28) == 31'sh0; // @[Parameters.scala 137:67]
   assign requestROI_0_0 = ~auto_out_0_r_bits_id; // @[Parameters.scala 47:9]
   assign requestROI_1_0 = ~auto_out_1_r_bits_id; // @[Parameters.scala 47:9]
   assign requestROI_2_0 = ~auto_out_2_r_bits_id; // @[Parameters.scala 47:9]
@@ -22904,7 +22904,7 @@ module BundleBridgeToAXI4(
   input         auto_out_aw_ready,
   output        auto_out_aw_valid,
   output        auto_out_aw_bits_id,
-  output [30:0] auto_out_aw_bits_addr,
+  output [29:0] auto_out_aw_bits_addr,
   input         auto_out_w_ready,
   output        auto_out_w_valid,
   output [31:0] auto_out_w_bits_data,
@@ -22916,7 +22916,7 @@ module BundleBridgeToAXI4(
   input         auto_out_ar_ready,
   output        auto_out_ar_valid,
   output        auto_out_ar_bits_id,
-  output [30:0] auto_out_ar_bits_addr,
+  output [29:0] auto_out_ar_bits_addr,
   output [2:0]  auto_out_ar_bits_size,
   output        auto_out_r_ready,
   input         auto_out_r_valid,
@@ -22935,7 +22935,7 @@ module BundleBridgeToAXI4(
   assign auto_in_r_bits_last = auto_out_r_bits_last; // @[LazyModule.scala 173:31]
   assign auto_out_aw_valid = auto_in_aw_valid; // @[LazyModule.scala 173:49]
   assign auto_out_aw_bits_id = auto_in_aw_bits_id; // @[LazyModule.scala 173:49]
-  assign auto_out_aw_bits_addr = auto_in_aw_bits_addr[30:0]; // @[LazyModule.scala 173:49]
+  assign auto_out_aw_bits_addr = auto_in_aw_bits_addr[29:0]; // @[LazyModule.scala 173:49]
   assign auto_out_w_valid = auto_in_w_valid; // @[LazyModule.scala 173:49]
   assign auto_out_w_bits_data = auto_in_w_bits_data; // @[LazyModule.scala 173:49]
   assign auto_out_w_bits_strb = auto_in_w_bits_strb; // @[LazyModule.scala 173:49]
@@ -22943,7 +22943,7 @@ module BundleBridgeToAXI4(
   assign auto_out_b_ready = auto_in_b_ready; // @[LazyModule.scala 173:49]
   assign auto_out_ar_valid = auto_in_ar_valid; // @[LazyModule.scala 173:49]
   assign auto_out_ar_bits_id = auto_in_ar_bits_id; // @[LazyModule.scala 173:49]
-  assign auto_out_ar_bits_addr = auto_in_ar_bits_addr[30:0]; // @[LazyModule.scala 173:49]
+  assign auto_out_ar_bits_addr = auto_in_ar_bits_addr[29:0]; // @[LazyModule.scala 173:49]
   assign auto_out_ar_bits_size = auto_in_ar_bits_size; // @[LazyModule.scala 173:49]
   assign auto_out_r_ready = auto_in_r_ready; // @[LazyModule.scala 173:49]
 endmodule
@@ -23041,7 +23041,7 @@ module AXI4HyperSpace(
   wire  fft_auto_mem_in_aw_ready; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_aw_valid; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_aw_bits_id; // @[HyperSpace.scala 62:76]
-  wire [30:0] fft_auto_mem_in_aw_bits_addr; // @[HyperSpace.scala 62:76]
+  wire [29:0] fft_auto_mem_in_aw_bits_addr; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_w_ready; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_w_valid; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_b_ready; // @[HyperSpace.scala 62:76]
@@ -23050,7 +23050,7 @@ module AXI4HyperSpace(
   wire  fft_auto_mem_in_ar_ready; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_ar_valid; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_ar_bits_id; // @[HyperSpace.scala 62:76]
-  wire [30:0] fft_auto_mem_in_ar_bits_addr; // @[HyperSpace.scala 62:76]
+  wire [29:0] fft_auto_mem_in_ar_bits_addr; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_r_ready; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_r_valid; // @[HyperSpace.scala 62:76]
   wire  fft_auto_mem_in_r_bits_id; // @[HyperSpace.scala 62:76]
@@ -23068,7 +23068,7 @@ module AXI4HyperSpace(
   wire  mag_auto_mem_in_aw_ready; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_aw_valid; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_aw_bits_id; // @[HyperSpace.scala 63:76]
-  wire [30:0] mag_auto_mem_in_aw_bits_addr; // @[HyperSpace.scala 63:76]
+  wire [29:0] mag_auto_mem_in_aw_bits_addr; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_w_ready; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_w_valid; // @[HyperSpace.scala 63:76]
   wire [31:0] mag_auto_mem_in_w_bits_data; // @[HyperSpace.scala 63:76]
@@ -23079,7 +23079,7 @@ module AXI4HyperSpace(
   wire  mag_auto_mem_in_ar_ready; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_ar_valid; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_ar_bits_id; // @[HyperSpace.scala 63:76]
-  wire [30:0] mag_auto_mem_in_ar_bits_addr; // @[HyperSpace.scala 63:76]
+  wire [29:0] mag_auto_mem_in_ar_bits_addr; // @[HyperSpace.scala 63:76]
   wire [2:0] mag_auto_mem_in_ar_bits_size; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_r_ready; // @[HyperSpace.scala 63:76]
   wire  mag_auto_mem_in_r_valid; // @[HyperSpace.scala 63:76]
@@ -23098,7 +23098,7 @@ module AXI4HyperSpace(
   wire  cfar_auto_mem_in_aw_ready; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_aw_valid; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_aw_bits_id; // @[HyperSpace.scala 64:76]
-  wire [30:0] cfar_auto_mem_in_aw_bits_addr; // @[HyperSpace.scala 64:76]
+  wire [29:0] cfar_auto_mem_in_aw_bits_addr; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_w_ready; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_w_valid; // @[HyperSpace.scala 64:76]
   wire [31:0] cfar_auto_mem_in_w_bits_data; // @[HyperSpace.scala 64:76]
@@ -23109,7 +23109,7 @@ module AXI4HyperSpace(
   wire  cfar_auto_mem_in_ar_ready; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_ar_valid; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_ar_bits_id; // @[HyperSpace.scala 64:76]
-  wire [30:0] cfar_auto_mem_in_ar_bits_addr; // @[HyperSpace.scala 64:76]
+  wire [29:0] cfar_auto_mem_in_ar_bits_addr; // @[HyperSpace.scala 64:76]
   wire [2:0] cfar_auto_mem_in_ar_bits_size; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_r_ready; // @[HyperSpace.scala 64:76]
   wire  cfar_auto_mem_in_r_valid; // @[HyperSpace.scala 64:76]
@@ -23178,7 +23178,7 @@ module AXI4HyperSpace(
   wire  bus_auto_in_aw_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_aw_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_aw_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_in_aw_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_in_aw_bits_addr; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_w_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_w_valid; // @[HyperSpace.scala 49:58]
   wire [31:0] bus_auto_in_w_bits_data; // @[HyperSpace.scala 49:58]
@@ -23190,7 +23190,7 @@ module AXI4HyperSpace(
   wire  bus_auto_in_ar_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_ar_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_ar_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_in_ar_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_in_ar_bits_addr; // @[HyperSpace.scala 49:58]
   wire [2:0] bus_auto_in_ar_bits_size; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_r_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_in_r_valid; // @[HyperSpace.scala 49:58]
@@ -23200,7 +23200,7 @@ module AXI4HyperSpace(
   wire  bus_auto_out_2_aw_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_aw_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_aw_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_out_2_aw_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_out_2_aw_bits_addr; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_w_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_w_valid; // @[HyperSpace.scala 49:58]
   wire [31:0] bus_auto_out_2_w_bits_data; // @[HyperSpace.scala 49:58]
@@ -23211,7 +23211,7 @@ module AXI4HyperSpace(
   wire  bus_auto_out_2_ar_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_ar_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_ar_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_out_2_ar_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_out_2_ar_bits_addr; // @[HyperSpace.scala 49:58]
   wire [2:0] bus_auto_out_2_ar_bits_size; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_r_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_2_r_valid; // @[HyperSpace.scala 49:58]
@@ -23220,7 +23220,7 @@ module AXI4HyperSpace(
   wire  bus_auto_out_1_aw_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_aw_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_aw_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_out_1_aw_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_out_1_aw_bits_addr; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_w_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_w_valid; // @[HyperSpace.scala 49:58]
   wire [31:0] bus_auto_out_1_w_bits_data; // @[HyperSpace.scala 49:58]
@@ -23231,7 +23231,7 @@ module AXI4HyperSpace(
   wire  bus_auto_out_1_ar_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_ar_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_ar_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_out_1_ar_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_out_1_ar_bits_addr; // @[HyperSpace.scala 49:58]
   wire [2:0] bus_auto_out_1_ar_bits_size; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_r_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_1_r_valid; // @[HyperSpace.scala 49:58]
@@ -23240,7 +23240,7 @@ module AXI4HyperSpace(
   wire  bus_auto_out_0_aw_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_aw_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_aw_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_out_0_aw_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_out_0_aw_bits_addr; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_w_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_w_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_b_ready; // @[HyperSpace.scala 49:58]
@@ -23249,7 +23249,7 @@ module AXI4HyperSpace(
   wire  bus_auto_out_0_ar_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_ar_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_ar_bits_id; // @[HyperSpace.scala 49:58]
-  wire [30:0] bus_auto_out_0_ar_bits_addr; // @[HyperSpace.scala 49:58]
+  wire [29:0] bus_auto_out_0_ar_bits_addr; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_r_ready; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_r_valid; // @[HyperSpace.scala 49:58]
   wire  bus_auto_out_0_r_bits_id; // @[HyperSpace.scala 49:58]
@@ -23279,7 +23279,7 @@ module AXI4HyperSpace(
   wire  converter_auto_out_aw_ready; // @[Node.scala 65:31]
   wire  converter_auto_out_aw_valid; // @[Node.scala 65:31]
   wire  converter_auto_out_aw_bits_id; // @[Node.scala 65:31]
-  wire [30:0] converter_auto_out_aw_bits_addr; // @[Node.scala 65:31]
+  wire [29:0] converter_auto_out_aw_bits_addr; // @[Node.scala 65:31]
   wire  converter_auto_out_w_ready; // @[Node.scala 65:31]
   wire  converter_auto_out_w_valid; // @[Node.scala 65:31]
   wire [31:0] converter_auto_out_w_bits_data; // @[Node.scala 65:31]
@@ -23291,7 +23291,7 @@ module AXI4HyperSpace(
   wire  converter_auto_out_ar_ready; // @[Node.scala 65:31]
   wire  converter_auto_out_ar_valid; // @[Node.scala 65:31]
   wire  converter_auto_out_ar_bits_id; // @[Node.scala 65:31]
-  wire [30:0] converter_auto_out_ar_bits_addr; // @[Node.scala 65:31]
+  wire [29:0] converter_auto_out_ar_bits_addr; // @[Node.scala 65:31]
   wire [2:0] converter_auto_out_ar_bits_size; // @[Node.scala 65:31]
   wire  converter_auto_out_r_ready; // @[Node.scala 65:31]
   wire  converter_auto_out_r_valid; // @[Node.scala 65:31]
