@@ -15,13 +15,6 @@
 
 `default_nettype none
 
-`ifdef SIM
-    `include "wbm2axisp.v"
-    `include "AXI4HyperSpace.v"
-    `include "SRAM_depth_256_width_32_mem_ext.v"
-    `include "sky130_sram_1kbyte_1rw1r_32x256_8.v"
-`endif
-
 module user_proj_example (
 `ifdef USE_POWER_PINS
     inout vccd1,    // User area 1 1.8V supply
