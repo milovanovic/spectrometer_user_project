@@ -4,6 +4,14 @@
 
 `timescale 1 ns / 1 ps
 
+`define FFT_SIZE 512
+
+`define RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE_REG_INIT
+`define RANDOMIZE_MEM_INIT
+`define RANDOM
+
 module hyperspace_tb;
     // declare file for writing data
     integer file;
@@ -25,6 +33,7 @@ module hyperspace_tb;
     // Output stream data wires
     reg         out_ready = 0;
     wire        out_valid;
+    wire        out_last;
     wire [15:0] out_data;
 
     // Input stream data wires
@@ -33,25 +42,25 @@ module hyperspace_tb;
     reg   [7:0] in_data  = 8'h04;
     reg         in_last  = 0;
 
-    reg [15:0] dataCounter = 16'b0;
-    reg [15:0] dataSentCounter = 16'b0;
+    reg [15:0] outputDataCnt = 16'b0;
+    reg [15:0] inputDataCnt = 16'b0;
 
-    // Assign wires
-    assign mprj_io[11]  = out_ready;
-    assign out_valid    = mprj_io[12];
-    assign out_data     = mprj_io[20:13];
+    // Assign wires to input and output stream
+    assign mprj_io[18] = out_ready;
+    assign out_valid   = mprj_io[17];
+    assign out_last    = mprj_io[16];
+    assign out_data    = mprj_io[15:0];
 
-    assign in_ready     = mprj_io[0];
-    assign mprj_io[1]   = in_valid;
-    assign mprj_io[9:2] = in_data[7:0];
-    assign mprj_io[10]  = in_last;
+    assign in_ready    = mprj_io[27];
+    assign mprj_io[28] = in_valid;
+    assign mprj_io[29] = in_last;
+    assign mprj_io[37:30] = {in_data[0], in_data[1], in_data[2], in_data[3], in_data[4], in_data[5], in_data[6], in_data[7]};
 
-    
     // toggle clock
     always #500 clock <= (clock === 1'b0);
 
     // Read input data
-	initial $readmemh("./../../../HyperSpace/test_run_dir/AXI4HyperSpace/input_data.txt", inputData);
+    initial $readmemh("./../../../HyperSpace/test_run_dir/AXI4HyperSpace/input_data.txt", inputData);
 
     // Read golden data
     initial $readmemh("./../../../HyperSpace/test_run_dir/AXI4HyperSpace/output_data.txt", goldenData);
@@ -70,50 +79,74 @@ module hyperspace_tb;
     end
 
     // Check in.ready and in.valid and send data
-	always @ (posedge clock) begin
-		if (in_ready == 1'b1) begin
-			in_valid = 1'b1;
-			in_data <= inputData[dataSentCounter];
-			dataSentCounter <= dataSentCounter + 1'b1;
-		end
-	end
+    always @ (posedge clock) begin
+        if (in_ready == 1'b1) begin
+            in_valid = 1'b1;
+            in_data <= inputData[inputDataCnt];
+            inputDataCnt <= inputDataCnt + 1'b1;
+            if (inputDataCnt == `FFT_SIZE*4-1) begin
+                in_last = 1'b1;
+            end
+            else begin
+                in_last = 1'b0;
+            end
+            if (inputDataCnt < `FFT_SIZE*4) begin
+                in_valid = 1'b1;
+            end
+            else begin
+                in_valid = 1'b0;
+            end
+        end
+    end
 
     // Check out.ready and out.valid and collect data
     always @ (posedge clock) begin
-        if (out_ready == 1'b1 && out_valid == 1'b1) begin
-            $fwriteh(file, "%h" ,out_data);
-            if (out_data != goldenData[dataCounter]) begin
-                $display("%c[1;31m",27);
-                $display ("Monitor: Test hyperspace failed!!! Read data was %h, but should be %h.", out_data, goldenData[dataCounter]);
-                $display("%c[0m",27);
-                $fclose(file); 
-                $finish;
+        if (RSTB == 1'b1) begin
+            if (out_ready == 1'b1 && out_valid == 1'b1) begin
+                $fwriteh(file, "%h" ,out_data);
+                if (out_data != goldenData[outputDataCnt]) begin
+                    $display("%c[1;31m",27);
+                    `ifdef GL
+                        $display ("Monitor: Test HyperSpace (GL) failed!!! Read data was %h, but should be %h.", out_data, goldenData[outputDataCnt]);
+                    `else
+                        $display ("Monitor: Test HyperSpace (RTL) failed!!! Read data was %h, but should be %h.", out_data, goldenData[outputDataCnt]);
+                    `endif
+                    $display("%c[0m",27);
+                    $fclose(file); 
+                    $finish;
+                end
+                outputDataCnt <= outputDataCnt + 1'b1;
             end
-            dataCounter <= dataCounter + 1'b1;
         end
     end
 
     initial begin
         $dumpfile("hyperspace.vcd");
         $dumpvars(0, hyperspace_tb);
-
         // Repeat cycles of 1000 clock edges as needed to complete testbench
-        repeat (30) begin
+        repeat (100) begin
             repeat (1000) @(posedge clock);
-            // $display("+1000 cycles");
+            $display("+1000 cycles");
         end
         $display("%c[1;31m",27);
-        $display ("Monitor: Test hyperspace failed!!! Timeout.");
+        `ifdef GL
+            $display ("Monitor: Timeout, Test HyperSpace (GL) Failed");
+        `else
+            $display ("Monitor: Timeout, Test HyperSpace (RTL) Failed");
+        `endif
         $display("%c[0m",27);
-        $fclose(file); 
         $finish;
     end
 
     // Check if enough data was send, and if so terminate test
     initial begin
-        wait(dataCounter == 16'd (3*(`FFT_SIZE-1)-1));
+        wait(outputDataCnt == 16'd 1532);
         $display("%c[1;32m",27);
-        $display("Monitor: Test hyperspace passed.");
+        `ifdef GL
+            $display("Monitor: Test hyperspace (GL) passed.");
+        `else
+            $display("Monitor: Test hyperspace (RTL) passed.");
+        `endif
         $display("%c[0m",27);
         $fclose(file); 
         $finish;
@@ -194,6 +227,5 @@ module hyperspace_tb;
         .io2(), // not used
         .io3()  // not used
     );
-
 endmodule
 `default_nettype wire
