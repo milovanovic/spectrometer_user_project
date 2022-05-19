@@ -4,7 +4,8 @@
 
 `timescale 1 ns / 1 ps
 
-`define FFT_SIZE 512
+`define INPUT_SIZE 2048
+`define OUTPUT_SIZE 512
 
 `define RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE_INVALID_ASSIGN
@@ -17,8 +18,8 @@ module hyperspace_tb;
     integer file;
     
     // Golden data
-    reg [ 7:0] inputData  [0:`FFT_SIZE*4-1];
-    reg [15:0] goldenData [0:(`FFT_SIZE-1)*3-1];
+    reg [ 7:0] inputData  [0:`INPUT_SIZE-1];
+    reg [15:0] goldenData [0:`OUTPUT_SIZE-1];
 
     // clk, rst, power signals
     reg clock;
@@ -81,20 +82,20 @@ module hyperspace_tb;
     // Check in.ready and in.valid and send data
     always @ (posedge clock) begin
         if (in_ready == 1'b1) begin
-            in_valid = 1'b1;
-            in_data <= inputData[inputDataCnt];
             inputDataCnt <= inputDataCnt + 1'b1;
-            if (inputDataCnt == `FFT_SIZE*4-1) begin
+            if (inputDataCnt == `INPUT_SIZE-1) begin
                 in_last = 1'b1;
             end
             else begin
                 in_last = 1'b0;
             end
-            if (inputDataCnt < `FFT_SIZE*4) begin
+            if (inputDataCnt < `INPUT_SIZE) begin
                 in_valid = 1'b1;
+                in_data <= inputData[inputDataCnt];
             end
             else begin
                 in_valid = 1'b0;
+                in_data <= 0;
             end
         end
     end
@@ -103,7 +104,7 @@ module hyperspace_tb;
     always @ (posedge clock) begin
         if (RSTB == 1'b1) begin
             if (out_ready == 1'b1 && out_valid == 1'b1) begin
-                $fwriteh(file, "%h" ,out_data);
+                $fwriteh(file, "%h\n" ,out_data);
                 if (out_data != goldenData[outputDataCnt]) begin
                     $display("%c[1;31m",27);
                     `ifdef GL
@@ -114,6 +115,11 @@ module hyperspace_tb;
                     $display("%c[0m",27);
                     $fclose(file); 
                     $finish;
+                end
+                if (^out_data === 1'bx) begin
+                    $display("%c[1;31m",27);
+                    $display("Output data has X's, out_data = %b at counter %h", out_data, outputDataCnt);
+                    $display("%c[0m",27);
                 end
                 outputDataCnt <= outputDataCnt + 1'b1;
             end
@@ -140,7 +146,7 @@ module hyperspace_tb;
 
     // Check if enough data was send, and if so terminate test
     initial begin
-        wait(outputDataCnt == 16'd 1532);
+        wait(outputDataCnt == (16'd`OUTPUT_SIZE));
         $display("%c[1;32m",27);
         `ifdef GL
             $display("Monitor: Test hyperspace (GL) passed.");
@@ -154,7 +160,7 @@ module hyperspace_tb;
 
     initial begin
         RSTB <= 1'b0;
-        #2000;
+        #40000;
         RSTB <= 1'b1; // Release reset
         #300000;
     end
