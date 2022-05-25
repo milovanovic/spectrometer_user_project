@@ -46,7 +46,17 @@ void main()
     // Enable wishbone
     reg_wb_enable = 1;
 
-    
+    // Write to registers
+    MAG_REG (0x0 * BEATBYTES) = 2; // set magnitude
+    CFAR_REG(0x0 * BEATBYTES) = 512;
+    CFAR_REG(0x1 * BEATBYTES) = 2867;
+    CFAR_REG(0x2 * BEATBYTES) = 0;
+    CFAR_REG(0x3 * BEATBYTES) = 0;
+    CFAR_REG(0x5 * BEATBYTES) = 8;
+    CFAR_REG(0x4 * BEATBYTES) = 64;
+    CFAR_REG(0x6 * BEATBYTES) = 6;
+
+    reg_wb_enable = 1;
 
     // Configure IO pins for in and out AXI4-Stream
     reg_mprj_io_0  =  GPIO_MODE_USER_STD_OUTPUT;
@@ -86,15 +96,6 @@ void main()
     reg_mprj_xfer = 1;
     while (reg_mprj_xfer == 1);
 
-	// Write to registers
-    MAG_REG (0x0 * BEATBYTES) = 2; // set magnitude
-    CFAR_REG(0x0 * BEATBYTES) = 512;
-    CFAR_REG(0x1 * BEATBYTES) = 2867;
-    CFAR_REG(0x2 * BEATBYTES) = 0;
-    CFAR_REG(0x3 * BEATBYTES) = 3;
-    CFAR_REG(0x7 * BEATBYTES) = 4;
-    CFAR_REG(0x5 * BEATBYTES) = 0;
-    CFAR_REG(0x4 * BEATBYTES) = 64;
-	CFAR_REG(0x6 * BEATBYTES) = 6;
+
 }
 

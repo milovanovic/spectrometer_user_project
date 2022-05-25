@@ -5,7 +5,7 @@
 `timescale 1 ns / 1 ps
 
 `define INPUT_SIZE 2048
-`define OUTPUT_SIZE 512
+`define OUTPUT_SIZE 1536
 
 `define RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE_INVALID_ASSIGN
