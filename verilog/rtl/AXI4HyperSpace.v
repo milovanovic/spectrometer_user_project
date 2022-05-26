@@ -10290,1359 +10290,51 @@ end // initial
     end
   end
 endmodule
-module AdjustableShiftRegisterStream(
+module Queue_5(
   input         clock,
   input         reset,
-  input  [6:0]  io_depth,
-  output        io_in_ready,
-  input         io_in_valid,
-  input  [15:0] io_in_bits,
-  input         io_lastIn,
-  input         io_out_ready,
-  output        io_out_valid,
-  output [15:0] io_out_bits,
-  output        io_lastOut,
-  output [15:0] io_parallelOut_0,
-  output [15:0] io_parallelOut_1,
-  output [15:0] io_parallelOut_2,
-  output [15:0] io_parallelOut_3,
-  output [15:0] io_parallelOut_4,
-  output [15:0] io_parallelOut_5,
-  output [15:0] io_parallelOut_6,
-  output [15:0] io_parallelOut_7,
-  output [15:0] io_parallelOut_8,
-  output [15:0] io_parallelOut_9,
-  output [15:0] io_parallelOut_10,
-  output [15:0] io_parallelOut_11,
-  output [15:0] io_parallelOut_12,
-  output [15:0] io_parallelOut_13,
-  output [15:0] io_parallelOut_14,
-  output [15:0] io_parallelOut_15,
-  output [15:0] io_parallelOut_16,
-  output [15:0] io_parallelOut_17,
-  output [15:0] io_parallelOut_18,
-  output [15:0] io_parallelOut_19,
-  output [15:0] io_parallelOut_20,
-  output [15:0] io_parallelOut_21,
-  output [15:0] io_parallelOut_22,
-  output [15:0] io_parallelOut_23,
-  output [15:0] io_parallelOut_24,
-  output [15:0] io_parallelOut_25,
-  output [15:0] io_parallelOut_26,
-  output [15:0] io_parallelOut_27,
-  output [15:0] io_parallelOut_28,
-  output [15:0] io_parallelOut_29,
-  output [15:0] io_parallelOut_30,
-  output [15:0] io_parallelOut_31,
-  output [15:0] io_parallelOut_32,
-  output [15:0] io_parallelOut_33,
-  output [15:0] io_parallelOut_34,
-  output [15:0] io_parallelOut_35,
-  output [15:0] io_parallelOut_36,
-  output [15:0] io_parallelOut_37,
-  output [15:0] io_parallelOut_38,
-  output [15:0] io_parallelOut_39,
-  output [15:0] io_parallelOut_40,
-  output [15:0] io_parallelOut_41,
-  output [15:0] io_parallelOut_42,
-  output [15:0] io_parallelOut_43,
-  output [15:0] io_parallelOut_44,
-  output [15:0] io_parallelOut_45,
-  output [15:0] io_parallelOut_46,
-  output [15:0] io_parallelOut_47,
-  output [15:0] io_parallelOut_48,
-  output [15:0] io_parallelOut_49,
-  output [15:0] io_parallelOut_50,
-  output [15:0] io_parallelOut_51,
-  output [15:0] io_parallelOut_52,
-  output [15:0] io_parallelOut_53,
-  output [15:0] io_parallelOut_54,
-  output [15:0] io_parallelOut_55,
-  output [15:0] io_parallelOut_56,
-  output [15:0] io_parallelOut_57,
-  output [15:0] io_parallelOut_58,
-  output [15:0] io_parallelOut_59,
-  output [15:0] io_parallelOut_60,
-  output [15:0] io_parallelOut_61,
-  output [15:0] io_parallelOut_62,
-  output [15:0] io_parallelOut_63,
-  output [6:0]  io_cnt,
-  output        io_regFull
+  output        io_enq_ready,
+  input         io_enq_valid,
+  input  [15:0] io_enq_bits,
+  input         io_deq_ready,
+  output        io_deq_valid,
+  output [15:0] io_deq_bits
 );
-  reg  InitialInDone; // @[CFARUtils.scala 379:30]
+  reg [15:0] _T [0:0]; // @[Decoupled.scala 209:24]
   reg [31:0] _RAND_0;
-  reg  last; // @[CFARUtils.scala 380:21]
+  wire [15:0] _T__T_14_data; // @[Decoupled.scala 209:24]
+  wire  _T__T_14_addr; // @[Decoupled.scala 209:24]
+  wire [15:0] _T__T_10_data; // @[Decoupled.scala 209:24]
+  wire  _T__T_10_addr; // @[Decoupled.scala 209:24]
+  wire  _T__T_10_mask; // @[Decoupled.scala 209:24]
+  wire  _T__T_10_en; // @[Decoupled.scala 209:24]
+  reg  _T_1; // @[Decoupled.scala 212:35]
   reg [31:0] _RAND_1;
-  wire  _T_1; // @[Decoupled.scala 40:37]
-  wire  _T_2; // @[CFARUtils.scala 385:34]
-  wire  en; // @[CFARUtils.scala 385:25]
-  wire  _T_3; // @[CFARUtils.scala 345:18]
-  wire  _T_5; // @[CFARUtils.scala 345:11]
-  wire  _T_6; // @[CFARUtils.scala 345:11]
-  wire [6:0] _T_8; // @[CFARUtils.scala 350:87]
-  wire  _T_9; // @[CFARUtils.scala 350:78]
-  wire  _T_13; // @[CFARUtils.scala 350:78]
-  wire  _T_14; // @[CFARUtils.scala 350:94]
-  wire  _T_17; // @[CFARUtils.scala 350:78]
-  wire  _T_18; // @[CFARUtils.scala 350:94]
-  wire  _T_21; // @[CFARUtils.scala 350:78]
-  wire  _T_22; // @[CFARUtils.scala 350:94]
-  wire  _T_25; // @[CFARUtils.scala 350:78]
-  wire  _T_26; // @[CFARUtils.scala 350:94]
-  wire  _T_29; // @[CFARUtils.scala 350:78]
-  wire  _T_30; // @[CFARUtils.scala 350:94]
-  wire  _T_33; // @[CFARUtils.scala 350:78]
-  wire  _T_34; // @[CFARUtils.scala 350:94]
-  wire  _T_37; // @[CFARUtils.scala 350:78]
-  wire  _T_38; // @[CFARUtils.scala 350:94]
-  wire  _T_41; // @[CFARUtils.scala 350:78]
-  wire  _T_42; // @[CFARUtils.scala 350:94]
-  wire  _T_45; // @[CFARUtils.scala 350:78]
-  wire  _T_46; // @[CFARUtils.scala 350:94]
-  wire  _T_49; // @[CFARUtils.scala 350:78]
-  wire  _T_50; // @[CFARUtils.scala 350:94]
-  wire  _T_53; // @[CFARUtils.scala 350:78]
-  wire  _T_54; // @[CFARUtils.scala 350:94]
-  wire  _T_57; // @[CFARUtils.scala 350:78]
-  wire  _T_58; // @[CFARUtils.scala 350:94]
-  wire  _T_61; // @[CFARUtils.scala 350:78]
-  wire  _T_62; // @[CFARUtils.scala 350:94]
-  wire  _T_65; // @[CFARUtils.scala 350:78]
-  wire  _T_66; // @[CFARUtils.scala 350:94]
-  wire  _T_69; // @[CFARUtils.scala 350:78]
-  wire  _T_70; // @[CFARUtils.scala 350:94]
-  wire  _T_73; // @[CFARUtils.scala 350:78]
-  wire  _T_74; // @[CFARUtils.scala 350:94]
-  wire  _T_77; // @[CFARUtils.scala 350:78]
-  wire  _T_78; // @[CFARUtils.scala 350:94]
-  wire  _T_81; // @[CFARUtils.scala 350:78]
-  wire  _T_82; // @[CFARUtils.scala 350:94]
-  wire  _T_85; // @[CFARUtils.scala 350:78]
-  wire  _T_86; // @[CFARUtils.scala 350:94]
-  wire  _T_89; // @[CFARUtils.scala 350:78]
-  wire  _T_90; // @[CFARUtils.scala 350:94]
-  wire  _T_93; // @[CFARUtils.scala 350:78]
-  wire  _T_94; // @[CFARUtils.scala 350:94]
-  wire  _T_97; // @[CFARUtils.scala 350:78]
-  wire  _T_98; // @[CFARUtils.scala 350:94]
-  wire  _T_101; // @[CFARUtils.scala 350:78]
-  wire  _T_102; // @[CFARUtils.scala 350:94]
-  wire  _T_105; // @[CFARUtils.scala 350:78]
-  wire  _T_106; // @[CFARUtils.scala 350:94]
-  wire  _T_109; // @[CFARUtils.scala 350:78]
-  wire  _T_110; // @[CFARUtils.scala 350:94]
-  wire  _T_113; // @[CFARUtils.scala 350:78]
-  wire  _T_114; // @[CFARUtils.scala 350:94]
-  wire  _T_117; // @[CFARUtils.scala 350:78]
-  wire  _T_118; // @[CFARUtils.scala 350:94]
-  wire  _T_121; // @[CFARUtils.scala 350:78]
-  wire  _T_122; // @[CFARUtils.scala 350:94]
-  wire  _T_125; // @[CFARUtils.scala 350:78]
-  wire  _T_126; // @[CFARUtils.scala 350:94]
-  wire  _T_129; // @[CFARUtils.scala 350:78]
-  wire  _T_130; // @[CFARUtils.scala 350:94]
-  wire  _T_133; // @[CFARUtils.scala 350:78]
-  wire  _T_134; // @[CFARUtils.scala 350:94]
-  wire  _T_137; // @[CFARUtils.scala 350:78]
-  wire  _T_138; // @[CFARUtils.scala 350:94]
-  wire  _T_141; // @[CFARUtils.scala 350:78]
-  wire  _T_142; // @[CFARUtils.scala 350:94]
-  wire  _T_145; // @[CFARUtils.scala 350:78]
-  wire  _T_146; // @[CFARUtils.scala 350:94]
-  wire  _T_149; // @[CFARUtils.scala 350:78]
-  wire  _T_150; // @[CFARUtils.scala 350:94]
-  wire  _T_153; // @[CFARUtils.scala 350:78]
-  wire  _T_154; // @[CFARUtils.scala 350:94]
-  wire  _T_157; // @[CFARUtils.scala 350:78]
-  wire  _T_158; // @[CFARUtils.scala 350:94]
-  wire  _T_161; // @[CFARUtils.scala 350:78]
-  wire  _T_162; // @[CFARUtils.scala 350:94]
-  wire  _T_165; // @[CFARUtils.scala 350:78]
-  wire  _T_166; // @[CFARUtils.scala 350:94]
-  wire  _T_169; // @[CFARUtils.scala 350:78]
-  wire  _T_170; // @[CFARUtils.scala 350:94]
-  wire  _T_173; // @[CFARUtils.scala 350:78]
-  wire  _T_174; // @[CFARUtils.scala 350:94]
-  wire  _T_177; // @[CFARUtils.scala 350:78]
-  wire  _T_178; // @[CFARUtils.scala 350:94]
-  wire  _T_181; // @[CFARUtils.scala 350:78]
-  wire  _T_182; // @[CFARUtils.scala 350:94]
-  wire  _T_185; // @[CFARUtils.scala 350:78]
-  wire  _T_186; // @[CFARUtils.scala 350:94]
-  wire  _T_189; // @[CFARUtils.scala 350:78]
-  wire  _T_190; // @[CFARUtils.scala 350:94]
-  wire  _T_193; // @[CFARUtils.scala 350:78]
-  wire  _T_194; // @[CFARUtils.scala 350:94]
-  wire  _T_197; // @[CFARUtils.scala 350:78]
-  wire  _T_198; // @[CFARUtils.scala 350:94]
-  wire  _T_201; // @[CFARUtils.scala 350:78]
-  wire  _T_202; // @[CFARUtils.scala 350:94]
-  wire  _T_205; // @[CFARUtils.scala 350:78]
-  wire  _T_206; // @[CFARUtils.scala 350:94]
-  wire  _T_209; // @[CFARUtils.scala 350:78]
-  wire  _T_210; // @[CFARUtils.scala 350:94]
-  wire  _T_213; // @[CFARUtils.scala 350:78]
-  wire  _T_214; // @[CFARUtils.scala 350:94]
-  wire  _T_217; // @[CFARUtils.scala 350:78]
-  wire  _T_218; // @[CFARUtils.scala 350:94]
-  wire  _T_221; // @[CFARUtils.scala 350:78]
-  wire  _T_222; // @[CFARUtils.scala 350:94]
-  wire  _T_225; // @[CFARUtils.scala 350:78]
-  wire  _T_226; // @[CFARUtils.scala 350:94]
-  wire  _T_229; // @[CFARUtils.scala 350:78]
-  wire  _T_230; // @[CFARUtils.scala 350:94]
-  wire  _T_233; // @[CFARUtils.scala 350:78]
-  wire  _T_234; // @[CFARUtils.scala 350:94]
-  wire  _T_237; // @[CFARUtils.scala 350:78]
-  wire  _T_238; // @[CFARUtils.scala 350:94]
-  wire  _T_241; // @[CFARUtils.scala 350:78]
-  wire  _T_242; // @[CFARUtils.scala 350:94]
-  wire  _T_245; // @[CFARUtils.scala 350:78]
-  wire  _T_246; // @[CFARUtils.scala 350:94]
-  wire  _T_249; // @[CFARUtils.scala 350:78]
-  wire  _T_250; // @[CFARUtils.scala 350:94]
-  wire  _T_253; // @[CFARUtils.scala 350:78]
-  wire  _T_254; // @[CFARUtils.scala 350:94]
-  wire  _T_257; // @[CFARUtils.scala 350:78]
-  wire  _T_258; // @[CFARUtils.scala 350:94]
-  wire  _T_261; // @[CFARUtils.scala 350:78]
-  wire  _T_262; // @[CFARUtils.scala 350:94]
-  wire  activeRegs_63; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_263; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_62; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_264; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_61; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_265; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_60; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_266; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_59; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_267; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_58; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_268; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_57; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_269; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_56; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_270; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_55; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_271; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_54; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_272; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_53; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_273; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_52; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_274; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_51; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_275; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_50; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_276; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_49; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_277; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_48; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_278; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_47; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_279; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_46; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_280; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_45; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_281; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_44; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_282; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_43; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_283; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_42; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_284; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_41; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_285; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_40; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_286; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_39; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_287; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_38; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_288; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_37; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_289; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_36; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_290; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_35; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_291; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_34; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_292; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_33; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_293; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_32; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_294; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_31; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_295; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_30; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_296; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_29; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_297; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_28; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_298; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_27; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_299; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_26; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_300; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_25; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_301; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_24; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_302; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_23; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_303; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_22; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_304; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_21; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_305; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_20; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_306; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_19; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_307; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_18; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_308; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_17; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_309; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_16; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_310; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_15; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_311; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_14; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_312; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_13; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_313; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_12; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_314; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_11; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_315; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_10; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_316; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_9; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_317; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_8; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_318; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_7; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_319; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_6; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_320; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_5; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_321; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_4; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_322; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_3; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_323; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_2; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_324; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_1; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_325; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_0; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_326; // @[CFARUtils.scala 319:37]
-  reg [15:0] adjShiftRegOut_0; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_2;
-  reg [15:0] adjShiftRegOut_1; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_3;
-  reg [15:0] adjShiftRegOut_2; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_4;
-  reg [15:0] adjShiftRegOut_3; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_5;
-  reg [15:0] adjShiftRegOut_4; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_6;
-  reg [15:0] adjShiftRegOut_5; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_7;
-  reg [15:0] adjShiftRegOut_6; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_8;
-  reg [15:0] adjShiftRegOut_7; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_9;
-  reg [15:0] adjShiftRegOut_8; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_10;
-  reg [15:0] adjShiftRegOut_9; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_11;
-  reg [15:0] adjShiftRegOut_10; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_12;
-  reg [15:0] adjShiftRegOut_11; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_13;
-  reg [15:0] adjShiftRegOut_12; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_14;
-  reg [15:0] adjShiftRegOut_13; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_15;
-  reg [15:0] adjShiftRegOut_14; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_16;
-  reg [15:0] adjShiftRegOut_15; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_17;
-  reg [15:0] adjShiftRegOut_16; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_18;
-  reg [15:0] adjShiftRegOut_17; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_19;
-  reg [15:0] adjShiftRegOut_18; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_20;
-  reg [15:0] adjShiftRegOut_19; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_21;
-  reg [15:0] adjShiftRegOut_20; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_22;
-  reg [15:0] adjShiftRegOut_21; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_23;
-  reg [15:0] adjShiftRegOut_22; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_24;
-  reg [15:0] adjShiftRegOut_23; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_25;
-  reg [15:0] adjShiftRegOut_24; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_26;
-  reg [15:0] adjShiftRegOut_25; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_27;
-  reg [15:0] adjShiftRegOut_26; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_28;
-  reg [15:0] adjShiftRegOut_27; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_29;
-  reg [15:0] adjShiftRegOut_28; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_30;
-  reg [15:0] adjShiftRegOut_29; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_31;
-  reg [15:0] adjShiftRegOut_30; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_32;
-  reg [15:0] adjShiftRegOut_31; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_33;
-  reg [15:0] adjShiftRegOut_32; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_34;
-  reg [15:0] adjShiftRegOut_33; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_35;
-  reg [15:0] adjShiftRegOut_34; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_36;
-  reg [15:0] adjShiftRegOut_35; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_37;
-  reg [15:0] adjShiftRegOut_36; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_38;
-  reg [15:0] adjShiftRegOut_37; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_39;
-  reg [15:0] adjShiftRegOut_38; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_40;
-  reg [15:0] adjShiftRegOut_39; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_41;
-  reg [15:0] adjShiftRegOut_40; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_42;
-  reg [15:0] adjShiftRegOut_41; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_43;
-  reg [15:0] adjShiftRegOut_42; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_44;
-  reg [15:0] adjShiftRegOut_43; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_45;
-  reg [15:0] adjShiftRegOut_44; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_46;
-  reg [15:0] adjShiftRegOut_45; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_47;
-  reg [15:0] adjShiftRegOut_46; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_48;
-  reg [15:0] adjShiftRegOut_47; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_49;
-  reg [15:0] adjShiftRegOut_48; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_50;
-  reg [15:0] adjShiftRegOut_49; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_51;
-  reg [15:0] adjShiftRegOut_50; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_52;
-  reg [15:0] adjShiftRegOut_51; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_53;
-  reg [15:0] adjShiftRegOut_52; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_54;
-  reg [15:0] adjShiftRegOut_53; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_55;
-  reg [15:0] adjShiftRegOut_54; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_56;
-  reg [15:0] adjShiftRegOut_55; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_57;
-  reg [15:0] adjShiftRegOut_56; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_58;
-  reg [15:0] adjShiftRegOut_57; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_59;
-  reg [15:0] adjShiftRegOut_58; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_60;
-  reg [15:0] adjShiftRegOut_59; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_61;
-  reg [15:0] adjShiftRegOut_60; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_62;
-  reg [15:0] adjShiftRegOut_61; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_63;
-  reg [15:0] adjShiftRegOut_62; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_64;
-  reg [15:0] adjShiftRegOut_63; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_65;
-  reg [6:0] cntIn; // @[CFARUtils.scala 390:23]
-  reg [31:0] _RAND_66;
-  wire  _T_395; // @[CFARUtils.scala 392:19]
-  wire  _GEN_64; // @[CFARUtils.scala 392:36]
-  wire [6:0] _T_398; // @[CFARUtils.scala 397:20]
-  wire  _T_399; // @[CFARUtils.scala 400:18]
-  wire  _T_402; // @[CFARUtils.scala 401:17]
-  wire  _T_404; // @[CFARUtils.scala 401:36]
-  wire  _GEN_66; // @[CFARUtils.scala 401:53]
-  wire  _T_406; // @[CFARUtils.scala 406:36]
-  wire  _T_407; // @[CFARUtils.scala 406:24]
-  wire  _GEN_67; // @[CFARUtils.scala 406:45]
-  wire  _T_409; // @[Decoupled.scala 40:37]
-  wire  _T_672; // @[CFARUtils.scala 319:37]
-  wire  _T_673; // @[CFARUtils.scala 319:37]
-  wire  _T_674; // @[CFARUtils.scala 319:37]
-  wire  _T_675; // @[CFARUtils.scala 319:37]
-  wire  _T_676; // @[CFARUtils.scala 319:37]
-  wire  _T_677; // @[CFARUtils.scala 319:37]
-  wire  _T_678; // @[CFARUtils.scala 319:37]
-  wire  _T_679; // @[CFARUtils.scala 319:37]
-  wire  _T_680; // @[CFARUtils.scala 319:37]
-  wire  _T_681; // @[CFARUtils.scala 319:37]
-  wire  _T_682; // @[CFARUtils.scala 319:37]
-  wire  _T_683; // @[CFARUtils.scala 319:37]
-  wire  _T_684; // @[CFARUtils.scala 319:37]
-  wire  _T_685; // @[CFARUtils.scala 319:37]
-  wire  _T_686; // @[CFARUtils.scala 319:37]
-  wire  _T_687; // @[CFARUtils.scala 319:37]
-  wire  _T_688; // @[CFARUtils.scala 319:37]
-  wire  _T_689; // @[CFARUtils.scala 319:37]
-  wire  _T_690; // @[CFARUtils.scala 319:37]
-  wire  _T_691; // @[CFARUtils.scala 319:37]
-  wire  _T_692; // @[CFARUtils.scala 319:37]
-  wire  _T_693; // @[CFARUtils.scala 319:37]
-  wire  _T_694; // @[CFARUtils.scala 319:37]
-  wire  _T_695; // @[CFARUtils.scala 319:37]
-  wire  _T_696; // @[CFARUtils.scala 319:37]
-  wire  _T_697; // @[CFARUtils.scala 319:37]
-  wire  _T_698; // @[CFARUtils.scala 319:37]
-  wire  _T_699; // @[CFARUtils.scala 319:37]
-  wire  _T_700; // @[CFARUtils.scala 319:37]
-  wire  _T_701; // @[CFARUtils.scala 319:37]
-  wire  _T_702; // @[CFARUtils.scala 319:37]
-  wire  _T_703; // @[CFARUtils.scala 319:37]
-  wire  _T_704; // @[CFARUtils.scala 319:37]
-  wire  _T_705; // @[CFARUtils.scala 319:37]
-  wire  _T_706; // @[CFARUtils.scala 319:37]
-  wire  _T_707; // @[CFARUtils.scala 319:37]
-  wire  _T_708; // @[CFARUtils.scala 319:37]
-  wire  _T_709; // @[CFARUtils.scala 319:37]
-  wire  _T_710; // @[CFARUtils.scala 319:37]
-  wire  _T_711; // @[CFARUtils.scala 319:37]
-  wire  _T_712; // @[CFARUtils.scala 319:37]
-  wire  _T_713; // @[CFARUtils.scala 319:37]
-  wire  _T_714; // @[CFARUtils.scala 319:37]
-  wire  _T_715; // @[CFARUtils.scala 319:37]
-  wire  _T_716; // @[CFARUtils.scala 319:37]
-  wire  _T_717; // @[CFARUtils.scala 319:37]
-  wire  _T_718; // @[CFARUtils.scala 319:37]
-  wire  _T_719; // @[CFARUtils.scala 319:37]
-  wire  _T_720; // @[CFARUtils.scala 319:37]
-  wire  _T_721; // @[CFARUtils.scala 319:37]
-  wire  _T_722; // @[CFARUtils.scala 319:37]
-  wire  _T_723; // @[CFARUtils.scala 319:37]
-  wire  _T_724; // @[CFARUtils.scala 319:37]
-  wire  _T_725; // @[CFARUtils.scala 319:37]
-  wire  _T_726; // @[CFARUtils.scala 319:37]
-  wire  _T_727; // @[CFARUtils.scala 319:37]
-  wire  _T_728; // @[CFARUtils.scala 319:37]
-  wire  _T_729; // @[CFARUtils.scala 319:37]
-  wire  _T_730; // @[CFARUtils.scala 319:37]
-  wire  _T_731; // @[CFARUtils.scala 319:37]
-  wire  _T_732; // @[CFARUtils.scala 319:37]
-  wire  _T_733; // @[CFARUtils.scala 319:37]
-  wire  _T_734; // @[CFARUtils.scala 319:37]
-  reg  _T_736; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_67;
-  reg  _T_737; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_68;
-  reg  _T_738; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_69;
-  reg  _T_739; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_70;
-  reg  _T_740; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_71;
-  reg  _T_741; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_72;
-  reg  _T_742; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_73;
-  reg  _T_743; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_74;
-  reg  _T_744; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_75;
-  reg  _T_745; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_76;
-  reg  _T_746; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_77;
-  reg  _T_747; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_78;
-  reg  _T_748; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_79;
-  reg  _T_749; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_80;
-  reg  _T_750; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_81;
-  reg  _T_751; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_82;
-  reg  _T_752; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_83;
-  reg  _T_753; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_84;
-  reg  _T_754; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_85;
-  reg  _T_755; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_86;
-  reg  _T_756; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_87;
-  reg  _T_757; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_88;
-  reg  _T_758; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_89;
-  reg  _T_759; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_90;
-  reg  _T_760; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_91;
-  reg  _T_761; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_92;
-  reg  _T_762; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_93;
-  reg  _T_763; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_94;
-  reg  _T_764; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_95;
-  reg  _T_765; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_96;
-  reg  _T_766; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_97;
-  reg  _T_767; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_98;
-  reg  _T_768; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_99;
-  reg  _T_769; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_100;
-  reg  _T_770; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_101;
-  reg  _T_771; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_102;
-  reg  _T_772; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_103;
-  reg  _T_773; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_104;
-  reg  _T_774; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_105;
-  reg  _T_775; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_106;
-  reg  _T_776; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_107;
-  reg  _T_777; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_108;
-  reg  _T_778; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_109;
-  reg  _T_779; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_110;
-  reg  _T_780; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_111;
-  reg  _T_781; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_112;
-  reg  _T_782; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_113;
-  reg  _T_783; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_114;
-  reg  _T_784; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_115;
-  reg  _T_785; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_116;
-  reg  _T_786; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_117;
-  reg  _T_787; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_118;
-  reg  _T_788; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_119;
-  reg  _T_789; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_120;
-  reg  _T_790; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_121;
-  reg  _T_791; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_122;
-  reg  _T_792; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_123;
-  reg  _T_793; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_124;
-  reg  _T_794; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_125;
-  reg  _T_795; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_126;
-  reg  _T_796; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_127;
-  reg  _T_797; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_128;
-  reg  _T_798; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_129;
-  reg  _T_799; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_130;
-  wire  _GEN_134; // @[CFARUtils.scala 414:17]
-  wire  _GEN_135; // @[CFARUtils.scala 414:17]
-  wire  _GEN_136; // @[CFARUtils.scala 414:17]
-  wire  _GEN_137; // @[CFARUtils.scala 414:17]
-  wire  _GEN_138; // @[CFARUtils.scala 414:17]
-  wire  _GEN_139; // @[CFARUtils.scala 414:17]
-  wire  _GEN_140; // @[CFARUtils.scala 414:17]
-  wire  _GEN_141; // @[CFARUtils.scala 414:17]
-  wire  _GEN_142; // @[CFARUtils.scala 414:17]
-  wire  _GEN_143; // @[CFARUtils.scala 414:17]
-  wire  _GEN_144; // @[CFARUtils.scala 414:17]
-  wire  _GEN_145; // @[CFARUtils.scala 414:17]
-  wire  _GEN_146; // @[CFARUtils.scala 414:17]
-  wire  _GEN_147; // @[CFARUtils.scala 414:17]
-  wire  _GEN_148; // @[CFARUtils.scala 414:17]
-  wire  _GEN_149; // @[CFARUtils.scala 414:17]
-  wire  _GEN_150; // @[CFARUtils.scala 414:17]
-  wire  _GEN_151; // @[CFARUtils.scala 414:17]
-  wire  _GEN_152; // @[CFARUtils.scala 414:17]
-  wire  _GEN_153; // @[CFARUtils.scala 414:17]
-  wire  _GEN_154; // @[CFARUtils.scala 414:17]
-  wire  _GEN_155; // @[CFARUtils.scala 414:17]
-  wire  _GEN_156; // @[CFARUtils.scala 414:17]
-  wire  _GEN_157; // @[CFARUtils.scala 414:17]
-  wire  _GEN_158; // @[CFARUtils.scala 414:17]
-  wire  _GEN_159; // @[CFARUtils.scala 414:17]
-  wire  _GEN_160; // @[CFARUtils.scala 414:17]
-  wire  _GEN_161; // @[CFARUtils.scala 414:17]
-  wire  _GEN_162; // @[CFARUtils.scala 414:17]
-  wire  _GEN_163; // @[CFARUtils.scala 414:17]
-  wire  _GEN_164; // @[CFARUtils.scala 414:17]
-  wire  _GEN_165; // @[CFARUtils.scala 414:17]
-  wire  _GEN_166; // @[CFARUtils.scala 414:17]
-  wire  _GEN_167; // @[CFARUtils.scala 414:17]
-  wire  _GEN_168; // @[CFARUtils.scala 414:17]
-  wire  _GEN_169; // @[CFARUtils.scala 414:17]
-  wire  _GEN_170; // @[CFARUtils.scala 414:17]
-  wire  _GEN_171; // @[CFARUtils.scala 414:17]
-  wire  _GEN_172; // @[CFARUtils.scala 414:17]
-  wire  _GEN_173; // @[CFARUtils.scala 414:17]
-  wire  _GEN_174; // @[CFARUtils.scala 414:17]
-  wire  _GEN_175; // @[CFARUtils.scala 414:17]
-  wire  _GEN_176; // @[CFARUtils.scala 414:17]
-  wire  _GEN_177; // @[CFARUtils.scala 414:17]
-  wire  _GEN_178; // @[CFARUtils.scala 414:17]
-  wire  _GEN_179; // @[CFARUtils.scala 414:17]
-  wire  _GEN_180; // @[CFARUtils.scala 414:17]
-  wire  _GEN_181; // @[CFARUtils.scala 414:17]
-  wire  _GEN_182; // @[CFARUtils.scala 414:17]
-  wire  _GEN_183; // @[CFARUtils.scala 414:17]
-  wire  _GEN_184; // @[CFARUtils.scala 414:17]
-  wire  _GEN_185; // @[CFARUtils.scala 414:17]
-  wire  _GEN_186; // @[CFARUtils.scala 414:17]
-  wire  _GEN_187; // @[CFARUtils.scala 414:17]
-  wire  _GEN_188; // @[CFARUtils.scala 414:17]
-  wire  _GEN_189; // @[CFARUtils.scala 414:17]
-  wire  _GEN_190; // @[CFARUtils.scala 414:17]
-  wire  _GEN_191; // @[CFARUtils.scala 414:17]
-  wire  _GEN_192; // @[CFARUtils.scala 414:17]
-  wire  _GEN_193; // @[CFARUtils.scala 414:17]
-  wire  _GEN_194; // @[CFARUtils.scala 414:17]
-  wire  _GEN_195; // @[CFARUtils.scala 414:17]
-  wire  _GEN_196; // @[CFARUtils.scala 414:17]
-  wire  _T_804; // @[CFARUtils.scala 414:17]
-  wire  _T_806; // @[CFARUtils.scala 420:36]
-  wire  _T_808; // @[CFARUtils.scala 421:36]
-  wire  _T_810; // @[CFARUtils.scala 426:37]
-  wire  _T_813; // @[CFARUtils.scala 426:91]
-  wire  _T_814; // @[CFARUtils.scala 426:75]
-  wire [15:0] _GEN_201; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_202; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_203; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_204; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_205; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_206; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_207; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_208; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_209; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_210; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_211; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_212; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_213; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_214; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_215; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_216; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_217; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_218; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_219; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_220; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_221; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_222; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_223; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_224; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_225; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_226; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_227; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_228; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_229; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_230; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_231; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_232; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_233; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_234; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_235; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_236; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_237; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_238; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_239; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_240; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_241; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_242; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_243; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_244; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_245; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_246; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_247; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_248; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_249; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_250; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_251; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_252; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_253; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_254; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_255; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_256; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_257; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_258; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_259; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_260; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_261; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_262; // @[CFARUtils.scala 433:24]
-  wire [15:0] _GEN_263; // @[CFARUtils.scala 433:24]
-  wire  _T_823; // @[CFARUtils.scala 436:70]
-  wire  _T_824; // @[CFARUtils.scala 436:94]
-  wire  _T_825; // @[CFARUtils.scala 436:85]
-  assign _T_1 = io_in_ready & io_in_valid; // @[Decoupled.scala 40:37]
-  assign _T_2 = last & io_out_ready; // @[CFARUtils.scala 385:34]
-  assign en = _T_1 | _T_2; // @[CFARUtils.scala 385:25]
-  assign _T_3 = io_depth <= 7'h40; // @[CFARUtils.scala 345:18]
-  assign _T_5 = _T_3 | reset; // @[CFARUtils.scala 345:11]
-  assign _T_6 = ~_T_5; // @[CFARUtils.scala 345:11]
-  assign _T_8 = io_depth - 7'h1; // @[CFARUtils.scala 350:87]
-  assign _T_9 = 1'h1; // @[CFARUtils.scala 350:78]
-  assign _T_13 = 7'h1 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_14 = _T_13; // @[CFARUtils.scala 350:94]
-  assign _T_17 = 7'h2 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_18 = _T_17; // @[CFARUtils.scala 350:94]
-  assign _T_21 = 7'h3 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_22 = _T_21; // @[CFARUtils.scala 350:94]
-  assign _T_25 = 7'h4 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_26 = _T_25; // @[CFARUtils.scala 350:94]
-  assign _T_29 = 7'h5 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_30 = _T_29; // @[CFARUtils.scala 350:94]
-  assign _T_33 = 7'h6 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_34 = _T_33; // @[CFARUtils.scala 350:94]
-  assign _T_37 = 7'h7 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_38 = _T_37; // @[CFARUtils.scala 350:94]
-  assign _T_41 = 7'h8 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_42 = _T_41; // @[CFARUtils.scala 350:94]
-  assign _T_45 = 7'h9 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_46 = _T_45; // @[CFARUtils.scala 350:94]
-  assign _T_49 = 7'ha <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_50 = _T_49; // @[CFARUtils.scala 350:94]
-  assign _T_53 = 7'hb <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_54 = _T_53; // @[CFARUtils.scala 350:94]
-  assign _T_57 = 7'hc <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_58 = _T_57; // @[CFARUtils.scala 350:94]
-  assign _T_61 = 7'hd <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_62 = _T_61; // @[CFARUtils.scala 350:94]
-  assign _T_65 = 7'he <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_66 = _T_65; // @[CFARUtils.scala 350:94]
-  assign _T_69 = 7'hf <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_70 = _T_69; // @[CFARUtils.scala 350:94]
-  assign _T_73 = 7'h10 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_74 = _T_73; // @[CFARUtils.scala 350:94]
-  assign _T_77 = 7'h11 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_78 = _T_77; // @[CFARUtils.scala 350:94]
-  assign _T_81 = 7'h12 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_82 = _T_81; // @[CFARUtils.scala 350:94]
-  assign _T_85 = 7'h13 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_86 = _T_85; // @[CFARUtils.scala 350:94]
-  assign _T_89 = 7'h14 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_90 = _T_89; // @[CFARUtils.scala 350:94]
-  assign _T_93 = 7'h15 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_94 = _T_93; // @[CFARUtils.scala 350:94]
-  assign _T_97 = 7'h16 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_98 = _T_97; // @[CFARUtils.scala 350:94]
-  assign _T_101 = 7'h17 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_102 = _T_101; // @[CFARUtils.scala 350:94]
-  assign _T_105 = 7'h18 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_106 = _T_105; // @[CFARUtils.scala 350:94]
-  assign _T_109 = 7'h19 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_110 = _T_109; // @[CFARUtils.scala 350:94]
-  assign _T_113 = 7'h1a <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_114 = _T_113; // @[CFARUtils.scala 350:94]
-  assign _T_117 = 7'h1b <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_118 = _T_117; // @[CFARUtils.scala 350:94]
-  assign _T_121 = 7'h1c <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_122 = _T_121; // @[CFARUtils.scala 350:94]
-  assign _T_125 = 7'h1d <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_126 = _T_125; // @[CFARUtils.scala 350:94]
-  assign _T_129 = 7'h1e <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_130 = _T_129; // @[CFARUtils.scala 350:94]
-  assign _T_133 = 7'h1f <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_134 = _T_133; // @[CFARUtils.scala 350:94]
-  assign _T_137 = 7'h20 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_138 = _T_137; // @[CFARUtils.scala 350:94]
-  assign _T_141 = 7'h21 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_142 = _T_141; // @[CFARUtils.scala 350:94]
-  assign _T_145 = 7'h22 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_146 = _T_145; // @[CFARUtils.scala 350:94]
-  assign _T_149 = 7'h23 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_150 = _T_149; // @[CFARUtils.scala 350:94]
-  assign _T_153 = 7'h24 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_154 = _T_153; // @[CFARUtils.scala 350:94]
-  assign _T_157 = 7'h25 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_158 = _T_157; // @[CFARUtils.scala 350:94]
-  assign _T_161 = 7'h26 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_162 = _T_161; // @[CFARUtils.scala 350:94]
-  assign _T_165 = 7'h27 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_166 = _T_165; // @[CFARUtils.scala 350:94]
-  assign _T_169 = 7'h28 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_170 = _T_169; // @[CFARUtils.scala 350:94]
-  assign _T_173 = 7'h29 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_174 = _T_173; // @[CFARUtils.scala 350:94]
-  assign _T_177 = 7'h2a <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_178 = _T_177; // @[CFARUtils.scala 350:94]
-  assign _T_181 = 7'h2b <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_182 = _T_181; // @[CFARUtils.scala 350:94]
-  assign _T_185 = 7'h2c <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_186 = _T_185; // @[CFARUtils.scala 350:94]
-  assign _T_189 = 7'h2d <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_190 = _T_189; // @[CFARUtils.scala 350:94]
-  assign _T_193 = 7'h2e <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_194 = _T_193; // @[CFARUtils.scala 350:94]
-  assign _T_197 = 7'h2f <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_198 = _T_197; // @[CFARUtils.scala 350:94]
-  assign _T_201 = 7'h30 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_202 = _T_201; // @[CFARUtils.scala 350:94]
-  assign _T_205 = 7'h31 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_206 = _T_205; // @[CFARUtils.scala 350:94]
-  assign _T_209 = 7'h32 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_210 = _T_209; // @[CFARUtils.scala 350:94]
-  assign _T_213 = 7'h33 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_214 = _T_213; // @[CFARUtils.scala 350:94]
-  assign _T_217 = 7'h34 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_218 = _T_217; // @[CFARUtils.scala 350:94]
-  assign _T_221 = 7'h35 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_222 = _T_221; // @[CFARUtils.scala 350:94]
-  assign _T_225 = 7'h36 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_226 = _T_225; // @[CFARUtils.scala 350:94]
-  assign _T_229 = 7'h37 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_230 = _T_229; // @[CFARUtils.scala 350:94]
-  assign _T_233 = 7'h38 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_234 = _T_233; // @[CFARUtils.scala 350:94]
-  assign _T_237 = 7'h39 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_238 = _T_237; // @[CFARUtils.scala 350:94]
-  assign _T_241 = 7'h3a <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_242 = _T_241; // @[CFARUtils.scala 350:94]
-  assign _T_245 = 7'h3b <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_246 = _T_245; // @[CFARUtils.scala 350:94]
-  assign _T_249 = 7'h3c <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_250 = _T_249; // @[CFARUtils.scala 350:94]
-  assign _T_253 = 7'h3d <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_254 = _T_253; // @[CFARUtils.scala 350:94]
-  assign _T_257 = 7'h3e <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_258 = _T_257; // @[CFARUtils.scala 350:94]
-  assign _T_261 = 7'h3f <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_262 = _T_261; // @[CFARUtils.scala 350:94]
-  assign activeRegs_63 = _T_261; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_263 = _T_262 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_62 = _T_257; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_264 = _T_258 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_61 = _T_253; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_265 = _T_254 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_60 = _T_249; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_266 = _T_250 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_59 = _T_245; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_267 = _T_246 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_58 = _T_241; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_268 = _T_242 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_57 = _T_237; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_269 = _T_238 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_56 = _T_233; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_270 = _T_234 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_55 = _T_229; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_271 = _T_230 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_54 = _T_225; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_272 = _T_226 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_53 = _T_221; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_273 = _T_222 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_52 = _T_217; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_274 = _T_218 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_51 = _T_213; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_275 = _T_214 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_50 = _T_209; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_276 = _T_210 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_49 = _T_205; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_277 = _T_206 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_48 = _T_201; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_278 = _T_202 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_47 = _T_197; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_279 = _T_198 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_46 = _T_193; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_280 = _T_194 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_45 = _T_189; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_281 = _T_190 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_44 = _T_185; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_282 = _T_186 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_43 = _T_181; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_283 = _T_182 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_42 = _T_177; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_284 = _T_178 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_41 = _T_173; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_285 = _T_174 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_40 = _T_169; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_286 = _T_170 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_39 = _T_165; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_287 = _T_166 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_38 = _T_161; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_288 = _T_162 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_37 = _T_157; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_289 = _T_158 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_36 = _T_153; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_290 = _T_154 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_35 = _T_149; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_291 = _T_150 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_34 = _T_145; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_292 = _T_146 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_33 = _T_141; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_293 = _T_142 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_32 = _T_137; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_294 = _T_138 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_31 = _T_133; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_295 = _T_134 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_30 = _T_129; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_296 = _T_130 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_29 = _T_125; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_297 = _T_126 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_28 = _T_121; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_298 = _T_122 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_27 = _T_117; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_299 = _T_118 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_26 = _T_113; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_300 = _T_114 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_25 = _T_109; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_301 = _T_110 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_24 = _T_105; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_302 = _T_106 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_23 = _T_101; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_303 = _T_102 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_22 = _T_97; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_304 = _T_98 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_21 = _T_93; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_305 = _T_94 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_20 = _T_89; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_306 = _T_90 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_19 = _T_85; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_307 = _T_86 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_18 = _T_81; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_308 = _T_82 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_17 = _T_77; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_309 = _T_78 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_16 = _T_73; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_310 = _T_74 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_15 = _T_69; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_311 = _T_70 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_14 = _T_65; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_312 = _T_66 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_13 = _T_61; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_313 = _T_62 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_12 = _T_57; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_314 = _T_58 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_11 = _T_53; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_315 = _T_54 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_10 = _T_49; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_316 = _T_50 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_9 = _T_45; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_317 = _T_46 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_8 = _T_41; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_318 = _T_42 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_7 = _T_37; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_319 = _T_38 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_6 = _T_33; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_320 = _T_34 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_5 = _T_29; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_321 = _T_30 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_4 = _T_25; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_322 = _T_26 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_3 = _T_21; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_323 = _T_22 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_2 = _T_17; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_324 = _T_18 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_1 = _T_13; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_325 = _T_14 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_0 = 1'h1; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_326 = _T_9 & en; // @[CFARUtils.scala 319:37]
-  assign _T_395 = io_lastIn & _T_1; // @[CFARUtils.scala 392:19]
-  assign _GEN_64 = _T_395 | last; // @[CFARUtils.scala 392:36]
-  assign _T_398 = cntIn + 7'h1; // @[CFARUtils.scala 397:20]
-  assign _T_399 = io_depth > 7'h1; // @[CFARUtils.scala 400:18]
-  assign _T_402 = cntIn == _T_8; // @[CFARUtils.scala 401:17]
-  assign _T_404 = _T_402 & _T_1; // @[CFARUtils.scala 401:36]
-  assign _GEN_66 = _T_404 | InitialInDone; // @[CFARUtils.scala 401:53]
-  assign _T_406 = io_depth == 7'h1; // @[CFARUtils.scala 406:36]
-  assign _T_407 = _T_1 & _T_406; // @[CFARUtils.scala 406:24]
-  assign _GEN_67 = _T_407 | InitialInDone; // @[CFARUtils.scala 406:45]
-  assign _T_409 = io_out_ready & io_out_valid; // @[Decoupled.scala 40:37]
-  assign _T_672 = _T_261 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_673 = _T_257 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_674 = _T_253 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_675 = _T_249 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_676 = _T_245 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_677 = _T_241 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_678 = _T_237 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_679 = _T_233 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_680 = _T_229 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_681 = _T_225 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_682 = _T_221 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_683 = _T_217 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_684 = _T_213 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_685 = _T_209 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_686 = _T_205 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_687 = _T_201 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_688 = _T_197 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_689 = _T_193 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_690 = _T_189 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_691 = _T_185 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_692 = _T_181 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_693 = _T_177 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_694 = _T_173 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_695 = _T_169 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_696 = _T_165 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_697 = _T_161 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_698 = _T_157 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_699 = _T_153 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_700 = _T_149 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_701 = _T_145 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_702 = _T_141 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_703 = _T_137 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_704 = _T_133 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_705 = _T_129 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_706 = _T_125 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_707 = _T_121 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_708 = _T_117 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_709 = _T_113 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_710 = _T_109 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_711 = _T_105 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_712 = _T_101 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_713 = _T_97 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_714 = _T_93 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_715 = _T_89 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_716 = _T_85 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_717 = _T_81 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_718 = _T_77 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_719 = _T_73 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_720 = _T_69 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_721 = _T_65 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_722 = _T_61 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_723 = _T_57 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_724 = _T_53 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_725 = _T_49 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_726 = _T_45 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_727 = _T_41 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_728 = _T_37 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_729 = _T_33 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_730 = _T_29 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_731 = _T_25 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_732 = _T_21 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_733 = _T_17 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_734 = _T_13 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _GEN_134 = 6'h1 == _T_8[5:0] ? _T_737 : _T_736; // @[CFARUtils.scala 414:17]
-  assign _GEN_135 = 6'h2 == _T_8[5:0] ? _T_738 : _GEN_134; // @[CFARUtils.scala 414:17]
-  assign _GEN_136 = 6'h3 == _T_8[5:0] ? _T_739 : _GEN_135; // @[CFARUtils.scala 414:17]
-  assign _GEN_137 = 6'h4 == _T_8[5:0] ? _T_740 : _GEN_136; // @[CFARUtils.scala 414:17]
-  assign _GEN_138 = 6'h5 == _T_8[5:0] ? _T_741 : _GEN_137; // @[CFARUtils.scala 414:17]
-  assign _GEN_139 = 6'h6 == _T_8[5:0] ? _T_742 : _GEN_138; // @[CFARUtils.scala 414:17]
-  assign _GEN_140 = 6'h7 == _T_8[5:0] ? _T_743 : _GEN_139; // @[CFARUtils.scala 414:17]
-  assign _GEN_141 = 6'h8 == _T_8[5:0] ? _T_744 : _GEN_140; // @[CFARUtils.scala 414:17]
-  assign _GEN_142 = 6'h9 == _T_8[5:0] ? _T_745 : _GEN_141; // @[CFARUtils.scala 414:17]
-  assign _GEN_143 = 6'ha == _T_8[5:0] ? _T_746 : _GEN_142; // @[CFARUtils.scala 414:17]
-  assign _GEN_144 = 6'hb == _T_8[5:0] ? _T_747 : _GEN_143; // @[CFARUtils.scala 414:17]
-  assign _GEN_145 = 6'hc == _T_8[5:0] ? _T_748 : _GEN_144; // @[CFARUtils.scala 414:17]
-  assign _GEN_146 = 6'hd == _T_8[5:0] ? _T_749 : _GEN_145; // @[CFARUtils.scala 414:17]
-  assign _GEN_147 = 6'he == _T_8[5:0] ? _T_750 : _GEN_146; // @[CFARUtils.scala 414:17]
-  assign _GEN_148 = 6'hf == _T_8[5:0] ? _T_751 : _GEN_147; // @[CFARUtils.scala 414:17]
-  assign _GEN_149 = 6'h10 == _T_8[5:0] ? _T_752 : _GEN_148; // @[CFARUtils.scala 414:17]
-  assign _GEN_150 = 6'h11 == _T_8[5:0] ? _T_753 : _GEN_149; // @[CFARUtils.scala 414:17]
-  assign _GEN_151 = 6'h12 == _T_8[5:0] ? _T_754 : _GEN_150; // @[CFARUtils.scala 414:17]
-  assign _GEN_152 = 6'h13 == _T_8[5:0] ? _T_755 : _GEN_151; // @[CFARUtils.scala 414:17]
-  assign _GEN_153 = 6'h14 == _T_8[5:0] ? _T_756 : _GEN_152; // @[CFARUtils.scala 414:17]
-  assign _GEN_154 = 6'h15 == _T_8[5:0] ? _T_757 : _GEN_153; // @[CFARUtils.scala 414:17]
-  assign _GEN_155 = 6'h16 == _T_8[5:0] ? _T_758 : _GEN_154; // @[CFARUtils.scala 414:17]
-  assign _GEN_156 = 6'h17 == _T_8[5:0] ? _T_759 : _GEN_155; // @[CFARUtils.scala 414:17]
-  assign _GEN_157 = 6'h18 == _T_8[5:0] ? _T_760 : _GEN_156; // @[CFARUtils.scala 414:17]
-  assign _GEN_158 = 6'h19 == _T_8[5:0] ? _T_761 : _GEN_157; // @[CFARUtils.scala 414:17]
-  assign _GEN_159 = 6'h1a == _T_8[5:0] ? _T_762 : _GEN_158; // @[CFARUtils.scala 414:17]
-  assign _GEN_160 = 6'h1b == _T_8[5:0] ? _T_763 : _GEN_159; // @[CFARUtils.scala 414:17]
-  assign _GEN_161 = 6'h1c == _T_8[5:0] ? _T_764 : _GEN_160; // @[CFARUtils.scala 414:17]
-  assign _GEN_162 = 6'h1d == _T_8[5:0] ? _T_765 : _GEN_161; // @[CFARUtils.scala 414:17]
-  assign _GEN_163 = 6'h1e == _T_8[5:0] ? _T_766 : _GEN_162; // @[CFARUtils.scala 414:17]
-  assign _GEN_164 = 6'h1f == _T_8[5:0] ? _T_767 : _GEN_163; // @[CFARUtils.scala 414:17]
-  assign _GEN_165 = 6'h20 == _T_8[5:0] ? _T_768 : _GEN_164; // @[CFARUtils.scala 414:17]
-  assign _GEN_166 = 6'h21 == _T_8[5:0] ? _T_769 : _GEN_165; // @[CFARUtils.scala 414:17]
-  assign _GEN_167 = 6'h22 == _T_8[5:0] ? _T_770 : _GEN_166; // @[CFARUtils.scala 414:17]
-  assign _GEN_168 = 6'h23 == _T_8[5:0] ? _T_771 : _GEN_167; // @[CFARUtils.scala 414:17]
-  assign _GEN_169 = 6'h24 == _T_8[5:0] ? _T_772 : _GEN_168; // @[CFARUtils.scala 414:17]
-  assign _GEN_170 = 6'h25 == _T_8[5:0] ? _T_773 : _GEN_169; // @[CFARUtils.scala 414:17]
-  assign _GEN_171 = 6'h26 == _T_8[5:0] ? _T_774 : _GEN_170; // @[CFARUtils.scala 414:17]
-  assign _GEN_172 = 6'h27 == _T_8[5:0] ? _T_775 : _GEN_171; // @[CFARUtils.scala 414:17]
-  assign _GEN_173 = 6'h28 == _T_8[5:0] ? _T_776 : _GEN_172; // @[CFARUtils.scala 414:17]
-  assign _GEN_174 = 6'h29 == _T_8[5:0] ? _T_777 : _GEN_173; // @[CFARUtils.scala 414:17]
-  assign _GEN_175 = 6'h2a == _T_8[5:0] ? _T_778 : _GEN_174; // @[CFARUtils.scala 414:17]
-  assign _GEN_176 = 6'h2b == _T_8[5:0] ? _T_779 : _GEN_175; // @[CFARUtils.scala 414:17]
-  assign _GEN_177 = 6'h2c == _T_8[5:0] ? _T_780 : _GEN_176; // @[CFARUtils.scala 414:17]
-  assign _GEN_178 = 6'h2d == _T_8[5:0] ? _T_781 : _GEN_177; // @[CFARUtils.scala 414:17]
-  assign _GEN_179 = 6'h2e == _T_8[5:0] ? _T_782 : _GEN_178; // @[CFARUtils.scala 414:17]
-  assign _GEN_180 = 6'h2f == _T_8[5:0] ? _T_783 : _GEN_179; // @[CFARUtils.scala 414:17]
-  assign _GEN_181 = 6'h30 == _T_8[5:0] ? _T_784 : _GEN_180; // @[CFARUtils.scala 414:17]
-  assign _GEN_182 = 6'h31 == _T_8[5:0] ? _T_785 : _GEN_181; // @[CFARUtils.scala 414:17]
-  assign _GEN_183 = 6'h32 == _T_8[5:0] ? _T_786 : _GEN_182; // @[CFARUtils.scala 414:17]
-  assign _GEN_184 = 6'h33 == _T_8[5:0] ? _T_787 : _GEN_183; // @[CFARUtils.scala 414:17]
-  assign _GEN_185 = 6'h34 == _T_8[5:0] ? _T_788 : _GEN_184; // @[CFARUtils.scala 414:17]
-  assign _GEN_186 = 6'h35 == _T_8[5:0] ? _T_789 : _GEN_185; // @[CFARUtils.scala 414:17]
-  assign _GEN_187 = 6'h36 == _T_8[5:0] ? _T_790 : _GEN_186; // @[CFARUtils.scala 414:17]
-  assign _GEN_188 = 6'h37 == _T_8[5:0] ? _T_791 : _GEN_187; // @[CFARUtils.scala 414:17]
-  assign _GEN_189 = 6'h38 == _T_8[5:0] ? _T_792 : _GEN_188; // @[CFARUtils.scala 414:17]
-  assign _GEN_190 = 6'h39 == _T_8[5:0] ? _T_793 : _GEN_189; // @[CFARUtils.scala 414:17]
-  assign _GEN_191 = 6'h3a == _T_8[5:0] ? _T_794 : _GEN_190; // @[CFARUtils.scala 414:17]
-  assign _GEN_192 = 6'h3b == _T_8[5:0] ? _T_795 : _GEN_191; // @[CFARUtils.scala 414:17]
-  assign _GEN_193 = 6'h3c == _T_8[5:0] ? _T_796 : _GEN_192; // @[CFARUtils.scala 414:17]
-  assign _GEN_194 = 6'h3d == _T_8[5:0] ? _T_797 : _GEN_193; // @[CFARUtils.scala 414:17]
-  assign _GEN_195 = 6'h3e == _T_8[5:0] ? _T_798 : _GEN_194; // @[CFARUtils.scala 414:17]
-  assign _GEN_196 = 6'h3f == _T_8[5:0] ? _T_799 : _GEN_195; // @[CFARUtils.scala 414:17]
-  assign _T_804 = _GEN_196 & _T_409; // @[CFARUtils.scala 414:17]
-  assign _T_806 = ~InitialInDone; // @[CFARUtils.scala 420:36]
-  assign _T_808 = ~last; // @[CFARUtils.scala 421:36]
-  assign _T_810 = io_depth == 7'h0; // @[CFARUtils.scala 426:37]
-  assign _T_813 = io_out_ready & _T_808; // @[CFARUtils.scala 426:91]
-  assign _T_814 = _T_806 | _T_813; // @[CFARUtils.scala 426:75]
-  assign _GEN_201 = 6'h1 == _T_8[5:0] ? $signed(adjShiftRegOut_1) : $signed(adjShiftRegOut_0); // @[CFARUtils.scala 433:24]
-  assign _GEN_202 = 6'h2 == _T_8[5:0] ? $signed(adjShiftRegOut_2) : $signed(_GEN_201); // @[CFARUtils.scala 433:24]
-  assign _GEN_203 = 6'h3 == _T_8[5:0] ? $signed(adjShiftRegOut_3) : $signed(_GEN_202); // @[CFARUtils.scala 433:24]
-  assign _GEN_204 = 6'h4 == _T_8[5:0] ? $signed(adjShiftRegOut_4) : $signed(_GEN_203); // @[CFARUtils.scala 433:24]
-  assign _GEN_205 = 6'h5 == _T_8[5:0] ? $signed(adjShiftRegOut_5) : $signed(_GEN_204); // @[CFARUtils.scala 433:24]
-  assign _GEN_206 = 6'h6 == _T_8[5:0] ? $signed(adjShiftRegOut_6) : $signed(_GEN_205); // @[CFARUtils.scala 433:24]
-  assign _GEN_207 = 6'h7 == _T_8[5:0] ? $signed(adjShiftRegOut_7) : $signed(_GEN_206); // @[CFARUtils.scala 433:24]
-  assign _GEN_208 = 6'h8 == _T_8[5:0] ? $signed(adjShiftRegOut_8) : $signed(_GEN_207); // @[CFARUtils.scala 433:24]
-  assign _GEN_209 = 6'h9 == _T_8[5:0] ? $signed(adjShiftRegOut_9) : $signed(_GEN_208); // @[CFARUtils.scala 433:24]
-  assign _GEN_210 = 6'ha == _T_8[5:0] ? $signed(adjShiftRegOut_10) : $signed(_GEN_209); // @[CFARUtils.scala 433:24]
-  assign _GEN_211 = 6'hb == _T_8[5:0] ? $signed(adjShiftRegOut_11) : $signed(_GEN_210); // @[CFARUtils.scala 433:24]
-  assign _GEN_212 = 6'hc == _T_8[5:0] ? $signed(adjShiftRegOut_12) : $signed(_GEN_211); // @[CFARUtils.scala 433:24]
-  assign _GEN_213 = 6'hd == _T_8[5:0] ? $signed(adjShiftRegOut_13) : $signed(_GEN_212); // @[CFARUtils.scala 433:24]
-  assign _GEN_214 = 6'he == _T_8[5:0] ? $signed(adjShiftRegOut_14) : $signed(_GEN_213); // @[CFARUtils.scala 433:24]
-  assign _GEN_215 = 6'hf == _T_8[5:0] ? $signed(adjShiftRegOut_15) : $signed(_GEN_214); // @[CFARUtils.scala 433:24]
-  assign _GEN_216 = 6'h10 == _T_8[5:0] ? $signed(adjShiftRegOut_16) : $signed(_GEN_215); // @[CFARUtils.scala 433:24]
-  assign _GEN_217 = 6'h11 == _T_8[5:0] ? $signed(adjShiftRegOut_17) : $signed(_GEN_216); // @[CFARUtils.scala 433:24]
-  assign _GEN_218 = 6'h12 == _T_8[5:0] ? $signed(adjShiftRegOut_18) : $signed(_GEN_217); // @[CFARUtils.scala 433:24]
-  assign _GEN_219 = 6'h13 == _T_8[5:0] ? $signed(adjShiftRegOut_19) : $signed(_GEN_218); // @[CFARUtils.scala 433:24]
-  assign _GEN_220 = 6'h14 == _T_8[5:0] ? $signed(adjShiftRegOut_20) : $signed(_GEN_219); // @[CFARUtils.scala 433:24]
-  assign _GEN_221 = 6'h15 == _T_8[5:0] ? $signed(adjShiftRegOut_21) : $signed(_GEN_220); // @[CFARUtils.scala 433:24]
-  assign _GEN_222 = 6'h16 == _T_8[5:0] ? $signed(adjShiftRegOut_22) : $signed(_GEN_221); // @[CFARUtils.scala 433:24]
-  assign _GEN_223 = 6'h17 == _T_8[5:0] ? $signed(adjShiftRegOut_23) : $signed(_GEN_222); // @[CFARUtils.scala 433:24]
-  assign _GEN_224 = 6'h18 == _T_8[5:0] ? $signed(adjShiftRegOut_24) : $signed(_GEN_223); // @[CFARUtils.scala 433:24]
-  assign _GEN_225 = 6'h19 == _T_8[5:0] ? $signed(adjShiftRegOut_25) : $signed(_GEN_224); // @[CFARUtils.scala 433:24]
-  assign _GEN_226 = 6'h1a == _T_8[5:0] ? $signed(adjShiftRegOut_26) : $signed(_GEN_225); // @[CFARUtils.scala 433:24]
-  assign _GEN_227 = 6'h1b == _T_8[5:0] ? $signed(adjShiftRegOut_27) : $signed(_GEN_226); // @[CFARUtils.scala 433:24]
-  assign _GEN_228 = 6'h1c == _T_8[5:0] ? $signed(adjShiftRegOut_28) : $signed(_GEN_227); // @[CFARUtils.scala 433:24]
-  assign _GEN_229 = 6'h1d == _T_8[5:0] ? $signed(adjShiftRegOut_29) : $signed(_GEN_228); // @[CFARUtils.scala 433:24]
-  assign _GEN_230 = 6'h1e == _T_8[5:0] ? $signed(adjShiftRegOut_30) : $signed(_GEN_229); // @[CFARUtils.scala 433:24]
-  assign _GEN_231 = 6'h1f == _T_8[5:0] ? $signed(adjShiftRegOut_31) : $signed(_GEN_230); // @[CFARUtils.scala 433:24]
-  assign _GEN_232 = 6'h20 == _T_8[5:0] ? $signed(adjShiftRegOut_32) : $signed(_GEN_231); // @[CFARUtils.scala 433:24]
-  assign _GEN_233 = 6'h21 == _T_8[5:0] ? $signed(adjShiftRegOut_33) : $signed(_GEN_232); // @[CFARUtils.scala 433:24]
-  assign _GEN_234 = 6'h22 == _T_8[5:0] ? $signed(adjShiftRegOut_34) : $signed(_GEN_233); // @[CFARUtils.scala 433:24]
-  assign _GEN_235 = 6'h23 == _T_8[5:0] ? $signed(adjShiftRegOut_35) : $signed(_GEN_234); // @[CFARUtils.scala 433:24]
-  assign _GEN_236 = 6'h24 == _T_8[5:0] ? $signed(adjShiftRegOut_36) : $signed(_GEN_235); // @[CFARUtils.scala 433:24]
-  assign _GEN_237 = 6'h25 == _T_8[5:0] ? $signed(adjShiftRegOut_37) : $signed(_GEN_236); // @[CFARUtils.scala 433:24]
-  assign _GEN_238 = 6'h26 == _T_8[5:0] ? $signed(adjShiftRegOut_38) : $signed(_GEN_237); // @[CFARUtils.scala 433:24]
-  assign _GEN_239 = 6'h27 == _T_8[5:0] ? $signed(adjShiftRegOut_39) : $signed(_GEN_238); // @[CFARUtils.scala 433:24]
-  assign _GEN_240 = 6'h28 == _T_8[5:0] ? $signed(adjShiftRegOut_40) : $signed(_GEN_239); // @[CFARUtils.scala 433:24]
-  assign _GEN_241 = 6'h29 == _T_8[5:0] ? $signed(adjShiftRegOut_41) : $signed(_GEN_240); // @[CFARUtils.scala 433:24]
-  assign _GEN_242 = 6'h2a == _T_8[5:0] ? $signed(adjShiftRegOut_42) : $signed(_GEN_241); // @[CFARUtils.scala 433:24]
-  assign _GEN_243 = 6'h2b == _T_8[5:0] ? $signed(adjShiftRegOut_43) : $signed(_GEN_242); // @[CFARUtils.scala 433:24]
-  assign _GEN_244 = 6'h2c == _T_8[5:0] ? $signed(adjShiftRegOut_44) : $signed(_GEN_243); // @[CFARUtils.scala 433:24]
-  assign _GEN_245 = 6'h2d == _T_8[5:0] ? $signed(adjShiftRegOut_45) : $signed(_GEN_244); // @[CFARUtils.scala 433:24]
-  assign _GEN_246 = 6'h2e == _T_8[5:0] ? $signed(adjShiftRegOut_46) : $signed(_GEN_245); // @[CFARUtils.scala 433:24]
-  assign _GEN_247 = 6'h2f == _T_8[5:0] ? $signed(adjShiftRegOut_47) : $signed(_GEN_246); // @[CFARUtils.scala 433:24]
-  assign _GEN_248 = 6'h30 == _T_8[5:0] ? $signed(adjShiftRegOut_48) : $signed(_GEN_247); // @[CFARUtils.scala 433:24]
-  assign _GEN_249 = 6'h31 == _T_8[5:0] ? $signed(adjShiftRegOut_49) : $signed(_GEN_248); // @[CFARUtils.scala 433:24]
-  assign _GEN_250 = 6'h32 == _T_8[5:0] ? $signed(adjShiftRegOut_50) : $signed(_GEN_249); // @[CFARUtils.scala 433:24]
-  assign _GEN_251 = 6'h33 == _T_8[5:0] ? $signed(adjShiftRegOut_51) : $signed(_GEN_250); // @[CFARUtils.scala 433:24]
-  assign _GEN_252 = 6'h34 == _T_8[5:0] ? $signed(adjShiftRegOut_52) : $signed(_GEN_251); // @[CFARUtils.scala 433:24]
-  assign _GEN_253 = 6'h35 == _T_8[5:0] ? $signed(adjShiftRegOut_53) : $signed(_GEN_252); // @[CFARUtils.scala 433:24]
-  assign _GEN_254 = 6'h36 == _T_8[5:0] ? $signed(adjShiftRegOut_54) : $signed(_GEN_253); // @[CFARUtils.scala 433:24]
-  assign _GEN_255 = 6'h37 == _T_8[5:0] ? $signed(adjShiftRegOut_55) : $signed(_GEN_254); // @[CFARUtils.scala 433:24]
-  assign _GEN_256 = 6'h38 == _T_8[5:0] ? $signed(adjShiftRegOut_56) : $signed(_GEN_255); // @[CFARUtils.scala 433:24]
-  assign _GEN_257 = 6'h39 == _T_8[5:0] ? $signed(adjShiftRegOut_57) : $signed(_GEN_256); // @[CFARUtils.scala 433:24]
-  assign _GEN_258 = 6'h3a == _T_8[5:0] ? $signed(adjShiftRegOut_58) : $signed(_GEN_257); // @[CFARUtils.scala 433:24]
-  assign _GEN_259 = 6'h3b == _T_8[5:0] ? $signed(adjShiftRegOut_59) : $signed(_GEN_258); // @[CFARUtils.scala 433:24]
-  assign _GEN_260 = 6'h3c == _T_8[5:0] ? $signed(adjShiftRegOut_60) : $signed(_GEN_259); // @[CFARUtils.scala 433:24]
-  assign _GEN_261 = 6'h3d == _T_8[5:0] ? $signed(adjShiftRegOut_61) : $signed(_GEN_260); // @[CFARUtils.scala 433:24]
-  assign _GEN_262 = 6'h3e == _T_8[5:0] ? $signed(adjShiftRegOut_62) : $signed(_GEN_261); // @[CFARUtils.scala 433:24]
-  assign _GEN_263 = 6'h3f == _T_8[5:0] ? $signed(adjShiftRegOut_63) : $signed(_GEN_262); // @[CFARUtils.scala 433:24]
-  assign _T_823 = InitialInDone & io_in_valid; // @[CFARUtils.scala 436:70]
-  assign _T_824 = last & en; // @[CFARUtils.scala 436:94]
-  assign _T_825 = _T_823 | _T_824; // @[CFARUtils.scala 436:85]
-  assign io_in_ready = _T_810 ? io_out_ready : _T_814; // @[CFARUtils.scala 426:20]
-  assign io_out_valid = _T_810 ? io_in_valid : _T_825; // @[CFARUtils.scala 436:18]
-  assign io_out_bits = _T_810 ? $signed(io_in_bits) : $signed(_GEN_263); // @[CFARUtils.scala 433:18]
-  assign io_lastOut = _T_810 ? _T_395 : _GEN_196; // @[CFARUtils.scala 435:18]
-  assign io_parallelOut_0 = adjShiftRegOut_0; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_1 = adjShiftRegOut_1; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_2 = adjShiftRegOut_2; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_3 = adjShiftRegOut_3; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_4 = adjShiftRegOut_4; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_5 = adjShiftRegOut_5; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_6 = adjShiftRegOut_6; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_7 = adjShiftRegOut_7; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_8 = adjShiftRegOut_8; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_9 = adjShiftRegOut_9; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_10 = adjShiftRegOut_10; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_11 = adjShiftRegOut_11; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_12 = adjShiftRegOut_12; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_13 = adjShiftRegOut_13; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_14 = adjShiftRegOut_14; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_15 = adjShiftRegOut_15; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_16 = adjShiftRegOut_16; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_17 = adjShiftRegOut_17; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_18 = adjShiftRegOut_18; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_19 = adjShiftRegOut_19; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_20 = adjShiftRegOut_20; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_21 = adjShiftRegOut_21; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_22 = adjShiftRegOut_22; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_23 = adjShiftRegOut_23; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_24 = adjShiftRegOut_24; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_25 = adjShiftRegOut_25; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_26 = adjShiftRegOut_26; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_27 = adjShiftRegOut_27; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_28 = adjShiftRegOut_28; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_29 = adjShiftRegOut_29; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_30 = adjShiftRegOut_30; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_31 = adjShiftRegOut_31; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_32 = adjShiftRegOut_32; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_33 = adjShiftRegOut_33; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_34 = adjShiftRegOut_34; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_35 = adjShiftRegOut_35; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_36 = adjShiftRegOut_36; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_37 = adjShiftRegOut_37; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_38 = adjShiftRegOut_38; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_39 = adjShiftRegOut_39; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_40 = adjShiftRegOut_40; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_41 = adjShiftRegOut_41; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_42 = adjShiftRegOut_42; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_43 = adjShiftRegOut_43; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_44 = adjShiftRegOut_44; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_45 = adjShiftRegOut_45; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_46 = adjShiftRegOut_46; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_47 = adjShiftRegOut_47; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_48 = adjShiftRegOut_48; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_49 = adjShiftRegOut_49; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_50 = adjShiftRegOut_50; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_51 = adjShiftRegOut_51; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_52 = adjShiftRegOut_52; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_53 = adjShiftRegOut_53; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_54 = adjShiftRegOut_54; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_55 = adjShiftRegOut_55; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_56 = adjShiftRegOut_56; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_57 = adjShiftRegOut_57; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_58 = adjShiftRegOut_58; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_59 = adjShiftRegOut_59; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_60 = adjShiftRegOut_60; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_61 = adjShiftRegOut_61; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_62 = adjShiftRegOut_62; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_63 = adjShiftRegOut_63; // @[CFARUtils.scala 434:18]
-  assign io_cnt = cntIn; // @[CFARUtils.scala 438:16]
-  assign io_regFull = InitialInDone & _T_808; // @[CFARUtils.scala 421:16]
+  wire  _T_3; // @[Decoupled.scala 215:36]
+  wire  _T_6; // @[Decoupled.scala 40:37]
+  wire  _T_8; // @[Decoupled.scala 40:37]
+  wire  _GEN_7; // @[Decoupled.scala 240:27]
+  wire  _GEN_10; // @[Decoupled.scala 237:18]
+  wire  _GEN_9; // @[Decoupled.scala 237:18]
+  wire  _T_11; // @[Decoupled.scala 227:16]
+  wire  _T_12; // @[Decoupled.scala 231:19]
+  assign _T__T_14_addr = 1'h0;
+  assign _T__T_14_data = _T[_T__T_14_addr]; // @[Decoupled.scala 209:24]
+  assign _T__T_10_data = io_enq_bits;
+  assign _T__T_10_addr = 1'h0;
+  assign _T__T_10_mask = 1'h1;
+  assign _T__T_10_en = _T_3 ? _GEN_7 : _T_6;
+  assign _T_3 = ~_T_1; // @[Decoupled.scala 215:36]
+  assign _T_6 = io_enq_ready & io_enq_valid; // @[Decoupled.scala 40:37]
+  assign _T_8 = io_deq_ready & io_deq_valid; // @[Decoupled.scala 40:37]
+  assign _GEN_7 = io_deq_ready ? 1'h0 : _T_6; // @[Decoupled.scala 240:27]
+  assign _GEN_10 = _T_3 ? _GEN_7 : _T_6; // @[Decoupled.scala 237:18]
+  assign _GEN_9 = _T_3 ? 1'h0 : _T_8; // @[Decoupled.scala 237:18]
+  assign _T_11 = _GEN_10 != _GEN_9; // @[Decoupled.scala 227:16]
+  assign _T_12 = ~_T_3; // @[Decoupled.scala 231:19]
+  assign io_enq_ready = io_deq_ready | _T_3; // @[Decoupled.scala 232:16 Decoupled.scala 245:40]
+  assign io_deq_valid = io_enq_valid | _T_12; // @[Decoupled.scala 231:16 Decoupled.scala 236:40]
+  assign io_deq_bits = _T_3 ? $signed(io_enq_bits) : $signed(_T__T_14_data); // @[Decoupled.scala 233:15 Decoupled.scala 238:19]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -11674,1224 +10366,1354 @@ initial begin
         #0.002 begin end
       `endif
     `endif
-  `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  InitialInDone = _RAND_0[0:0];
-  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_MEM_INIT
+  for (initvar = 0; initvar < 1; initvar = initvar+1)
+    _T[initvar] = _RAND_0[15:0];
+  `endif // RANDOMIZE_MEM_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
-  last = _RAND_1[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_2 = {1{`RANDOM}};
-  adjShiftRegOut_0 = _RAND_2[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_3 = {1{`RANDOM}};
-  adjShiftRegOut_1 = _RAND_3[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_4 = {1{`RANDOM}};
-  adjShiftRegOut_2 = _RAND_4[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_5 = {1{`RANDOM}};
-  adjShiftRegOut_3 = _RAND_5[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_6 = {1{`RANDOM}};
-  adjShiftRegOut_4 = _RAND_6[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_7 = {1{`RANDOM}};
-  adjShiftRegOut_5 = _RAND_7[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_8 = {1{`RANDOM}};
-  adjShiftRegOut_6 = _RAND_8[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_9 = {1{`RANDOM}};
-  adjShiftRegOut_7 = _RAND_9[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_10 = {1{`RANDOM}};
-  adjShiftRegOut_8 = _RAND_10[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_11 = {1{`RANDOM}};
-  adjShiftRegOut_9 = _RAND_11[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_12 = {1{`RANDOM}};
-  adjShiftRegOut_10 = _RAND_12[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_13 = {1{`RANDOM}};
-  adjShiftRegOut_11 = _RAND_13[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_14 = {1{`RANDOM}};
-  adjShiftRegOut_12 = _RAND_14[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_15 = {1{`RANDOM}};
-  adjShiftRegOut_13 = _RAND_15[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_16 = {1{`RANDOM}};
-  adjShiftRegOut_14 = _RAND_16[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_17 = {1{`RANDOM}};
-  adjShiftRegOut_15 = _RAND_17[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_18 = {1{`RANDOM}};
-  adjShiftRegOut_16 = _RAND_18[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_19 = {1{`RANDOM}};
-  adjShiftRegOut_17 = _RAND_19[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_20 = {1{`RANDOM}};
-  adjShiftRegOut_18 = _RAND_20[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_21 = {1{`RANDOM}};
-  adjShiftRegOut_19 = _RAND_21[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_22 = {1{`RANDOM}};
-  adjShiftRegOut_20 = _RAND_22[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_23 = {1{`RANDOM}};
-  adjShiftRegOut_21 = _RAND_23[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_24 = {1{`RANDOM}};
-  adjShiftRegOut_22 = _RAND_24[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_25 = {1{`RANDOM}};
-  adjShiftRegOut_23 = _RAND_25[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_26 = {1{`RANDOM}};
-  adjShiftRegOut_24 = _RAND_26[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_27 = {1{`RANDOM}};
-  adjShiftRegOut_25 = _RAND_27[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_28 = {1{`RANDOM}};
-  adjShiftRegOut_26 = _RAND_28[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_29 = {1{`RANDOM}};
-  adjShiftRegOut_27 = _RAND_29[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_30 = {1{`RANDOM}};
-  adjShiftRegOut_28 = _RAND_30[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_31 = {1{`RANDOM}};
-  adjShiftRegOut_29 = _RAND_31[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_32 = {1{`RANDOM}};
-  adjShiftRegOut_30 = _RAND_32[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_33 = {1{`RANDOM}};
-  adjShiftRegOut_31 = _RAND_33[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_34 = {1{`RANDOM}};
-  adjShiftRegOut_32 = _RAND_34[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_35 = {1{`RANDOM}};
-  adjShiftRegOut_33 = _RAND_35[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_36 = {1{`RANDOM}};
-  adjShiftRegOut_34 = _RAND_36[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_37 = {1{`RANDOM}};
-  adjShiftRegOut_35 = _RAND_37[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_38 = {1{`RANDOM}};
-  adjShiftRegOut_36 = _RAND_38[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_39 = {1{`RANDOM}};
-  adjShiftRegOut_37 = _RAND_39[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_40 = {1{`RANDOM}};
-  adjShiftRegOut_38 = _RAND_40[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_41 = {1{`RANDOM}};
-  adjShiftRegOut_39 = _RAND_41[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_42 = {1{`RANDOM}};
-  adjShiftRegOut_40 = _RAND_42[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_43 = {1{`RANDOM}};
-  adjShiftRegOut_41 = _RAND_43[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_44 = {1{`RANDOM}};
-  adjShiftRegOut_42 = _RAND_44[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_45 = {1{`RANDOM}};
-  adjShiftRegOut_43 = _RAND_45[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_46 = {1{`RANDOM}};
-  adjShiftRegOut_44 = _RAND_46[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_47 = {1{`RANDOM}};
-  adjShiftRegOut_45 = _RAND_47[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_48 = {1{`RANDOM}};
-  adjShiftRegOut_46 = _RAND_48[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_49 = {1{`RANDOM}};
-  adjShiftRegOut_47 = _RAND_49[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_50 = {1{`RANDOM}};
-  adjShiftRegOut_48 = _RAND_50[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_51 = {1{`RANDOM}};
-  adjShiftRegOut_49 = _RAND_51[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_52 = {1{`RANDOM}};
-  adjShiftRegOut_50 = _RAND_52[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_53 = {1{`RANDOM}};
-  adjShiftRegOut_51 = _RAND_53[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_54 = {1{`RANDOM}};
-  adjShiftRegOut_52 = _RAND_54[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_55 = {1{`RANDOM}};
-  adjShiftRegOut_53 = _RAND_55[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_56 = {1{`RANDOM}};
-  adjShiftRegOut_54 = _RAND_56[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_57 = {1{`RANDOM}};
-  adjShiftRegOut_55 = _RAND_57[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_58 = {1{`RANDOM}};
-  adjShiftRegOut_56 = _RAND_58[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_59 = {1{`RANDOM}};
-  adjShiftRegOut_57 = _RAND_59[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_60 = {1{`RANDOM}};
-  adjShiftRegOut_58 = _RAND_60[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_61 = {1{`RANDOM}};
-  adjShiftRegOut_59 = _RAND_61[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_62 = {1{`RANDOM}};
-  adjShiftRegOut_60 = _RAND_62[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_63 = {1{`RANDOM}};
-  adjShiftRegOut_61 = _RAND_63[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_64 = {1{`RANDOM}};
-  adjShiftRegOut_62 = _RAND_64[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_65 = {1{`RANDOM}};
-  adjShiftRegOut_63 = _RAND_65[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_66 = {1{`RANDOM}};
-  cntIn = _RAND_66[6:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_67 = {1{`RANDOM}};
-  _T_736 = _RAND_67[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_68 = {1{`RANDOM}};
-  _T_737 = _RAND_68[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_69 = {1{`RANDOM}};
-  _T_738 = _RAND_69[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_70 = {1{`RANDOM}};
-  _T_739 = _RAND_70[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_71 = {1{`RANDOM}};
-  _T_740 = _RAND_71[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_72 = {1{`RANDOM}};
-  _T_741 = _RAND_72[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_73 = {1{`RANDOM}};
-  _T_742 = _RAND_73[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_74 = {1{`RANDOM}};
-  _T_743 = _RAND_74[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_75 = {1{`RANDOM}};
-  _T_744 = _RAND_75[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_76 = {1{`RANDOM}};
-  _T_745 = _RAND_76[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_77 = {1{`RANDOM}};
-  _T_746 = _RAND_77[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_78 = {1{`RANDOM}};
-  _T_747 = _RAND_78[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_79 = {1{`RANDOM}};
-  _T_748 = _RAND_79[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_80 = {1{`RANDOM}};
-  _T_749 = _RAND_80[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_81 = {1{`RANDOM}};
-  _T_750 = _RAND_81[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_82 = {1{`RANDOM}};
-  _T_751 = _RAND_82[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_83 = {1{`RANDOM}};
-  _T_752 = _RAND_83[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_84 = {1{`RANDOM}};
-  _T_753 = _RAND_84[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_85 = {1{`RANDOM}};
-  _T_754 = _RAND_85[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_86 = {1{`RANDOM}};
-  _T_755 = _RAND_86[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_87 = {1{`RANDOM}};
-  _T_756 = _RAND_87[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_88 = {1{`RANDOM}};
-  _T_757 = _RAND_88[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_89 = {1{`RANDOM}};
-  _T_758 = _RAND_89[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_90 = {1{`RANDOM}};
-  _T_759 = _RAND_90[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_91 = {1{`RANDOM}};
-  _T_760 = _RAND_91[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_92 = {1{`RANDOM}};
-  _T_761 = _RAND_92[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_93 = {1{`RANDOM}};
-  _T_762 = _RAND_93[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_94 = {1{`RANDOM}};
-  _T_763 = _RAND_94[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_95 = {1{`RANDOM}};
-  _T_764 = _RAND_95[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_96 = {1{`RANDOM}};
-  _T_765 = _RAND_96[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_97 = {1{`RANDOM}};
-  _T_766 = _RAND_97[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_98 = {1{`RANDOM}};
-  _T_767 = _RAND_98[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_99 = {1{`RANDOM}};
-  _T_768 = _RAND_99[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_100 = {1{`RANDOM}};
-  _T_769 = _RAND_100[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_101 = {1{`RANDOM}};
-  _T_770 = _RAND_101[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_102 = {1{`RANDOM}};
-  _T_771 = _RAND_102[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_103 = {1{`RANDOM}};
-  _T_772 = _RAND_103[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_104 = {1{`RANDOM}};
-  _T_773 = _RAND_104[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_105 = {1{`RANDOM}};
-  _T_774 = _RAND_105[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_106 = {1{`RANDOM}};
-  _T_775 = _RAND_106[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_107 = {1{`RANDOM}};
-  _T_776 = _RAND_107[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_108 = {1{`RANDOM}};
-  _T_777 = _RAND_108[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_109 = {1{`RANDOM}};
-  _T_778 = _RAND_109[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_110 = {1{`RANDOM}};
-  _T_779 = _RAND_110[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_111 = {1{`RANDOM}};
-  _T_780 = _RAND_111[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_112 = {1{`RANDOM}};
-  _T_781 = _RAND_112[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_113 = {1{`RANDOM}};
-  _T_782 = _RAND_113[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_114 = {1{`RANDOM}};
-  _T_783 = _RAND_114[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_115 = {1{`RANDOM}};
-  _T_784 = _RAND_115[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_116 = {1{`RANDOM}};
-  _T_785 = _RAND_116[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_117 = {1{`RANDOM}};
-  _T_786 = _RAND_117[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_118 = {1{`RANDOM}};
-  _T_787 = _RAND_118[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_119 = {1{`RANDOM}};
-  _T_788 = _RAND_119[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_120 = {1{`RANDOM}};
-  _T_789 = _RAND_120[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_121 = {1{`RANDOM}};
-  _T_790 = _RAND_121[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_122 = {1{`RANDOM}};
-  _T_791 = _RAND_122[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_123 = {1{`RANDOM}};
-  _T_792 = _RAND_123[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_124 = {1{`RANDOM}};
-  _T_793 = _RAND_124[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_125 = {1{`RANDOM}};
-  _T_794 = _RAND_125[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_126 = {1{`RANDOM}};
-  _T_795 = _RAND_126[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_127 = {1{`RANDOM}};
-  _T_796 = _RAND_127[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_128 = {1{`RANDOM}};
-  _T_797 = _RAND_128[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_129 = {1{`RANDOM}};
-  _T_798 = _RAND_129[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_130 = {1{`RANDOM}};
-  _T_799 = _RAND_130[0:0];
+  _T_1 = _RAND_1[0:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
+    if(_T__T_10_en & _T__T_10_mask) begin
+      _T[_T__T_10_addr] <= _T__T_10_data; // @[Decoupled.scala 209:24]
+    end
     if (reset) begin
-      InitialInDone <= 1'h0;
-    end else if (_T_804) begin
-      InitialInDone <= 1'h0;
-    end else if (_T_399) begin
-      InitialInDone <= _GEN_66;
-    end else begin
-      InitialInDone <= _GEN_67;
+      _T_1 <= 1'h0;
+    end else if (_T_11) begin
+      if (_T_3) begin
+        if (io_deq_ready) begin
+          _T_1 <= 1'h0;
+        end else begin
+          _T_1 <= _T_6;
+        end
+      end else begin
+        _T_1 <= _T_6;
+      end
+    end
+  end
+endmodule
+module ShiftRegisterMemStream(
+  input         clock,
+  input         reset,
+  input  [6:0]  io_depth,
+  output        io_in_ready,
+  input         io_in_valid,
+  input  [15:0] io_in_bits,
+  input         io_lastIn,
+  input         io_out_ready,
+  output        io_out_valid,
+  output [15:0] io_out_bits,
+  output        io_lastOut,
+  output        io_memFull
+);
+  reg [15:0] mem [0:63]; // @[CFARUtils.scala 505:26]
+  reg [31:0] _RAND_0;
+  wire [15:0] mem__T_423_data; // @[CFARUtils.scala 505:26]
+  wire [5:0] mem__T_423_addr; // @[CFARUtils.scala 505:26]
+  wire [15:0] mem__T_418_data; // @[CFARUtils.scala 505:26]
+  wire [5:0] mem__T_418_addr; // @[CFARUtils.scala 505:26]
+  wire  mem__T_418_mask; // @[CFARUtils.scala 505:26]
+  wire  mem__T_418_en; // @[CFARUtils.scala 505:26]
+  wire  outputQueue_clock; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_reset; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_enq_ready; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_enq_valid; // @[CFARUtils.scala 549:27]
+  wire [15:0] outputQueue_io_enq_bits; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_deq_ready; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_deq_valid; // @[CFARUtils.scala 549:27]
+  wire [15:0] outputQueue_io_deq_bits; // @[CFARUtils.scala 549:27]
+  reg [5:0] writeIdxReg; // @[CFARUtils.scala 508:30]
+  reg [31:0] _RAND_1;
+  reg  last; // @[CFARUtils.scala 509:30]
+  reg [31:0] _RAND_2;
+  reg  initialInDone; // @[CFARUtils.scala 510:30]
+  reg [31:0] _RAND_3;
+  wire  _T; // @[Decoupled.scala 40:37]
+  wire  _T_1; // @[CFARUtils.scala 511:45]
+  wire  en; // @[CFARUtils.scala 511:36]
+  reg  validPrev; // @[CFARUtils.scala 514:26]
+  reg [31:0] _RAND_4;
+  wire [5:0] _T_3; // @[CFARUtils.scala 515:21]
+  wire [6:0] _GEN_140; // @[CFARUtils.scala 515:27]
+  wire  _T_4; // @[CFARUtils.scala 515:27]
+  wire [6:0] _GEN_141; // @[CFARUtils.scala 516:28]
+  wire [6:0] _T_6; // @[CFARUtils.scala 516:28]
+  wire [6:0] _T_8; // @[CFARUtils.scala 516:39]
+  wire [6:0] _T_10; // @[CFARUtils.scala 518:27]
+  wire [6:0] _T_12; // @[CFARUtils.scala 518:41]
+  wire [6:0] _T_14; // @[CFARUtils.scala 518:47]
+  wire [6:0] _GEN_0; // @[CFARUtils.scala 515:40]
+  wire [6:0] _T_16; // @[CFARUtils.scala 528:34]
+  wire  _T_17; // @[CFARUtils.scala 528:21]
+  wire  _T_19; // @[CFARUtils.scala 528:40]
+  wire  _GEN_1; // @[CFARUtils.scala 528:57]
+  wire  fireLastIn; // @[CFARUtils.scala 531:30]
+  wire  _GEN_2; // @[CFARUtils.scala 533:21]
+  wire  _T_21; // @[Decoupled.scala 40:37]
+  wire  _T_22; // @[CFARUtils.scala 330:18]
+  wire  _T_24; // @[CFARUtils.scala 330:11]
+  wire  _T_25; // @[CFARUtils.scala 330:11]
+  wire  _T_33; // @[CFARUtils.scala 335:78]
+  wire  _T_37; // @[CFARUtils.scala 335:78]
+  wire  _T_41; // @[CFARUtils.scala 335:78]
+  wire  _T_45; // @[CFARUtils.scala 335:78]
+  wire  _T_49; // @[CFARUtils.scala 335:78]
+  wire  _T_53; // @[CFARUtils.scala 335:78]
+  wire  _T_57; // @[CFARUtils.scala 335:78]
+  wire  _T_61; // @[CFARUtils.scala 335:78]
+  wire  _T_65; // @[CFARUtils.scala 335:78]
+  wire  _T_69; // @[CFARUtils.scala 335:78]
+  wire  _T_73; // @[CFARUtils.scala 335:78]
+  wire  _T_77; // @[CFARUtils.scala 335:78]
+  wire  _T_81; // @[CFARUtils.scala 335:78]
+  wire  _T_85; // @[CFARUtils.scala 335:78]
+  wire  _T_89; // @[CFARUtils.scala 335:78]
+  wire  _T_93; // @[CFARUtils.scala 335:78]
+  wire  _T_97; // @[CFARUtils.scala 335:78]
+  wire  _T_101; // @[CFARUtils.scala 335:78]
+  wire  _T_105; // @[CFARUtils.scala 335:78]
+  wire  _T_109; // @[CFARUtils.scala 335:78]
+  wire  _T_113; // @[CFARUtils.scala 335:78]
+  wire  _T_117; // @[CFARUtils.scala 335:78]
+  wire  _T_121; // @[CFARUtils.scala 335:78]
+  wire  _T_125; // @[CFARUtils.scala 335:78]
+  wire  _T_129; // @[CFARUtils.scala 335:78]
+  wire  _T_133; // @[CFARUtils.scala 335:78]
+  wire  _T_137; // @[CFARUtils.scala 335:78]
+  wire  _T_141; // @[CFARUtils.scala 335:78]
+  wire  _T_145; // @[CFARUtils.scala 335:78]
+  wire  _T_149; // @[CFARUtils.scala 335:78]
+  wire  _T_153; // @[CFARUtils.scala 335:78]
+  wire  _T_157; // @[CFARUtils.scala 335:78]
+  wire  _T_161; // @[CFARUtils.scala 335:78]
+  wire  _T_165; // @[CFARUtils.scala 335:78]
+  wire  _T_169; // @[CFARUtils.scala 335:78]
+  wire  _T_173; // @[CFARUtils.scala 335:78]
+  wire  _T_177; // @[CFARUtils.scala 335:78]
+  wire  _T_181; // @[CFARUtils.scala 335:78]
+  wire  _T_185; // @[CFARUtils.scala 335:78]
+  wire  _T_189; // @[CFARUtils.scala 335:78]
+  wire  _T_193; // @[CFARUtils.scala 335:78]
+  wire  _T_197; // @[CFARUtils.scala 335:78]
+  wire  _T_201; // @[CFARUtils.scala 335:78]
+  wire  _T_205; // @[CFARUtils.scala 335:78]
+  wire  _T_209; // @[CFARUtils.scala 335:78]
+  wire  _T_213; // @[CFARUtils.scala 335:78]
+  wire  _T_217; // @[CFARUtils.scala 335:78]
+  wire  _T_221; // @[CFARUtils.scala 335:78]
+  wire  _T_225; // @[CFARUtils.scala 335:78]
+  wire  _T_229; // @[CFARUtils.scala 335:78]
+  wire  _T_233; // @[CFARUtils.scala 335:78]
+  wire  _T_237; // @[CFARUtils.scala 335:78]
+  wire  _T_241; // @[CFARUtils.scala 335:78]
+  wire  _T_245; // @[CFARUtils.scala 335:78]
+  wire  _T_249; // @[CFARUtils.scala 335:78]
+  wire  _T_253; // @[CFARUtils.scala 335:78]
+  wire  _T_257; // @[CFARUtils.scala 335:78]
+  wire  _T_261; // @[CFARUtils.scala 335:78]
+  wire  _T_265; // @[CFARUtils.scala 335:78]
+  wire  _T_269; // @[CFARUtils.scala 335:78]
+  wire  _T_273; // @[CFARUtils.scala 335:78]
+  wire  _T_277; // @[CFARUtils.scala 335:78]
+  wire  _T_281; // @[CFARUtils.scala 335:78]
+  wire  _T_284; // @[CFARUtils.scala 319:37]
+  wire  _T_285; // @[CFARUtils.scala 319:37]
+  wire  _T_286; // @[CFARUtils.scala 319:37]
+  wire  _T_287; // @[CFARUtils.scala 319:37]
+  wire  _T_288; // @[CFARUtils.scala 319:37]
+  wire  _T_289; // @[CFARUtils.scala 319:37]
+  wire  _T_290; // @[CFARUtils.scala 319:37]
+  wire  _T_291; // @[CFARUtils.scala 319:37]
+  wire  _T_292; // @[CFARUtils.scala 319:37]
+  wire  _T_293; // @[CFARUtils.scala 319:37]
+  wire  _T_294; // @[CFARUtils.scala 319:37]
+  wire  _T_295; // @[CFARUtils.scala 319:37]
+  wire  _T_296; // @[CFARUtils.scala 319:37]
+  wire  _T_297; // @[CFARUtils.scala 319:37]
+  wire  _T_298; // @[CFARUtils.scala 319:37]
+  wire  _T_299; // @[CFARUtils.scala 319:37]
+  wire  _T_300; // @[CFARUtils.scala 319:37]
+  wire  _T_301; // @[CFARUtils.scala 319:37]
+  wire  _T_302; // @[CFARUtils.scala 319:37]
+  wire  _T_303; // @[CFARUtils.scala 319:37]
+  wire  _T_304; // @[CFARUtils.scala 319:37]
+  wire  _T_305; // @[CFARUtils.scala 319:37]
+  wire  _T_306; // @[CFARUtils.scala 319:37]
+  wire  _T_307; // @[CFARUtils.scala 319:37]
+  wire  _T_308; // @[CFARUtils.scala 319:37]
+  wire  _T_309; // @[CFARUtils.scala 319:37]
+  wire  _T_310; // @[CFARUtils.scala 319:37]
+  wire  _T_311; // @[CFARUtils.scala 319:37]
+  wire  _T_312; // @[CFARUtils.scala 319:37]
+  wire  _T_313; // @[CFARUtils.scala 319:37]
+  wire  _T_314; // @[CFARUtils.scala 319:37]
+  wire  _T_315; // @[CFARUtils.scala 319:37]
+  wire  _T_316; // @[CFARUtils.scala 319:37]
+  wire  _T_317; // @[CFARUtils.scala 319:37]
+  wire  _T_318; // @[CFARUtils.scala 319:37]
+  wire  _T_319; // @[CFARUtils.scala 319:37]
+  wire  _T_320; // @[CFARUtils.scala 319:37]
+  wire  _T_321; // @[CFARUtils.scala 319:37]
+  wire  _T_322; // @[CFARUtils.scala 319:37]
+  wire  _T_323; // @[CFARUtils.scala 319:37]
+  wire  _T_324; // @[CFARUtils.scala 319:37]
+  wire  _T_325; // @[CFARUtils.scala 319:37]
+  wire  _T_326; // @[CFARUtils.scala 319:37]
+  wire  _T_327; // @[CFARUtils.scala 319:37]
+  wire  _T_328; // @[CFARUtils.scala 319:37]
+  wire  _T_329; // @[CFARUtils.scala 319:37]
+  wire  _T_330; // @[CFARUtils.scala 319:37]
+  wire  _T_331; // @[CFARUtils.scala 319:37]
+  wire  _T_332; // @[CFARUtils.scala 319:37]
+  wire  _T_333; // @[CFARUtils.scala 319:37]
+  wire  _T_334; // @[CFARUtils.scala 319:37]
+  wire  _T_335; // @[CFARUtils.scala 319:37]
+  wire  _T_336; // @[CFARUtils.scala 319:37]
+  wire  _T_337; // @[CFARUtils.scala 319:37]
+  wire  _T_338; // @[CFARUtils.scala 319:37]
+  wire  _T_339; // @[CFARUtils.scala 319:37]
+  wire  _T_340; // @[CFARUtils.scala 319:37]
+  wire  _T_341; // @[CFARUtils.scala 319:37]
+  wire  _T_342; // @[CFARUtils.scala 319:37]
+  wire  _T_343; // @[CFARUtils.scala 319:37]
+  wire  _T_344; // @[CFARUtils.scala 319:37]
+  wire  _T_345; // @[CFARUtils.scala 319:37]
+  wire  _T_346; // @[CFARUtils.scala 319:37]
+  reg  _T_348; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_5;
+  reg  _T_349; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_6;
+  reg  _T_350; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_7;
+  reg  _T_351; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_8;
+  reg  _T_352; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_9;
+  reg  _T_353; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_10;
+  reg  _T_354; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_11;
+  reg  _T_355; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_12;
+  reg  _T_356; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_13;
+  reg  _T_357; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_14;
+  reg  _T_358; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_15;
+  reg  _T_359; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_16;
+  reg  _T_360; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_17;
+  reg  _T_361; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_18;
+  reg  _T_362; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_19;
+  reg  _T_363; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_20;
+  reg  _T_364; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_21;
+  reg  _T_365; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_22;
+  reg  _T_366; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_23;
+  reg  _T_367; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_24;
+  reg  _T_368; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_25;
+  reg  _T_369; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_26;
+  reg  _T_370; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_27;
+  reg  _T_371; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_28;
+  reg  _T_372; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_29;
+  reg  _T_373; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_30;
+  reg  _T_374; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_31;
+  reg  _T_375; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_32;
+  reg  _T_376; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_33;
+  reg  _T_377; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_34;
+  reg  _T_378; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_35;
+  reg  _T_379; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_36;
+  reg  _T_380; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_37;
+  reg  _T_381; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_38;
+  reg  _T_382; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_39;
+  reg  _T_383; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_40;
+  reg  _T_384; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_41;
+  reg  _T_385; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_42;
+  reg  _T_386; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_43;
+  reg  _T_387; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_44;
+  reg  _T_388; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_45;
+  reg  _T_389; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_46;
+  reg  _T_390; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_47;
+  reg  _T_391; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_48;
+  reg  _T_392; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_49;
+  reg  _T_393; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_50;
+  reg  _T_394; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_51;
+  reg  _T_395; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_52;
+  reg  _T_396; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_53;
+  reg  _T_397; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_54;
+  reg  _T_398; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_55;
+  reg  _T_399; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_56;
+  reg  _T_400; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_57;
+  reg  _T_401; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_58;
+  reg  _T_402; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_59;
+  reg  _T_403; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_60;
+  reg  _T_404; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_61;
+  reg  _T_405; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_62;
+  reg  _T_406; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_63;
+  reg  _T_407; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_64;
+  reg  _T_408; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_65;
+  reg  _T_409; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_66;
+  reg  _T_410; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_67;
+  reg  _T_411; // @[Reg.scala 27:20]
+  reg [31:0] _RAND_68;
+  wire  _GEN_68; // @[CFARUtils.scala 537:26]
+  wire  _GEN_69; // @[CFARUtils.scala 537:26]
+  wire  _GEN_70; // @[CFARUtils.scala 537:26]
+  wire  _GEN_71; // @[CFARUtils.scala 537:26]
+  wire  _GEN_72; // @[CFARUtils.scala 537:26]
+  wire  _GEN_73; // @[CFARUtils.scala 537:26]
+  wire  _GEN_74; // @[CFARUtils.scala 537:26]
+  wire  _GEN_75; // @[CFARUtils.scala 537:26]
+  wire  _GEN_76; // @[CFARUtils.scala 537:26]
+  wire  _GEN_77; // @[CFARUtils.scala 537:26]
+  wire  _GEN_78; // @[CFARUtils.scala 537:26]
+  wire  _GEN_79; // @[CFARUtils.scala 537:26]
+  wire  _GEN_80; // @[CFARUtils.scala 537:26]
+  wire  _GEN_81; // @[CFARUtils.scala 537:26]
+  wire  _GEN_82; // @[CFARUtils.scala 537:26]
+  wire  _GEN_83; // @[CFARUtils.scala 537:26]
+  wire  _GEN_84; // @[CFARUtils.scala 537:26]
+  wire  _GEN_85; // @[CFARUtils.scala 537:26]
+  wire  _GEN_86; // @[CFARUtils.scala 537:26]
+  wire  _GEN_87; // @[CFARUtils.scala 537:26]
+  wire  _GEN_88; // @[CFARUtils.scala 537:26]
+  wire  _GEN_89; // @[CFARUtils.scala 537:26]
+  wire  _GEN_90; // @[CFARUtils.scala 537:26]
+  wire  _GEN_91; // @[CFARUtils.scala 537:26]
+  wire  _GEN_92; // @[CFARUtils.scala 537:26]
+  wire  _GEN_93; // @[CFARUtils.scala 537:26]
+  wire  _GEN_94; // @[CFARUtils.scala 537:26]
+  wire  _GEN_95; // @[CFARUtils.scala 537:26]
+  wire  _GEN_96; // @[CFARUtils.scala 537:26]
+  wire  _GEN_97; // @[CFARUtils.scala 537:26]
+  wire  _GEN_98; // @[CFARUtils.scala 537:26]
+  wire  _GEN_99; // @[CFARUtils.scala 537:26]
+  wire  _GEN_100; // @[CFARUtils.scala 537:26]
+  wire  _GEN_101; // @[CFARUtils.scala 537:26]
+  wire  _GEN_102; // @[CFARUtils.scala 537:26]
+  wire  _GEN_103; // @[CFARUtils.scala 537:26]
+  wire  _GEN_104; // @[CFARUtils.scala 537:26]
+  wire  _GEN_105; // @[CFARUtils.scala 537:26]
+  wire  _GEN_106; // @[CFARUtils.scala 537:26]
+  wire  _GEN_107; // @[CFARUtils.scala 537:26]
+  wire  _GEN_108; // @[CFARUtils.scala 537:26]
+  wire  _GEN_109; // @[CFARUtils.scala 537:26]
+  wire  _GEN_110; // @[CFARUtils.scala 537:26]
+  wire  _GEN_111; // @[CFARUtils.scala 537:26]
+  wire  _GEN_112; // @[CFARUtils.scala 537:26]
+  wire  _GEN_113; // @[CFARUtils.scala 537:26]
+  wire  _GEN_114; // @[CFARUtils.scala 537:26]
+  wire  _GEN_115; // @[CFARUtils.scala 537:26]
+  wire  _GEN_116; // @[CFARUtils.scala 537:26]
+  wire  _GEN_117; // @[CFARUtils.scala 537:26]
+  wire  _GEN_118; // @[CFARUtils.scala 537:26]
+  wire  _GEN_119; // @[CFARUtils.scala 537:26]
+  wire  _GEN_120; // @[CFARUtils.scala 537:26]
+  wire  _GEN_121; // @[CFARUtils.scala 537:26]
+  wire  _GEN_122; // @[CFARUtils.scala 537:26]
+  wire  _GEN_123; // @[CFARUtils.scala 537:26]
+  wire  _GEN_124; // @[CFARUtils.scala 537:26]
+  wire  _GEN_125; // @[CFARUtils.scala 537:26]
+  wire  _GEN_126; // @[CFARUtils.scala 537:26]
+  wire  _GEN_127; // @[CFARUtils.scala 537:26]
+  wire  _GEN_128; // @[CFARUtils.scala 537:26]
+  wire  _GEN_129; // @[CFARUtils.scala 537:26]
+  wire  _GEN_130; // @[CFARUtils.scala 537:26]
+  wire  resetAll; // @[CFARUtils.scala 537:26]
+  wire  _T_416; // @[CFARUtils.scala 544:15]
+  wire  _T_417; // @[CFARUtils.scala 544:12]
+  wire  _T_419; // @[CFARUtils.scala 546:36]
+  reg [15:0] _T_426; // @[CFARUtils.scala 551:37]
+  reg [31:0] _RAND_69;
+  wire  _T_431; // @[CFARUtils.scala 554:42]
+  wire  _T_433; // @[CFARUtils.scala 555:36]
+  wire  _T_437; // @[CFARUtils.scala 559:52]
+  wire  _T_439; // @[CFARUtils.scala 568:33]
+  wire  _T_440; // @[CFARUtils.scala 568:57]
+  wire [5:0] readIdx; // @[CFARUtils.scala 506:27 CFARUtils.scala 516:13 CFARUtils.scala 518:13]
+  Queue_5 outputQueue ( // @[CFARUtils.scala 549:27]
+    .clock(outputQueue_clock),
+    .reset(outputQueue_reset),
+    .io_enq_ready(outputQueue_io_enq_ready),
+    .io_enq_valid(outputQueue_io_enq_valid),
+    .io_enq_bits(outputQueue_io_enq_bits),
+    .io_deq_ready(outputQueue_io_deq_ready),
+    .io_deq_valid(outputQueue_io_deq_valid),
+    .io_deq_bits(outputQueue_io_deq_bits)
+  );
+  assign mem__T_423_addr = readIdx;
+  assign mem__T_423_data = mem[mem__T_423_addr]; // @[CFARUtils.scala 505:26]
+  assign mem__T_418_data = io_in_bits;
+  assign mem__T_418_addr = writeIdxReg;
+  assign mem__T_418_mask = 1'h1;
+  assign mem__T_418_en = en & _T_416;
+  assign _T = io_in_ready & io_in_valid; // @[Decoupled.scala 40:37]
+  assign _T_1 = last & io_out_ready; // @[CFARUtils.scala 511:45]
+  assign en = _T | _T_1; // @[CFARUtils.scala 511:36]
+  assign _T_3 = writeIdxReg + 6'h1; // @[CFARUtils.scala 515:21]
+  assign _GEN_140 = {{1'd0}, _T_3}; // @[CFARUtils.scala 515:27]
+  assign _T_4 = _GEN_140 >= io_depth; // @[CFARUtils.scala 515:27]
+  assign _GEN_141 = {{1'd0}, writeIdxReg}; // @[CFARUtils.scala 516:28]
+  assign _T_6 = _GEN_141 - io_depth; // @[CFARUtils.scala 516:28]
+  assign _T_8 = _T_6 + 7'h1; // @[CFARUtils.scala 516:39]
+  assign _T_10 = 7'h40 + _GEN_141; // @[CFARUtils.scala 518:27]
+  assign _T_12 = _T_10 + 7'h1; // @[CFARUtils.scala 518:41]
+  assign _T_14 = _T_12 - io_depth; // @[CFARUtils.scala 518:47]
+  assign _GEN_0 = _T_4 ? _T_8 : _T_14; // @[CFARUtils.scala 515:40]
+  assign _T_16 = io_depth - 7'h1; // @[CFARUtils.scala 528:34]
+  assign _T_17 = _GEN_141 == _T_16; // @[CFARUtils.scala 528:21]
+  assign _T_19 = _T_17 & _T; // @[CFARUtils.scala 528:40]
+  assign _GEN_1 = _T_19 | initialInDone; // @[CFARUtils.scala 528:57]
+  assign fireLastIn = io_lastIn & _T; // @[CFARUtils.scala 531:30]
+  assign _GEN_2 = fireLastIn | last; // @[CFARUtils.scala 533:21]
+  assign _T_21 = io_out_ready & io_out_valid; // @[Decoupled.scala 40:37]
+  assign _T_22 = io_depth <= 7'h40; // @[CFARUtils.scala 330:18]
+  assign _T_24 = _T_22 | reset; // @[CFARUtils.scala 330:11]
+  assign _T_25 = ~_T_24; // @[CFARUtils.scala 330:11]
+  assign _T_33 = 7'h1 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_37 = 7'h2 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_41 = 7'h3 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_45 = 7'h4 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_49 = 7'h5 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_53 = 7'h6 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_57 = 7'h7 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_61 = 7'h8 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_65 = 7'h9 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_69 = 7'ha <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_73 = 7'hb <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_77 = 7'hc <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_81 = 7'hd <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_85 = 7'he <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_89 = 7'hf <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_93 = 7'h10 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_97 = 7'h11 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_101 = 7'h12 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_105 = 7'h13 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_109 = 7'h14 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_113 = 7'h15 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_117 = 7'h16 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_121 = 7'h17 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_125 = 7'h18 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_129 = 7'h19 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_133 = 7'h1a <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_137 = 7'h1b <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_141 = 7'h1c <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_145 = 7'h1d <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_149 = 7'h1e <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_153 = 7'h1f <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_157 = 7'h20 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_161 = 7'h21 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_165 = 7'h22 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_169 = 7'h23 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_173 = 7'h24 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_177 = 7'h25 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_181 = 7'h26 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_185 = 7'h27 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_189 = 7'h28 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_193 = 7'h29 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_197 = 7'h2a <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_201 = 7'h2b <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_205 = 7'h2c <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_209 = 7'h2d <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_213 = 7'h2e <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_217 = 7'h2f <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_221 = 7'h30 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_225 = 7'h31 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_229 = 7'h32 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_233 = 7'h33 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_237 = 7'h34 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_241 = 7'h35 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_245 = 7'h36 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_249 = 7'h37 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_253 = 7'h38 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_257 = 7'h39 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_261 = 7'h3a <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_265 = 7'h3b <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_269 = 7'h3c <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_273 = 7'h3d <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_277 = 7'h3e <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_281 = 7'h3f <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_284 = _T_281 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_285 = _T_277 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_286 = _T_273 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_287 = _T_269 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_288 = _T_265 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_289 = _T_261 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_290 = _T_257 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_291 = _T_253 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_292 = _T_249 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_293 = _T_245 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_294 = _T_241 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_295 = _T_237 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_296 = _T_233 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_297 = _T_229 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_298 = _T_225 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_299 = _T_221 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_300 = _T_217 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_301 = _T_213 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_302 = _T_209 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_303 = _T_205 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_304 = _T_201 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_305 = _T_197 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_306 = _T_193 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_307 = _T_189 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_308 = _T_185 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_309 = _T_181 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_310 = _T_177 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_311 = _T_173 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_312 = _T_169 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_313 = _T_165 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_314 = _T_161 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_315 = _T_157 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_316 = _T_153 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_317 = _T_149 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_318 = _T_145 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_319 = _T_141 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_320 = _T_137 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_321 = _T_133 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_322 = _T_129 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_323 = _T_125 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_324 = _T_121 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_325 = _T_117 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_326 = _T_113 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_327 = _T_109 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_328 = _T_105 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_329 = _T_101 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_330 = _T_97 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_331 = _T_93 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_332 = _T_89 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_333 = _T_85 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_334 = _T_81 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_335 = _T_77 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_336 = _T_73 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_337 = _T_69 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_338 = _T_65 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_339 = _T_61 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_340 = _T_57 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_341 = _T_53 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_342 = _T_49 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_343 = _T_45 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_344 = _T_41 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_345 = _T_37 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_346 = _T_33 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _GEN_68 = 6'h1 == _T_16[5:0] ? _T_349 : _T_348; // @[CFARUtils.scala 537:26]
+  assign _GEN_69 = 6'h2 == _T_16[5:0] ? _T_350 : _GEN_68; // @[CFARUtils.scala 537:26]
+  assign _GEN_70 = 6'h3 == _T_16[5:0] ? _T_351 : _GEN_69; // @[CFARUtils.scala 537:26]
+  assign _GEN_71 = 6'h4 == _T_16[5:0] ? _T_352 : _GEN_70; // @[CFARUtils.scala 537:26]
+  assign _GEN_72 = 6'h5 == _T_16[5:0] ? _T_353 : _GEN_71; // @[CFARUtils.scala 537:26]
+  assign _GEN_73 = 6'h6 == _T_16[5:0] ? _T_354 : _GEN_72; // @[CFARUtils.scala 537:26]
+  assign _GEN_74 = 6'h7 == _T_16[5:0] ? _T_355 : _GEN_73; // @[CFARUtils.scala 537:26]
+  assign _GEN_75 = 6'h8 == _T_16[5:0] ? _T_356 : _GEN_74; // @[CFARUtils.scala 537:26]
+  assign _GEN_76 = 6'h9 == _T_16[5:0] ? _T_357 : _GEN_75; // @[CFARUtils.scala 537:26]
+  assign _GEN_77 = 6'ha == _T_16[5:0] ? _T_358 : _GEN_76; // @[CFARUtils.scala 537:26]
+  assign _GEN_78 = 6'hb == _T_16[5:0] ? _T_359 : _GEN_77; // @[CFARUtils.scala 537:26]
+  assign _GEN_79 = 6'hc == _T_16[5:0] ? _T_360 : _GEN_78; // @[CFARUtils.scala 537:26]
+  assign _GEN_80 = 6'hd == _T_16[5:0] ? _T_361 : _GEN_79; // @[CFARUtils.scala 537:26]
+  assign _GEN_81 = 6'he == _T_16[5:0] ? _T_362 : _GEN_80; // @[CFARUtils.scala 537:26]
+  assign _GEN_82 = 6'hf == _T_16[5:0] ? _T_363 : _GEN_81; // @[CFARUtils.scala 537:26]
+  assign _GEN_83 = 6'h10 == _T_16[5:0] ? _T_364 : _GEN_82; // @[CFARUtils.scala 537:26]
+  assign _GEN_84 = 6'h11 == _T_16[5:0] ? _T_365 : _GEN_83; // @[CFARUtils.scala 537:26]
+  assign _GEN_85 = 6'h12 == _T_16[5:0] ? _T_366 : _GEN_84; // @[CFARUtils.scala 537:26]
+  assign _GEN_86 = 6'h13 == _T_16[5:0] ? _T_367 : _GEN_85; // @[CFARUtils.scala 537:26]
+  assign _GEN_87 = 6'h14 == _T_16[5:0] ? _T_368 : _GEN_86; // @[CFARUtils.scala 537:26]
+  assign _GEN_88 = 6'h15 == _T_16[5:0] ? _T_369 : _GEN_87; // @[CFARUtils.scala 537:26]
+  assign _GEN_89 = 6'h16 == _T_16[5:0] ? _T_370 : _GEN_88; // @[CFARUtils.scala 537:26]
+  assign _GEN_90 = 6'h17 == _T_16[5:0] ? _T_371 : _GEN_89; // @[CFARUtils.scala 537:26]
+  assign _GEN_91 = 6'h18 == _T_16[5:0] ? _T_372 : _GEN_90; // @[CFARUtils.scala 537:26]
+  assign _GEN_92 = 6'h19 == _T_16[5:0] ? _T_373 : _GEN_91; // @[CFARUtils.scala 537:26]
+  assign _GEN_93 = 6'h1a == _T_16[5:0] ? _T_374 : _GEN_92; // @[CFARUtils.scala 537:26]
+  assign _GEN_94 = 6'h1b == _T_16[5:0] ? _T_375 : _GEN_93; // @[CFARUtils.scala 537:26]
+  assign _GEN_95 = 6'h1c == _T_16[5:0] ? _T_376 : _GEN_94; // @[CFARUtils.scala 537:26]
+  assign _GEN_96 = 6'h1d == _T_16[5:0] ? _T_377 : _GEN_95; // @[CFARUtils.scala 537:26]
+  assign _GEN_97 = 6'h1e == _T_16[5:0] ? _T_378 : _GEN_96; // @[CFARUtils.scala 537:26]
+  assign _GEN_98 = 6'h1f == _T_16[5:0] ? _T_379 : _GEN_97; // @[CFARUtils.scala 537:26]
+  assign _GEN_99 = 6'h20 == _T_16[5:0] ? _T_380 : _GEN_98; // @[CFARUtils.scala 537:26]
+  assign _GEN_100 = 6'h21 == _T_16[5:0] ? _T_381 : _GEN_99; // @[CFARUtils.scala 537:26]
+  assign _GEN_101 = 6'h22 == _T_16[5:0] ? _T_382 : _GEN_100; // @[CFARUtils.scala 537:26]
+  assign _GEN_102 = 6'h23 == _T_16[5:0] ? _T_383 : _GEN_101; // @[CFARUtils.scala 537:26]
+  assign _GEN_103 = 6'h24 == _T_16[5:0] ? _T_384 : _GEN_102; // @[CFARUtils.scala 537:26]
+  assign _GEN_104 = 6'h25 == _T_16[5:0] ? _T_385 : _GEN_103; // @[CFARUtils.scala 537:26]
+  assign _GEN_105 = 6'h26 == _T_16[5:0] ? _T_386 : _GEN_104; // @[CFARUtils.scala 537:26]
+  assign _GEN_106 = 6'h27 == _T_16[5:0] ? _T_387 : _GEN_105; // @[CFARUtils.scala 537:26]
+  assign _GEN_107 = 6'h28 == _T_16[5:0] ? _T_388 : _GEN_106; // @[CFARUtils.scala 537:26]
+  assign _GEN_108 = 6'h29 == _T_16[5:0] ? _T_389 : _GEN_107; // @[CFARUtils.scala 537:26]
+  assign _GEN_109 = 6'h2a == _T_16[5:0] ? _T_390 : _GEN_108; // @[CFARUtils.scala 537:26]
+  assign _GEN_110 = 6'h2b == _T_16[5:0] ? _T_391 : _GEN_109; // @[CFARUtils.scala 537:26]
+  assign _GEN_111 = 6'h2c == _T_16[5:0] ? _T_392 : _GEN_110; // @[CFARUtils.scala 537:26]
+  assign _GEN_112 = 6'h2d == _T_16[5:0] ? _T_393 : _GEN_111; // @[CFARUtils.scala 537:26]
+  assign _GEN_113 = 6'h2e == _T_16[5:0] ? _T_394 : _GEN_112; // @[CFARUtils.scala 537:26]
+  assign _GEN_114 = 6'h2f == _T_16[5:0] ? _T_395 : _GEN_113; // @[CFARUtils.scala 537:26]
+  assign _GEN_115 = 6'h30 == _T_16[5:0] ? _T_396 : _GEN_114; // @[CFARUtils.scala 537:26]
+  assign _GEN_116 = 6'h31 == _T_16[5:0] ? _T_397 : _GEN_115; // @[CFARUtils.scala 537:26]
+  assign _GEN_117 = 6'h32 == _T_16[5:0] ? _T_398 : _GEN_116; // @[CFARUtils.scala 537:26]
+  assign _GEN_118 = 6'h33 == _T_16[5:0] ? _T_399 : _GEN_117; // @[CFARUtils.scala 537:26]
+  assign _GEN_119 = 6'h34 == _T_16[5:0] ? _T_400 : _GEN_118; // @[CFARUtils.scala 537:26]
+  assign _GEN_120 = 6'h35 == _T_16[5:0] ? _T_401 : _GEN_119; // @[CFARUtils.scala 537:26]
+  assign _GEN_121 = 6'h36 == _T_16[5:0] ? _T_402 : _GEN_120; // @[CFARUtils.scala 537:26]
+  assign _GEN_122 = 6'h37 == _T_16[5:0] ? _T_403 : _GEN_121; // @[CFARUtils.scala 537:26]
+  assign _GEN_123 = 6'h38 == _T_16[5:0] ? _T_404 : _GEN_122; // @[CFARUtils.scala 537:26]
+  assign _GEN_124 = 6'h39 == _T_16[5:0] ? _T_405 : _GEN_123; // @[CFARUtils.scala 537:26]
+  assign _GEN_125 = 6'h3a == _T_16[5:0] ? _T_406 : _GEN_124; // @[CFARUtils.scala 537:26]
+  assign _GEN_126 = 6'h3b == _T_16[5:0] ? _T_407 : _GEN_125; // @[CFARUtils.scala 537:26]
+  assign _GEN_127 = 6'h3c == _T_16[5:0] ? _T_408 : _GEN_126; // @[CFARUtils.scala 537:26]
+  assign _GEN_128 = 6'h3d == _T_16[5:0] ? _T_409 : _GEN_127; // @[CFARUtils.scala 537:26]
+  assign _GEN_129 = 6'h3e == _T_16[5:0] ? _T_410 : _GEN_128; // @[CFARUtils.scala 537:26]
+  assign _GEN_130 = 6'h3f == _T_16[5:0] ? _T_411 : _GEN_129; // @[CFARUtils.scala 537:26]
+  assign resetAll = _GEN_130 & _T_21; // @[CFARUtils.scala 537:26]
+  assign _T_416 = ~resetAll; // @[CFARUtils.scala 544:15]
+  assign _T_417 = en & _T_416; // @[CFARUtils.scala 544:12]
+  assign _T_419 = writeIdxReg < 6'h3f; // @[CFARUtils.scala 546:36]
+  assign _T_431 = ~initialInDone; // @[CFARUtils.scala 554:42]
+  assign _T_433 = ~last; // @[CFARUtils.scala 555:36]
+  assign _T_437 = io_out_ready & _T_433; // @[CFARUtils.scala 559:52]
+  assign _T_439 = initialInDone & io_in_valid; // @[CFARUtils.scala 568:33]
+  assign _T_440 = last & en; // @[CFARUtils.scala 568:57]
+  assign readIdx = _GEN_0[5:0]; // @[CFARUtils.scala 506:27 CFARUtils.scala 516:13 CFARUtils.scala 518:13]
+  assign io_in_ready = _T_431 | _T_437; // @[CFARUtils.scala 559:18]
+  assign io_out_valid = _T_439 | _T_440; // @[CFARUtils.scala 568:16]
+  assign io_out_bits = outputQueue_io_deq_bits; // @[CFARUtils.scala 565:16]
+  assign io_lastOut = 6'h3f == _T_16[5:0] ? _T_411 : _GEN_129; // @[CFARUtils.scala 567:16]
+  assign io_memFull = initialInDone & _T_433; // @[CFARUtils.scala 555:16]
+  assign outputQueue_clock = clock;
+  assign outputQueue_reset = reset;
+  assign outputQueue_io_enq_valid = validPrev; // @[CFARUtils.scala 550:28]
+  assign outputQueue_io_enq_bits = _T_426; // @[CFARUtils.scala 551:27]
+  assign outputQueue_io_deq_ready = _T | _T_1; // @[CFARUtils.scala 552:28]
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+  integer initvar;
+`endif
+`ifndef SYNTHESIS
+initial begin
+  `ifdef RANDOMIZE
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      `ifdef RANDOMIZE_DELAY
+        #`RANDOMIZE_DELAY begin end
+      `else
+        #0.002 begin end
+      `endif
+    `endif
+  _RAND_0 = {1{`RANDOM}};
+  `ifdef RANDOMIZE_MEM_INIT
+  for (initvar = 0; initvar < 64; initvar = initvar+1)
+    mem[initvar] = _RAND_0[15:0];
+  `endif // RANDOMIZE_MEM_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_1 = {1{`RANDOM}};
+  writeIdxReg = _RAND_1[5:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_2 = {1{`RANDOM}};
+  last = _RAND_2[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_3 = {1{`RANDOM}};
+  initialInDone = _RAND_3[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_4 = {1{`RANDOM}};
+  validPrev = _RAND_4[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_5 = {1{`RANDOM}};
+  _T_348 = _RAND_5[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_6 = {1{`RANDOM}};
+  _T_349 = _RAND_6[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_7 = {1{`RANDOM}};
+  _T_350 = _RAND_7[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_8 = {1{`RANDOM}};
+  _T_351 = _RAND_8[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_9 = {1{`RANDOM}};
+  _T_352 = _RAND_9[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_10 = {1{`RANDOM}};
+  _T_353 = _RAND_10[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_11 = {1{`RANDOM}};
+  _T_354 = _RAND_11[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_12 = {1{`RANDOM}};
+  _T_355 = _RAND_12[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_13 = {1{`RANDOM}};
+  _T_356 = _RAND_13[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_14 = {1{`RANDOM}};
+  _T_357 = _RAND_14[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_15 = {1{`RANDOM}};
+  _T_358 = _RAND_15[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_16 = {1{`RANDOM}};
+  _T_359 = _RAND_16[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_17 = {1{`RANDOM}};
+  _T_360 = _RAND_17[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_18 = {1{`RANDOM}};
+  _T_361 = _RAND_18[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_19 = {1{`RANDOM}};
+  _T_362 = _RAND_19[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_20 = {1{`RANDOM}};
+  _T_363 = _RAND_20[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_21 = {1{`RANDOM}};
+  _T_364 = _RAND_21[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_22 = {1{`RANDOM}};
+  _T_365 = _RAND_22[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_23 = {1{`RANDOM}};
+  _T_366 = _RAND_23[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_24 = {1{`RANDOM}};
+  _T_367 = _RAND_24[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_25 = {1{`RANDOM}};
+  _T_368 = _RAND_25[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_26 = {1{`RANDOM}};
+  _T_369 = _RAND_26[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_27 = {1{`RANDOM}};
+  _T_370 = _RAND_27[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_28 = {1{`RANDOM}};
+  _T_371 = _RAND_28[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_29 = {1{`RANDOM}};
+  _T_372 = _RAND_29[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_30 = {1{`RANDOM}};
+  _T_373 = _RAND_30[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_31 = {1{`RANDOM}};
+  _T_374 = _RAND_31[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_32 = {1{`RANDOM}};
+  _T_375 = _RAND_32[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_33 = {1{`RANDOM}};
+  _T_376 = _RAND_33[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_34 = {1{`RANDOM}};
+  _T_377 = _RAND_34[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_35 = {1{`RANDOM}};
+  _T_378 = _RAND_35[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_36 = {1{`RANDOM}};
+  _T_379 = _RAND_36[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_37 = {1{`RANDOM}};
+  _T_380 = _RAND_37[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_38 = {1{`RANDOM}};
+  _T_381 = _RAND_38[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_39 = {1{`RANDOM}};
+  _T_382 = _RAND_39[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_40 = {1{`RANDOM}};
+  _T_383 = _RAND_40[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_41 = {1{`RANDOM}};
+  _T_384 = _RAND_41[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_42 = {1{`RANDOM}};
+  _T_385 = _RAND_42[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_43 = {1{`RANDOM}};
+  _T_386 = _RAND_43[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_44 = {1{`RANDOM}};
+  _T_387 = _RAND_44[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_45 = {1{`RANDOM}};
+  _T_388 = _RAND_45[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_46 = {1{`RANDOM}};
+  _T_389 = _RAND_46[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_47 = {1{`RANDOM}};
+  _T_390 = _RAND_47[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_48 = {1{`RANDOM}};
+  _T_391 = _RAND_48[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_49 = {1{`RANDOM}};
+  _T_392 = _RAND_49[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_50 = {1{`RANDOM}};
+  _T_393 = _RAND_50[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_51 = {1{`RANDOM}};
+  _T_394 = _RAND_51[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_52 = {1{`RANDOM}};
+  _T_395 = _RAND_52[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_53 = {1{`RANDOM}};
+  _T_396 = _RAND_53[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_54 = {1{`RANDOM}};
+  _T_397 = _RAND_54[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_55 = {1{`RANDOM}};
+  _T_398 = _RAND_55[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_56 = {1{`RANDOM}};
+  _T_399 = _RAND_56[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_57 = {1{`RANDOM}};
+  _T_400 = _RAND_57[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_58 = {1{`RANDOM}};
+  _T_401 = _RAND_58[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_59 = {1{`RANDOM}};
+  _T_402 = _RAND_59[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_60 = {1{`RANDOM}};
+  _T_403 = _RAND_60[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_61 = {1{`RANDOM}};
+  _T_404 = _RAND_61[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_62 = {1{`RANDOM}};
+  _T_405 = _RAND_62[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_63 = {1{`RANDOM}};
+  _T_406 = _RAND_63[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_64 = {1{`RANDOM}};
+  _T_407 = _RAND_64[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_65 = {1{`RANDOM}};
+  _T_408 = _RAND_65[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_66 = {1{`RANDOM}};
+  _T_409 = _RAND_66[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_67 = {1{`RANDOM}};
+  _T_410 = _RAND_67[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_68 = {1{`RANDOM}};
+  _T_411 = _RAND_68[0:0];
+  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_REG_INIT
+  _RAND_69 = {1{`RANDOM}};
+  _T_426 = _RAND_69[15:0];
+  `endif // RANDOMIZE_REG_INIT
+  `endif // RANDOMIZE
+end // initial
+`endif // SYNTHESIS
+  always @(posedge clock) begin
+    if(mem__T_418_en & mem__T_418_mask) begin
+      mem[mem__T_418_addr] <= mem__T_418_data; // @[CFARUtils.scala 505:26]
+    end
+    if (reset) begin
+      writeIdxReg <= 6'h0;
+    end else if (_T_417) begin
+      if (_T_419) begin
+        writeIdxReg <= _T_3;
+      end else begin
+        writeIdxReg <= 6'h0;
+      end
+    end else if (resetAll) begin
+      writeIdxReg <= 6'h0;
     end
     if (reset) begin
       last <= 1'h0;
-    end else if (_T_804) begin
+    end else if (resetAll) begin
       last <= 1'h0;
     end else begin
-      last <= _GEN_64;
+      last <= _GEN_2;
     end
     if (reset) begin
-      adjShiftRegOut_0 <= 16'sh0;
+      initialInDone <= 1'h0;
+    end else if (resetAll) begin
+      initialInDone <= 1'h0;
+    end else begin
+      initialInDone <= _GEN_1;
+    end
+    if (reset) begin
+      validPrev <= 1'h0;
+    end else begin
+      validPrev <= io_in_valid;
+    end
+    if (reset) begin
+      _T_348 <= 1'h0;
+    end else if (_T_21) begin
+      _T_348 <= fireLastIn;
+    end
+    if (reset) begin
+      _T_349 <= 1'h0;
+    end else if (_T_346) begin
+      _T_349 <= _T_348;
+    end
+    if (reset) begin
+      _T_350 <= 1'h0;
+    end else if (_T_345) begin
+      _T_350 <= _T_349;
+    end
+    if (reset) begin
+      _T_351 <= 1'h0;
+    end else if (_T_344) begin
+      _T_351 <= _T_350;
+    end
+    if (reset) begin
+      _T_352 <= 1'h0;
+    end else if (_T_343) begin
+      _T_352 <= _T_351;
+    end
+    if (reset) begin
+      _T_353 <= 1'h0;
+    end else if (_T_342) begin
+      _T_353 <= _T_352;
+    end
+    if (reset) begin
+      _T_354 <= 1'h0;
+    end else if (_T_341) begin
+      _T_354 <= _T_353;
+    end
+    if (reset) begin
+      _T_355 <= 1'h0;
+    end else if (_T_340) begin
+      _T_355 <= _T_354;
+    end
+    if (reset) begin
+      _T_356 <= 1'h0;
+    end else if (_T_339) begin
+      _T_356 <= _T_355;
+    end
+    if (reset) begin
+      _T_357 <= 1'h0;
+    end else if (_T_338) begin
+      _T_357 <= _T_356;
+    end
+    if (reset) begin
+      _T_358 <= 1'h0;
+    end else if (_T_337) begin
+      _T_358 <= _T_357;
+    end
+    if (reset) begin
+      _T_359 <= 1'h0;
+    end else if (_T_336) begin
+      _T_359 <= _T_358;
+    end
+    if (reset) begin
+      _T_360 <= 1'h0;
+    end else if (_T_335) begin
+      _T_360 <= _T_359;
+    end
+    if (reset) begin
+      _T_361 <= 1'h0;
+    end else if (_T_334) begin
+      _T_361 <= _T_360;
+    end
+    if (reset) begin
+      _T_362 <= 1'h0;
+    end else if (_T_333) begin
+      _T_362 <= _T_361;
+    end
+    if (reset) begin
+      _T_363 <= 1'h0;
+    end else if (_T_332) begin
+      _T_363 <= _T_362;
+    end
+    if (reset) begin
+      _T_364 <= 1'h0;
+    end else if (_T_331) begin
+      _T_364 <= _T_363;
+    end
+    if (reset) begin
+      _T_365 <= 1'h0;
+    end else if (_T_330) begin
+      _T_365 <= _T_364;
+    end
+    if (reset) begin
+      _T_366 <= 1'h0;
+    end else if (_T_329) begin
+      _T_366 <= _T_365;
+    end
+    if (reset) begin
+      _T_367 <= 1'h0;
+    end else if (_T_328) begin
+      _T_367 <= _T_366;
+    end
+    if (reset) begin
+      _T_368 <= 1'h0;
+    end else if (_T_327) begin
+      _T_368 <= _T_367;
+    end
+    if (reset) begin
+      _T_369 <= 1'h0;
     end else if (_T_326) begin
-      adjShiftRegOut_0 <= io_in_bits;
+      _T_369 <= _T_368;
     end
     if (reset) begin
-      adjShiftRegOut_1 <= 16'sh0;
+      _T_370 <= 1'h0;
     end else if (_T_325) begin
-      adjShiftRegOut_1 <= adjShiftRegOut_0;
+      _T_370 <= _T_369;
     end
     if (reset) begin
-      adjShiftRegOut_2 <= 16'sh0;
+      _T_371 <= 1'h0;
     end else if (_T_324) begin
-      adjShiftRegOut_2 <= adjShiftRegOut_1;
+      _T_371 <= _T_370;
     end
     if (reset) begin
-      adjShiftRegOut_3 <= 16'sh0;
+      _T_372 <= 1'h0;
     end else if (_T_323) begin
-      adjShiftRegOut_3 <= adjShiftRegOut_2;
+      _T_372 <= _T_371;
     end
     if (reset) begin
-      adjShiftRegOut_4 <= 16'sh0;
+      _T_373 <= 1'h0;
     end else if (_T_322) begin
-      adjShiftRegOut_4 <= adjShiftRegOut_3;
+      _T_373 <= _T_372;
     end
     if (reset) begin
-      adjShiftRegOut_5 <= 16'sh0;
+      _T_374 <= 1'h0;
     end else if (_T_321) begin
-      adjShiftRegOut_5 <= adjShiftRegOut_4;
+      _T_374 <= _T_373;
     end
     if (reset) begin
-      adjShiftRegOut_6 <= 16'sh0;
+      _T_375 <= 1'h0;
     end else if (_T_320) begin
-      adjShiftRegOut_6 <= adjShiftRegOut_5;
+      _T_375 <= _T_374;
     end
     if (reset) begin
-      adjShiftRegOut_7 <= 16'sh0;
+      _T_376 <= 1'h0;
     end else if (_T_319) begin
-      adjShiftRegOut_7 <= adjShiftRegOut_6;
+      _T_376 <= _T_375;
     end
     if (reset) begin
-      adjShiftRegOut_8 <= 16'sh0;
+      _T_377 <= 1'h0;
     end else if (_T_318) begin
-      adjShiftRegOut_8 <= adjShiftRegOut_7;
+      _T_377 <= _T_376;
     end
     if (reset) begin
-      adjShiftRegOut_9 <= 16'sh0;
+      _T_378 <= 1'h0;
     end else if (_T_317) begin
-      adjShiftRegOut_9 <= adjShiftRegOut_8;
+      _T_378 <= _T_377;
     end
     if (reset) begin
-      adjShiftRegOut_10 <= 16'sh0;
+      _T_379 <= 1'h0;
     end else if (_T_316) begin
-      adjShiftRegOut_10 <= adjShiftRegOut_9;
+      _T_379 <= _T_378;
     end
     if (reset) begin
-      adjShiftRegOut_11 <= 16'sh0;
+      _T_380 <= 1'h0;
     end else if (_T_315) begin
-      adjShiftRegOut_11 <= adjShiftRegOut_10;
+      _T_380 <= _T_379;
     end
     if (reset) begin
-      adjShiftRegOut_12 <= 16'sh0;
+      _T_381 <= 1'h0;
     end else if (_T_314) begin
-      adjShiftRegOut_12 <= adjShiftRegOut_11;
+      _T_381 <= _T_380;
     end
     if (reset) begin
-      adjShiftRegOut_13 <= 16'sh0;
+      _T_382 <= 1'h0;
     end else if (_T_313) begin
-      adjShiftRegOut_13 <= adjShiftRegOut_12;
+      _T_382 <= _T_381;
     end
     if (reset) begin
-      adjShiftRegOut_14 <= 16'sh0;
+      _T_383 <= 1'h0;
     end else if (_T_312) begin
-      adjShiftRegOut_14 <= adjShiftRegOut_13;
+      _T_383 <= _T_382;
     end
     if (reset) begin
-      adjShiftRegOut_15 <= 16'sh0;
+      _T_384 <= 1'h0;
     end else if (_T_311) begin
-      adjShiftRegOut_15 <= adjShiftRegOut_14;
+      _T_384 <= _T_383;
     end
     if (reset) begin
-      adjShiftRegOut_16 <= 16'sh0;
+      _T_385 <= 1'h0;
     end else if (_T_310) begin
-      adjShiftRegOut_16 <= adjShiftRegOut_15;
+      _T_385 <= _T_384;
     end
     if (reset) begin
-      adjShiftRegOut_17 <= 16'sh0;
+      _T_386 <= 1'h0;
     end else if (_T_309) begin
-      adjShiftRegOut_17 <= adjShiftRegOut_16;
+      _T_386 <= _T_385;
     end
     if (reset) begin
-      adjShiftRegOut_18 <= 16'sh0;
+      _T_387 <= 1'h0;
     end else if (_T_308) begin
-      adjShiftRegOut_18 <= adjShiftRegOut_17;
+      _T_387 <= _T_386;
     end
     if (reset) begin
-      adjShiftRegOut_19 <= 16'sh0;
+      _T_388 <= 1'h0;
     end else if (_T_307) begin
-      adjShiftRegOut_19 <= adjShiftRegOut_18;
+      _T_388 <= _T_387;
     end
     if (reset) begin
-      adjShiftRegOut_20 <= 16'sh0;
+      _T_389 <= 1'h0;
     end else if (_T_306) begin
-      adjShiftRegOut_20 <= adjShiftRegOut_19;
+      _T_389 <= _T_388;
     end
     if (reset) begin
-      adjShiftRegOut_21 <= 16'sh0;
+      _T_390 <= 1'h0;
     end else if (_T_305) begin
-      adjShiftRegOut_21 <= adjShiftRegOut_20;
+      _T_390 <= _T_389;
     end
     if (reset) begin
-      adjShiftRegOut_22 <= 16'sh0;
+      _T_391 <= 1'h0;
     end else if (_T_304) begin
-      adjShiftRegOut_22 <= adjShiftRegOut_21;
+      _T_391 <= _T_390;
     end
     if (reset) begin
-      adjShiftRegOut_23 <= 16'sh0;
+      _T_392 <= 1'h0;
     end else if (_T_303) begin
-      adjShiftRegOut_23 <= adjShiftRegOut_22;
+      _T_392 <= _T_391;
     end
     if (reset) begin
-      adjShiftRegOut_24 <= 16'sh0;
+      _T_393 <= 1'h0;
     end else if (_T_302) begin
-      adjShiftRegOut_24 <= adjShiftRegOut_23;
+      _T_393 <= _T_392;
     end
     if (reset) begin
-      adjShiftRegOut_25 <= 16'sh0;
+      _T_394 <= 1'h0;
     end else if (_T_301) begin
-      adjShiftRegOut_25 <= adjShiftRegOut_24;
+      _T_394 <= _T_393;
     end
     if (reset) begin
-      adjShiftRegOut_26 <= 16'sh0;
+      _T_395 <= 1'h0;
     end else if (_T_300) begin
-      adjShiftRegOut_26 <= adjShiftRegOut_25;
+      _T_395 <= _T_394;
     end
     if (reset) begin
-      adjShiftRegOut_27 <= 16'sh0;
+      _T_396 <= 1'h0;
     end else if (_T_299) begin
-      adjShiftRegOut_27 <= adjShiftRegOut_26;
+      _T_396 <= _T_395;
     end
     if (reset) begin
-      adjShiftRegOut_28 <= 16'sh0;
+      _T_397 <= 1'h0;
     end else if (_T_298) begin
-      adjShiftRegOut_28 <= adjShiftRegOut_27;
+      _T_397 <= _T_396;
     end
     if (reset) begin
-      adjShiftRegOut_29 <= 16'sh0;
+      _T_398 <= 1'h0;
     end else if (_T_297) begin
-      adjShiftRegOut_29 <= adjShiftRegOut_28;
+      _T_398 <= _T_397;
     end
     if (reset) begin
-      adjShiftRegOut_30 <= 16'sh0;
+      _T_399 <= 1'h0;
     end else if (_T_296) begin
-      adjShiftRegOut_30 <= adjShiftRegOut_29;
+      _T_399 <= _T_398;
     end
     if (reset) begin
-      adjShiftRegOut_31 <= 16'sh0;
+      _T_400 <= 1'h0;
     end else if (_T_295) begin
-      adjShiftRegOut_31 <= adjShiftRegOut_30;
+      _T_400 <= _T_399;
     end
     if (reset) begin
-      adjShiftRegOut_32 <= 16'sh0;
+      _T_401 <= 1'h0;
     end else if (_T_294) begin
-      adjShiftRegOut_32 <= adjShiftRegOut_31;
+      _T_401 <= _T_400;
     end
     if (reset) begin
-      adjShiftRegOut_33 <= 16'sh0;
+      _T_402 <= 1'h0;
     end else if (_T_293) begin
-      adjShiftRegOut_33 <= adjShiftRegOut_32;
+      _T_402 <= _T_401;
     end
     if (reset) begin
-      adjShiftRegOut_34 <= 16'sh0;
+      _T_403 <= 1'h0;
     end else if (_T_292) begin
-      adjShiftRegOut_34 <= adjShiftRegOut_33;
+      _T_403 <= _T_402;
     end
     if (reset) begin
-      adjShiftRegOut_35 <= 16'sh0;
+      _T_404 <= 1'h0;
     end else if (_T_291) begin
-      adjShiftRegOut_35 <= adjShiftRegOut_34;
+      _T_404 <= _T_403;
     end
     if (reset) begin
-      adjShiftRegOut_36 <= 16'sh0;
+      _T_405 <= 1'h0;
     end else if (_T_290) begin
-      adjShiftRegOut_36 <= adjShiftRegOut_35;
+      _T_405 <= _T_404;
     end
     if (reset) begin
-      adjShiftRegOut_37 <= 16'sh0;
+      _T_406 <= 1'h0;
     end else if (_T_289) begin
-      adjShiftRegOut_37 <= adjShiftRegOut_36;
+      _T_406 <= _T_405;
     end
     if (reset) begin
-      adjShiftRegOut_38 <= 16'sh0;
+      _T_407 <= 1'h0;
     end else if (_T_288) begin
-      adjShiftRegOut_38 <= adjShiftRegOut_37;
+      _T_407 <= _T_406;
     end
     if (reset) begin
-      adjShiftRegOut_39 <= 16'sh0;
+      _T_408 <= 1'h0;
     end else if (_T_287) begin
-      adjShiftRegOut_39 <= adjShiftRegOut_38;
+      _T_408 <= _T_407;
     end
     if (reset) begin
-      adjShiftRegOut_40 <= 16'sh0;
+      _T_409 <= 1'h0;
     end else if (_T_286) begin
-      adjShiftRegOut_40 <= adjShiftRegOut_39;
+      _T_409 <= _T_408;
     end
     if (reset) begin
-      adjShiftRegOut_41 <= 16'sh0;
+      _T_410 <= 1'h0;
     end else if (_T_285) begin
-      adjShiftRegOut_41 <= adjShiftRegOut_40;
+      _T_410 <= _T_409;
     end
     if (reset) begin
-      adjShiftRegOut_42 <= 16'sh0;
+      _T_411 <= 1'h0;
     end else if (_T_284) begin
-      adjShiftRegOut_42 <= adjShiftRegOut_41;
+      _T_411 <= _T_410;
     end
     if (reset) begin
-      adjShiftRegOut_43 <= 16'sh0;
-    end else if (_T_283) begin
-      adjShiftRegOut_43 <= adjShiftRegOut_42;
-    end
-    if (reset) begin
-      adjShiftRegOut_44 <= 16'sh0;
-    end else if (_T_282) begin
-      adjShiftRegOut_44 <= adjShiftRegOut_43;
-    end
-    if (reset) begin
-      adjShiftRegOut_45 <= 16'sh0;
-    end else if (_T_281) begin
-      adjShiftRegOut_45 <= adjShiftRegOut_44;
-    end
-    if (reset) begin
-      adjShiftRegOut_46 <= 16'sh0;
-    end else if (_T_280) begin
-      adjShiftRegOut_46 <= adjShiftRegOut_45;
-    end
-    if (reset) begin
-      adjShiftRegOut_47 <= 16'sh0;
-    end else if (_T_279) begin
-      adjShiftRegOut_47 <= adjShiftRegOut_46;
-    end
-    if (reset) begin
-      adjShiftRegOut_48 <= 16'sh0;
-    end else if (_T_278) begin
-      adjShiftRegOut_48 <= adjShiftRegOut_47;
-    end
-    if (reset) begin
-      adjShiftRegOut_49 <= 16'sh0;
-    end else if (_T_277) begin
-      adjShiftRegOut_49 <= adjShiftRegOut_48;
-    end
-    if (reset) begin
-      adjShiftRegOut_50 <= 16'sh0;
-    end else if (_T_276) begin
-      adjShiftRegOut_50 <= adjShiftRegOut_49;
-    end
-    if (reset) begin
-      adjShiftRegOut_51 <= 16'sh0;
-    end else if (_T_275) begin
-      adjShiftRegOut_51 <= adjShiftRegOut_50;
-    end
-    if (reset) begin
-      adjShiftRegOut_52 <= 16'sh0;
-    end else if (_T_274) begin
-      adjShiftRegOut_52 <= adjShiftRegOut_51;
-    end
-    if (reset) begin
-      adjShiftRegOut_53 <= 16'sh0;
-    end else if (_T_273) begin
-      adjShiftRegOut_53 <= adjShiftRegOut_52;
-    end
-    if (reset) begin
-      adjShiftRegOut_54 <= 16'sh0;
-    end else if (_T_272) begin
-      adjShiftRegOut_54 <= adjShiftRegOut_53;
-    end
-    if (reset) begin
-      adjShiftRegOut_55 <= 16'sh0;
-    end else if (_T_271) begin
-      adjShiftRegOut_55 <= adjShiftRegOut_54;
-    end
-    if (reset) begin
-      adjShiftRegOut_56 <= 16'sh0;
-    end else if (_T_270) begin
-      adjShiftRegOut_56 <= adjShiftRegOut_55;
-    end
-    if (reset) begin
-      adjShiftRegOut_57 <= 16'sh0;
-    end else if (_T_269) begin
-      adjShiftRegOut_57 <= adjShiftRegOut_56;
-    end
-    if (reset) begin
-      adjShiftRegOut_58 <= 16'sh0;
-    end else if (_T_268) begin
-      adjShiftRegOut_58 <= adjShiftRegOut_57;
-    end
-    if (reset) begin
-      adjShiftRegOut_59 <= 16'sh0;
-    end else if (_T_267) begin
-      adjShiftRegOut_59 <= adjShiftRegOut_58;
-    end
-    if (reset) begin
-      adjShiftRegOut_60 <= 16'sh0;
-    end else if (_T_266) begin
-      adjShiftRegOut_60 <= adjShiftRegOut_59;
-    end
-    if (reset) begin
-      adjShiftRegOut_61 <= 16'sh0;
-    end else if (_T_265) begin
-      adjShiftRegOut_61 <= adjShiftRegOut_60;
-    end
-    if (reset) begin
-      adjShiftRegOut_62 <= 16'sh0;
-    end else if (_T_264) begin
-      adjShiftRegOut_62 <= adjShiftRegOut_61;
-    end
-    if (reset) begin
-      adjShiftRegOut_63 <= 16'sh0;
-    end else if (_T_263) begin
-      adjShiftRegOut_63 <= adjShiftRegOut_62;
-    end
-    if (reset) begin
-      cntIn <= 7'h0;
-    end else if (_T_804) begin
-      cntIn <= 7'h0;
-    end else if (_T_1) begin
-      cntIn <= _T_398;
-    end
-    if (reset) begin
-      _T_736 <= 1'h0;
-    end else if (_T_409) begin
-      _T_736 <= _T_395;
-    end
-    if (reset) begin
-      _T_737 <= 1'h0;
-    end else if (_T_734) begin
-      _T_737 <= _T_736;
-    end
-    if (reset) begin
-      _T_738 <= 1'h0;
-    end else if (_T_733) begin
-      _T_738 <= _T_737;
-    end
-    if (reset) begin
-      _T_739 <= 1'h0;
-    end else if (_T_732) begin
-      _T_739 <= _T_738;
-    end
-    if (reset) begin
-      _T_740 <= 1'h0;
-    end else if (_T_731) begin
-      _T_740 <= _T_739;
-    end
-    if (reset) begin
-      _T_741 <= 1'h0;
-    end else if (_T_730) begin
-      _T_741 <= _T_740;
-    end
-    if (reset) begin
-      _T_742 <= 1'h0;
-    end else if (_T_729) begin
-      _T_742 <= _T_741;
-    end
-    if (reset) begin
-      _T_743 <= 1'h0;
-    end else if (_T_728) begin
-      _T_743 <= _T_742;
-    end
-    if (reset) begin
-      _T_744 <= 1'h0;
-    end else if (_T_727) begin
-      _T_744 <= _T_743;
-    end
-    if (reset) begin
-      _T_745 <= 1'h0;
-    end else if (_T_726) begin
-      _T_745 <= _T_744;
-    end
-    if (reset) begin
-      _T_746 <= 1'h0;
-    end else if (_T_725) begin
-      _T_746 <= _T_745;
-    end
-    if (reset) begin
-      _T_747 <= 1'h0;
-    end else if (_T_724) begin
-      _T_747 <= _T_746;
-    end
-    if (reset) begin
-      _T_748 <= 1'h0;
-    end else if (_T_723) begin
-      _T_748 <= _T_747;
-    end
-    if (reset) begin
-      _T_749 <= 1'h0;
-    end else if (_T_722) begin
-      _T_749 <= _T_748;
-    end
-    if (reset) begin
-      _T_750 <= 1'h0;
-    end else if (_T_721) begin
-      _T_750 <= _T_749;
-    end
-    if (reset) begin
-      _T_751 <= 1'h0;
-    end else if (_T_720) begin
-      _T_751 <= _T_750;
-    end
-    if (reset) begin
-      _T_752 <= 1'h0;
-    end else if (_T_719) begin
-      _T_752 <= _T_751;
-    end
-    if (reset) begin
-      _T_753 <= 1'h0;
-    end else if (_T_718) begin
-      _T_753 <= _T_752;
-    end
-    if (reset) begin
-      _T_754 <= 1'h0;
-    end else if (_T_717) begin
-      _T_754 <= _T_753;
-    end
-    if (reset) begin
-      _T_755 <= 1'h0;
-    end else if (_T_716) begin
-      _T_755 <= _T_754;
-    end
-    if (reset) begin
-      _T_756 <= 1'h0;
-    end else if (_T_715) begin
-      _T_756 <= _T_755;
-    end
-    if (reset) begin
-      _T_757 <= 1'h0;
-    end else if (_T_714) begin
-      _T_757 <= _T_756;
-    end
-    if (reset) begin
-      _T_758 <= 1'h0;
-    end else if (_T_713) begin
-      _T_758 <= _T_757;
-    end
-    if (reset) begin
-      _T_759 <= 1'h0;
-    end else if (_T_712) begin
-      _T_759 <= _T_758;
-    end
-    if (reset) begin
-      _T_760 <= 1'h0;
-    end else if (_T_711) begin
-      _T_760 <= _T_759;
-    end
-    if (reset) begin
-      _T_761 <= 1'h0;
-    end else if (_T_710) begin
-      _T_761 <= _T_760;
-    end
-    if (reset) begin
-      _T_762 <= 1'h0;
-    end else if (_T_709) begin
-      _T_762 <= _T_761;
-    end
-    if (reset) begin
-      _T_763 <= 1'h0;
-    end else if (_T_708) begin
-      _T_763 <= _T_762;
-    end
-    if (reset) begin
-      _T_764 <= 1'h0;
-    end else if (_T_707) begin
-      _T_764 <= _T_763;
-    end
-    if (reset) begin
-      _T_765 <= 1'h0;
-    end else if (_T_706) begin
-      _T_765 <= _T_764;
-    end
-    if (reset) begin
-      _T_766 <= 1'h0;
-    end else if (_T_705) begin
-      _T_766 <= _T_765;
-    end
-    if (reset) begin
-      _T_767 <= 1'h0;
-    end else if (_T_704) begin
-      _T_767 <= _T_766;
-    end
-    if (reset) begin
-      _T_768 <= 1'h0;
-    end else if (_T_703) begin
-      _T_768 <= _T_767;
-    end
-    if (reset) begin
-      _T_769 <= 1'h0;
-    end else if (_T_702) begin
-      _T_769 <= _T_768;
-    end
-    if (reset) begin
-      _T_770 <= 1'h0;
-    end else if (_T_701) begin
-      _T_770 <= _T_769;
-    end
-    if (reset) begin
-      _T_771 <= 1'h0;
-    end else if (_T_700) begin
-      _T_771 <= _T_770;
-    end
-    if (reset) begin
-      _T_772 <= 1'h0;
-    end else if (_T_699) begin
-      _T_772 <= _T_771;
-    end
-    if (reset) begin
-      _T_773 <= 1'h0;
-    end else if (_T_698) begin
-      _T_773 <= _T_772;
-    end
-    if (reset) begin
-      _T_774 <= 1'h0;
-    end else if (_T_697) begin
-      _T_774 <= _T_773;
-    end
-    if (reset) begin
-      _T_775 <= 1'h0;
-    end else if (_T_696) begin
-      _T_775 <= _T_774;
-    end
-    if (reset) begin
-      _T_776 <= 1'h0;
-    end else if (_T_695) begin
-      _T_776 <= _T_775;
-    end
-    if (reset) begin
-      _T_777 <= 1'h0;
-    end else if (_T_694) begin
-      _T_777 <= _T_776;
-    end
-    if (reset) begin
-      _T_778 <= 1'h0;
-    end else if (_T_693) begin
-      _T_778 <= _T_777;
-    end
-    if (reset) begin
-      _T_779 <= 1'h0;
-    end else if (_T_692) begin
-      _T_779 <= _T_778;
-    end
-    if (reset) begin
-      _T_780 <= 1'h0;
-    end else if (_T_691) begin
-      _T_780 <= _T_779;
-    end
-    if (reset) begin
-      _T_781 <= 1'h0;
-    end else if (_T_690) begin
-      _T_781 <= _T_780;
-    end
-    if (reset) begin
-      _T_782 <= 1'h0;
-    end else if (_T_689) begin
-      _T_782 <= _T_781;
-    end
-    if (reset) begin
-      _T_783 <= 1'h0;
-    end else if (_T_688) begin
-      _T_783 <= _T_782;
-    end
-    if (reset) begin
-      _T_784 <= 1'h0;
-    end else if (_T_687) begin
-      _T_784 <= _T_783;
-    end
-    if (reset) begin
-      _T_785 <= 1'h0;
-    end else if (_T_686) begin
-      _T_785 <= _T_784;
-    end
-    if (reset) begin
-      _T_786 <= 1'h0;
-    end else if (_T_685) begin
-      _T_786 <= _T_785;
-    end
-    if (reset) begin
-      _T_787 <= 1'h0;
-    end else if (_T_684) begin
-      _T_787 <= _T_786;
-    end
-    if (reset) begin
-      _T_788 <= 1'h0;
-    end else if (_T_683) begin
-      _T_788 <= _T_787;
-    end
-    if (reset) begin
-      _T_789 <= 1'h0;
-    end else if (_T_682) begin
-      _T_789 <= _T_788;
-    end
-    if (reset) begin
-      _T_790 <= 1'h0;
-    end else if (_T_681) begin
-      _T_790 <= _T_789;
-    end
-    if (reset) begin
-      _T_791 <= 1'h0;
-    end else if (_T_680) begin
-      _T_791 <= _T_790;
-    end
-    if (reset) begin
-      _T_792 <= 1'h0;
-    end else if (_T_679) begin
-      _T_792 <= _T_791;
-    end
-    if (reset) begin
-      _T_793 <= 1'h0;
-    end else if (_T_678) begin
-      _T_793 <= _T_792;
-    end
-    if (reset) begin
-      _T_794 <= 1'h0;
-    end else if (_T_677) begin
-      _T_794 <= _T_793;
-    end
-    if (reset) begin
-      _T_795 <= 1'h0;
-    end else if (_T_676) begin
-      _T_795 <= _T_794;
-    end
-    if (reset) begin
-      _T_796 <= 1'h0;
-    end else if (_T_675) begin
-      _T_796 <= _T_795;
-    end
-    if (reset) begin
-      _T_797 <= 1'h0;
-    end else if (_T_674) begin
-      _T_797 <= _T_796;
-    end
-    if (reset) begin
-      _T_798 <= 1'h0;
-    end else if (_T_673) begin
-      _T_798 <= _T_797;
-    end
-    if (reset) begin
-      _T_799 <= 1'h0;
-    end else if (_T_672) begin
-      _T_799 <= _T_798;
+      _T_426 <= 16'sh0;
+    end else begin
+      _T_426 <= mem__T_423_data;
     end
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_T_6) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at CFARUtils.scala:345 assert(depth <= maxDepth.U)\n"); // @[CFARUtils.scala 345:11]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_6) begin
-          $fatal; // @[CFARUtils.scala 345:11]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_6) begin
+        if (_T_25) begin
           $fwrite(32'h80000002,"Assertion failed\n    at CFARUtils.scala:330 assert(depth <= maxDepth.U)\n"); // @[CFARUtils.scala 330:11]
         end
     `ifdef PRINTF_COND
@@ -12902,7 +11724,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_T_6) begin
+        if (_T_25) begin
           $fatal; // @[CFARUtils.scala 330:11]
         end
     `ifdef STOP_COND
@@ -12911,7 +11733,7 @@ end // initial
     `endif // SYNTHESIS
   end
 endmodule
-module AdjustableShiftRegisterStream_1(
+module AdjustableShiftRegisterStream(
   input         clock,
   input         reset,
   input  [3:0]  io_depth,
@@ -13527,7 +12349,7 @@ end // initial
     end
   end
 endmodule
-module AdjustableShiftRegisterStream_3(
+module ShiftRegisterMemStream_1(
   input         clock,
   input         reset,
   input  [6:0]  io_depth,
@@ -13537,1215 +12359,634 @@ module AdjustableShiftRegisterStream_3(
   input         io_lastIn,
   input         io_out_ready,
   output        io_out_valid,
-  output [15:0] io_parallelOut_0,
-  output [15:0] io_parallelOut_1,
-  output [15:0] io_parallelOut_2,
-  output [15:0] io_parallelOut_3,
-  output [15:0] io_parallelOut_4,
-  output [15:0] io_parallelOut_5,
-  output [15:0] io_parallelOut_6,
-  output [15:0] io_parallelOut_7,
-  output [15:0] io_parallelOut_8,
-  output [15:0] io_parallelOut_9,
-  output [15:0] io_parallelOut_10,
-  output [15:0] io_parallelOut_11,
-  output [15:0] io_parallelOut_12,
-  output [15:0] io_parallelOut_13,
-  output [15:0] io_parallelOut_14,
-  output [15:0] io_parallelOut_15,
-  output [15:0] io_parallelOut_16,
-  output [15:0] io_parallelOut_17,
-  output [15:0] io_parallelOut_18,
-  output [15:0] io_parallelOut_19,
-  output [15:0] io_parallelOut_20,
-  output [15:0] io_parallelOut_21,
-  output [15:0] io_parallelOut_22,
-  output [15:0] io_parallelOut_23,
-  output [15:0] io_parallelOut_24,
-  output [15:0] io_parallelOut_25,
-  output [15:0] io_parallelOut_26,
-  output [15:0] io_parallelOut_27,
-  output [15:0] io_parallelOut_28,
-  output [15:0] io_parallelOut_29,
-  output [15:0] io_parallelOut_30,
-  output [15:0] io_parallelOut_31,
-  output [15:0] io_parallelOut_32,
-  output [15:0] io_parallelOut_33,
-  output [15:0] io_parallelOut_34,
-  output [15:0] io_parallelOut_35,
-  output [15:0] io_parallelOut_36,
-  output [15:0] io_parallelOut_37,
-  output [15:0] io_parallelOut_38,
-  output [15:0] io_parallelOut_39,
-  output [15:0] io_parallelOut_40,
-  output [15:0] io_parallelOut_41,
-  output [15:0] io_parallelOut_42,
-  output [15:0] io_parallelOut_43,
-  output [15:0] io_parallelOut_44,
-  output [15:0] io_parallelOut_45,
-  output [15:0] io_parallelOut_46,
-  output [15:0] io_parallelOut_47,
-  output [15:0] io_parallelOut_48,
-  output [15:0] io_parallelOut_49,
-  output [15:0] io_parallelOut_50,
-  output [15:0] io_parallelOut_51,
-  output [15:0] io_parallelOut_52,
-  output [15:0] io_parallelOut_53,
-  output [15:0] io_parallelOut_54,
-  output [15:0] io_parallelOut_55,
-  output [15:0] io_parallelOut_56,
-  output [15:0] io_parallelOut_57,
-  output [15:0] io_parallelOut_58,
-  output [15:0] io_parallelOut_59,
-  output [15:0] io_parallelOut_60,
-  output [15:0] io_parallelOut_61,
-  output [15:0] io_parallelOut_62,
-  output [15:0] io_parallelOut_63,
-  output [6:0]  io_cnt,
-  output        io_regFull
+  output [15:0] io_out_bits,
+  output        io_memFull,
+  output        io_memEmpty
 );
-  reg  InitialInDone; // @[CFARUtils.scala 379:30]
+  reg [15:0] mem [0:63]; // @[CFARUtils.scala 505:26]
   reg [31:0] _RAND_0;
-  reg  last; // @[CFARUtils.scala 380:21]
+  wire [15:0] mem__T_423_data; // @[CFARUtils.scala 505:26]
+  wire [5:0] mem__T_423_addr; // @[CFARUtils.scala 505:26]
+  wire [15:0] mem__T_418_data; // @[CFARUtils.scala 505:26]
+  wire [5:0] mem__T_418_addr; // @[CFARUtils.scala 505:26]
+  wire  mem__T_418_mask; // @[CFARUtils.scala 505:26]
+  wire  mem__T_418_en; // @[CFARUtils.scala 505:26]
+  wire  outputQueue_clock; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_reset; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_enq_ready; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_enq_valid; // @[CFARUtils.scala 549:27]
+  wire [15:0] outputQueue_io_enq_bits; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_deq_ready; // @[CFARUtils.scala 549:27]
+  wire  outputQueue_io_deq_valid; // @[CFARUtils.scala 549:27]
+  wire [15:0] outputQueue_io_deq_bits; // @[CFARUtils.scala 549:27]
+  reg [5:0] writeIdxReg; // @[CFARUtils.scala 508:30]
   reg [31:0] _RAND_1;
-  wire  _T_1; // @[Decoupled.scala 40:37]
-  wire  _T_2; // @[CFARUtils.scala 385:34]
-  wire  en; // @[CFARUtils.scala 385:25]
-  wire  _T_3; // @[CFARUtils.scala 345:18]
-  wire  _T_5; // @[CFARUtils.scala 345:11]
-  wire  _T_6; // @[CFARUtils.scala 345:11]
-  wire [6:0] _T_8; // @[CFARUtils.scala 350:87]
-  wire  _T_9; // @[CFARUtils.scala 350:78]
-  wire  _T_13; // @[CFARUtils.scala 350:78]
-  wire  _T_14; // @[CFARUtils.scala 350:94]
-  wire  _T_17; // @[CFARUtils.scala 350:78]
-  wire  _T_18; // @[CFARUtils.scala 350:94]
-  wire  _T_21; // @[CFARUtils.scala 350:78]
-  wire  _T_22; // @[CFARUtils.scala 350:94]
-  wire  _T_25; // @[CFARUtils.scala 350:78]
-  wire  _T_26; // @[CFARUtils.scala 350:94]
-  wire  _T_29; // @[CFARUtils.scala 350:78]
-  wire  _T_30; // @[CFARUtils.scala 350:94]
-  wire  _T_33; // @[CFARUtils.scala 350:78]
-  wire  _T_34; // @[CFARUtils.scala 350:94]
-  wire  _T_37; // @[CFARUtils.scala 350:78]
-  wire  _T_38; // @[CFARUtils.scala 350:94]
-  wire  _T_41; // @[CFARUtils.scala 350:78]
-  wire  _T_42; // @[CFARUtils.scala 350:94]
-  wire  _T_45; // @[CFARUtils.scala 350:78]
-  wire  _T_46; // @[CFARUtils.scala 350:94]
-  wire  _T_49; // @[CFARUtils.scala 350:78]
-  wire  _T_50; // @[CFARUtils.scala 350:94]
-  wire  _T_53; // @[CFARUtils.scala 350:78]
-  wire  _T_54; // @[CFARUtils.scala 350:94]
-  wire  _T_57; // @[CFARUtils.scala 350:78]
-  wire  _T_58; // @[CFARUtils.scala 350:94]
-  wire  _T_61; // @[CFARUtils.scala 350:78]
-  wire  _T_62; // @[CFARUtils.scala 350:94]
-  wire  _T_65; // @[CFARUtils.scala 350:78]
-  wire  _T_66; // @[CFARUtils.scala 350:94]
-  wire  _T_69; // @[CFARUtils.scala 350:78]
-  wire  _T_70; // @[CFARUtils.scala 350:94]
-  wire  _T_73; // @[CFARUtils.scala 350:78]
-  wire  _T_74; // @[CFARUtils.scala 350:94]
-  wire  _T_77; // @[CFARUtils.scala 350:78]
-  wire  _T_78; // @[CFARUtils.scala 350:94]
-  wire  _T_81; // @[CFARUtils.scala 350:78]
-  wire  _T_82; // @[CFARUtils.scala 350:94]
-  wire  _T_85; // @[CFARUtils.scala 350:78]
-  wire  _T_86; // @[CFARUtils.scala 350:94]
-  wire  _T_89; // @[CFARUtils.scala 350:78]
-  wire  _T_90; // @[CFARUtils.scala 350:94]
-  wire  _T_93; // @[CFARUtils.scala 350:78]
-  wire  _T_94; // @[CFARUtils.scala 350:94]
-  wire  _T_97; // @[CFARUtils.scala 350:78]
-  wire  _T_98; // @[CFARUtils.scala 350:94]
-  wire  _T_101; // @[CFARUtils.scala 350:78]
-  wire  _T_102; // @[CFARUtils.scala 350:94]
-  wire  _T_105; // @[CFARUtils.scala 350:78]
-  wire  _T_106; // @[CFARUtils.scala 350:94]
-  wire  _T_109; // @[CFARUtils.scala 350:78]
-  wire  _T_110; // @[CFARUtils.scala 350:94]
-  wire  _T_113; // @[CFARUtils.scala 350:78]
-  wire  _T_114; // @[CFARUtils.scala 350:94]
-  wire  _T_117; // @[CFARUtils.scala 350:78]
-  wire  _T_118; // @[CFARUtils.scala 350:94]
-  wire  _T_121; // @[CFARUtils.scala 350:78]
-  wire  _T_122; // @[CFARUtils.scala 350:94]
-  wire  _T_125; // @[CFARUtils.scala 350:78]
-  wire  _T_126; // @[CFARUtils.scala 350:94]
-  wire  _T_129; // @[CFARUtils.scala 350:78]
-  wire  _T_130; // @[CFARUtils.scala 350:94]
-  wire  _T_133; // @[CFARUtils.scala 350:78]
-  wire  _T_134; // @[CFARUtils.scala 350:94]
-  wire  _T_137; // @[CFARUtils.scala 350:78]
-  wire  _T_138; // @[CFARUtils.scala 350:94]
-  wire  _T_141; // @[CFARUtils.scala 350:78]
-  wire  _T_142; // @[CFARUtils.scala 350:94]
-  wire  _T_145; // @[CFARUtils.scala 350:78]
-  wire  _T_146; // @[CFARUtils.scala 350:94]
-  wire  _T_149; // @[CFARUtils.scala 350:78]
-  wire  _T_150; // @[CFARUtils.scala 350:94]
-  wire  _T_153; // @[CFARUtils.scala 350:78]
-  wire  _T_154; // @[CFARUtils.scala 350:94]
-  wire  _T_157; // @[CFARUtils.scala 350:78]
-  wire  _T_158; // @[CFARUtils.scala 350:94]
-  wire  _T_161; // @[CFARUtils.scala 350:78]
-  wire  _T_162; // @[CFARUtils.scala 350:94]
-  wire  _T_165; // @[CFARUtils.scala 350:78]
-  wire  _T_166; // @[CFARUtils.scala 350:94]
-  wire  _T_169; // @[CFARUtils.scala 350:78]
-  wire  _T_170; // @[CFARUtils.scala 350:94]
-  wire  _T_173; // @[CFARUtils.scala 350:78]
-  wire  _T_174; // @[CFARUtils.scala 350:94]
-  wire  _T_177; // @[CFARUtils.scala 350:78]
-  wire  _T_178; // @[CFARUtils.scala 350:94]
-  wire  _T_181; // @[CFARUtils.scala 350:78]
-  wire  _T_182; // @[CFARUtils.scala 350:94]
-  wire  _T_185; // @[CFARUtils.scala 350:78]
-  wire  _T_186; // @[CFARUtils.scala 350:94]
-  wire  _T_189; // @[CFARUtils.scala 350:78]
-  wire  _T_190; // @[CFARUtils.scala 350:94]
-  wire  _T_193; // @[CFARUtils.scala 350:78]
-  wire  _T_194; // @[CFARUtils.scala 350:94]
-  wire  _T_197; // @[CFARUtils.scala 350:78]
-  wire  _T_198; // @[CFARUtils.scala 350:94]
-  wire  _T_201; // @[CFARUtils.scala 350:78]
-  wire  _T_202; // @[CFARUtils.scala 350:94]
-  wire  _T_205; // @[CFARUtils.scala 350:78]
-  wire  _T_206; // @[CFARUtils.scala 350:94]
-  wire  _T_209; // @[CFARUtils.scala 350:78]
-  wire  _T_210; // @[CFARUtils.scala 350:94]
-  wire  _T_213; // @[CFARUtils.scala 350:78]
-  wire  _T_214; // @[CFARUtils.scala 350:94]
-  wire  _T_217; // @[CFARUtils.scala 350:78]
-  wire  _T_218; // @[CFARUtils.scala 350:94]
-  wire  _T_221; // @[CFARUtils.scala 350:78]
-  wire  _T_222; // @[CFARUtils.scala 350:94]
-  wire  _T_225; // @[CFARUtils.scala 350:78]
-  wire  _T_226; // @[CFARUtils.scala 350:94]
-  wire  _T_229; // @[CFARUtils.scala 350:78]
-  wire  _T_230; // @[CFARUtils.scala 350:94]
-  wire  _T_233; // @[CFARUtils.scala 350:78]
-  wire  _T_234; // @[CFARUtils.scala 350:94]
-  wire  _T_237; // @[CFARUtils.scala 350:78]
-  wire  _T_238; // @[CFARUtils.scala 350:94]
-  wire  _T_241; // @[CFARUtils.scala 350:78]
-  wire  _T_242; // @[CFARUtils.scala 350:94]
-  wire  _T_245; // @[CFARUtils.scala 350:78]
-  wire  _T_246; // @[CFARUtils.scala 350:94]
-  wire  _T_249; // @[CFARUtils.scala 350:78]
-  wire  _T_250; // @[CFARUtils.scala 350:94]
-  wire  _T_253; // @[CFARUtils.scala 350:78]
-  wire  _T_254; // @[CFARUtils.scala 350:94]
-  wire  _T_257; // @[CFARUtils.scala 350:78]
-  wire  _T_258; // @[CFARUtils.scala 350:94]
-  wire  _T_261; // @[CFARUtils.scala 350:78]
-  wire  _T_262; // @[CFARUtils.scala 350:94]
-  wire  activeRegs_63; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_263; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_62; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_264; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_61; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_265; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_60; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_266; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_59; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_267; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_58; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_268; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_57; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_269; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_56; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_270; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_55; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_271; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_54; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_272; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_53; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_273; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_52; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_274; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_51; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_275; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_50; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_276; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_49; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_277; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_48; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_278; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_47; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_279; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_46; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_280; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_45; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_281; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_44; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_282; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_43; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_283; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_42; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_284; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_41; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_285; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_40; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_286; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_39; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_287; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_38; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_288; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_37; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_289; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_36; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_290; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_35; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_291; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_34; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_292; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_33; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_293; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_32; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_294; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_31; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_295; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_30; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_296; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_29; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_297; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_28; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_298; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_27; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_299; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_26; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_300; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_25; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_301; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_24; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_302; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_23; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_303; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_22; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_304; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_21; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_305; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_20; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_306; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_19; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_307; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_18; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_308; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_17; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_309; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_16; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_310; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_15; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_311; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_14; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_312; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_13; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_313; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_12; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_314; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_11; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_315; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_10; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_316; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_9; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_317; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_8; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_318; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_7; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_319; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_6; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_320; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_5; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_321; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_4; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_322; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_3; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_323; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_2; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_324; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_1; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_325; // @[CFARUtils.scala 319:37]
-  wire  activeRegs_0; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  wire  _T_326; // @[CFARUtils.scala 319:37]
-  reg [15:0] adjShiftRegOut_0; // @[Reg.scala 27:20]
+  reg  last; // @[CFARUtils.scala 509:30]
   reg [31:0] _RAND_2;
-  reg [15:0] adjShiftRegOut_1; // @[Reg.scala 27:20]
+  reg  initialInDone; // @[CFARUtils.scala 510:30]
   reg [31:0] _RAND_3;
-  reg [15:0] adjShiftRegOut_2; // @[Reg.scala 27:20]
+  wire  _T; // @[Decoupled.scala 40:37]
+  wire  _T_1; // @[CFARUtils.scala 511:45]
+  wire  en; // @[CFARUtils.scala 511:36]
+  reg  validPrev; // @[CFARUtils.scala 514:26]
   reg [31:0] _RAND_4;
-  reg [15:0] adjShiftRegOut_3; // @[Reg.scala 27:20]
+  wire [5:0] _T_3; // @[CFARUtils.scala 515:21]
+  wire [6:0] _GEN_140; // @[CFARUtils.scala 515:27]
+  wire  _T_4; // @[CFARUtils.scala 515:27]
+  wire [6:0] _GEN_141; // @[CFARUtils.scala 516:28]
+  wire [6:0] _T_6; // @[CFARUtils.scala 516:28]
+  wire [6:0] _T_8; // @[CFARUtils.scala 516:39]
+  wire [6:0] _T_10; // @[CFARUtils.scala 518:27]
+  wire [6:0] _T_12; // @[CFARUtils.scala 518:41]
+  wire [6:0] _T_14; // @[CFARUtils.scala 518:47]
+  wire [6:0] _GEN_0; // @[CFARUtils.scala 515:40]
+  wire [6:0] _T_16; // @[CFARUtils.scala 528:34]
+  wire  _T_17; // @[CFARUtils.scala 528:21]
+  wire  _T_19; // @[CFARUtils.scala 528:40]
+  wire  _GEN_1; // @[CFARUtils.scala 528:57]
+  wire  fireLastIn; // @[CFARUtils.scala 531:30]
+  wire  _GEN_2; // @[CFARUtils.scala 533:21]
+  wire  _T_21; // @[Decoupled.scala 40:37]
+  wire  _T_22; // @[CFARUtils.scala 330:18]
+  wire  _T_24; // @[CFARUtils.scala 330:11]
+  wire  _T_25; // @[CFARUtils.scala 330:11]
+  wire  _T_33; // @[CFARUtils.scala 335:78]
+  wire  _T_37; // @[CFARUtils.scala 335:78]
+  wire  _T_41; // @[CFARUtils.scala 335:78]
+  wire  _T_45; // @[CFARUtils.scala 335:78]
+  wire  _T_49; // @[CFARUtils.scala 335:78]
+  wire  _T_53; // @[CFARUtils.scala 335:78]
+  wire  _T_57; // @[CFARUtils.scala 335:78]
+  wire  _T_61; // @[CFARUtils.scala 335:78]
+  wire  _T_65; // @[CFARUtils.scala 335:78]
+  wire  _T_69; // @[CFARUtils.scala 335:78]
+  wire  _T_73; // @[CFARUtils.scala 335:78]
+  wire  _T_77; // @[CFARUtils.scala 335:78]
+  wire  _T_81; // @[CFARUtils.scala 335:78]
+  wire  _T_85; // @[CFARUtils.scala 335:78]
+  wire  _T_89; // @[CFARUtils.scala 335:78]
+  wire  _T_93; // @[CFARUtils.scala 335:78]
+  wire  _T_97; // @[CFARUtils.scala 335:78]
+  wire  _T_101; // @[CFARUtils.scala 335:78]
+  wire  _T_105; // @[CFARUtils.scala 335:78]
+  wire  _T_109; // @[CFARUtils.scala 335:78]
+  wire  _T_113; // @[CFARUtils.scala 335:78]
+  wire  _T_117; // @[CFARUtils.scala 335:78]
+  wire  _T_121; // @[CFARUtils.scala 335:78]
+  wire  _T_125; // @[CFARUtils.scala 335:78]
+  wire  _T_129; // @[CFARUtils.scala 335:78]
+  wire  _T_133; // @[CFARUtils.scala 335:78]
+  wire  _T_137; // @[CFARUtils.scala 335:78]
+  wire  _T_141; // @[CFARUtils.scala 335:78]
+  wire  _T_145; // @[CFARUtils.scala 335:78]
+  wire  _T_149; // @[CFARUtils.scala 335:78]
+  wire  _T_153; // @[CFARUtils.scala 335:78]
+  wire  _T_157; // @[CFARUtils.scala 335:78]
+  wire  _T_161; // @[CFARUtils.scala 335:78]
+  wire  _T_165; // @[CFARUtils.scala 335:78]
+  wire  _T_169; // @[CFARUtils.scala 335:78]
+  wire  _T_173; // @[CFARUtils.scala 335:78]
+  wire  _T_177; // @[CFARUtils.scala 335:78]
+  wire  _T_181; // @[CFARUtils.scala 335:78]
+  wire  _T_185; // @[CFARUtils.scala 335:78]
+  wire  _T_189; // @[CFARUtils.scala 335:78]
+  wire  _T_193; // @[CFARUtils.scala 335:78]
+  wire  _T_197; // @[CFARUtils.scala 335:78]
+  wire  _T_201; // @[CFARUtils.scala 335:78]
+  wire  _T_205; // @[CFARUtils.scala 335:78]
+  wire  _T_209; // @[CFARUtils.scala 335:78]
+  wire  _T_213; // @[CFARUtils.scala 335:78]
+  wire  _T_217; // @[CFARUtils.scala 335:78]
+  wire  _T_221; // @[CFARUtils.scala 335:78]
+  wire  _T_225; // @[CFARUtils.scala 335:78]
+  wire  _T_229; // @[CFARUtils.scala 335:78]
+  wire  _T_233; // @[CFARUtils.scala 335:78]
+  wire  _T_237; // @[CFARUtils.scala 335:78]
+  wire  _T_241; // @[CFARUtils.scala 335:78]
+  wire  _T_245; // @[CFARUtils.scala 335:78]
+  wire  _T_249; // @[CFARUtils.scala 335:78]
+  wire  _T_253; // @[CFARUtils.scala 335:78]
+  wire  _T_257; // @[CFARUtils.scala 335:78]
+  wire  _T_261; // @[CFARUtils.scala 335:78]
+  wire  _T_265; // @[CFARUtils.scala 335:78]
+  wire  _T_269; // @[CFARUtils.scala 335:78]
+  wire  _T_273; // @[CFARUtils.scala 335:78]
+  wire  _T_277; // @[CFARUtils.scala 335:78]
+  wire  _T_281; // @[CFARUtils.scala 335:78]
+  wire  _T_284; // @[CFARUtils.scala 319:37]
+  wire  _T_285; // @[CFARUtils.scala 319:37]
+  wire  _T_286; // @[CFARUtils.scala 319:37]
+  wire  _T_287; // @[CFARUtils.scala 319:37]
+  wire  _T_288; // @[CFARUtils.scala 319:37]
+  wire  _T_289; // @[CFARUtils.scala 319:37]
+  wire  _T_290; // @[CFARUtils.scala 319:37]
+  wire  _T_291; // @[CFARUtils.scala 319:37]
+  wire  _T_292; // @[CFARUtils.scala 319:37]
+  wire  _T_293; // @[CFARUtils.scala 319:37]
+  wire  _T_294; // @[CFARUtils.scala 319:37]
+  wire  _T_295; // @[CFARUtils.scala 319:37]
+  wire  _T_296; // @[CFARUtils.scala 319:37]
+  wire  _T_297; // @[CFARUtils.scala 319:37]
+  wire  _T_298; // @[CFARUtils.scala 319:37]
+  wire  _T_299; // @[CFARUtils.scala 319:37]
+  wire  _T_300; // @[CFARUtils.scala 319:37]
+  wire  _T_301; // @[CFARUtils.scala 319:37]
+  wire  _T_302; // @[CFARUtils.scala 319:37]
+  wire  _T_303; // @[CFARUtils.scala 319:37]
+  wire  _T_304; // @[CFARUtils.scala 319:37]
+  wire  _T_305; // @[CFARUtils.scala 319:37]
+  wire  _T_306; // @[CFARUtils.scala 319:37]
+  wire  _T_307; // @[CFARUtils.scala 319:37]
+  wire  _T_308; // @[CFARUtils.scala 319:37]
+  wire  _T_309; // @[CFARUtils.scala 319:37]
+  wire  _T_310; // @[CFARUtils.scala 319:37]
+  wire  _T_311; // @[CFARUtils.scala 319:37]
+  wire  _T_312; // @[CFARUtils.scala 319:37]
+  wire  _T_313; // @[CFARUtils.scala 319:37]
+  wire  _T_314; // @[CFARUtils.scala 319:37]
+  wire  _T_315; // @[CFARUtils.scala 319:37]
+  wire  _T_316; // @[CFARUtils.scala 319:37]
+  wire  _T_317; // @[CFARUtils.scala 319:37]
+  wire  _T_318; // @[CFARUtils.scala 319:37]
+  wire  _T_319; // @[CFARUtils.scala 319:37]
+  wire  _T_320; // @[CFARUtils.scala 319:37]
+  wire  _T_321; // @[CFARUtils.scala 319:37]
+  wire  _T_322; // @[CFARUtils.scala 319:37]
+  wire  _T_323; // @[CFARUtils.scala 319:37]
+  wire  _T_324; // @[CFARUtils.scala 319:37]
+  wire  _T_325; // @[CFARUtils.scala 319:37]
+  wire  _T_326; // @[CFARUtils.scala 319:37]
+  wire  _T_327; // @[CFARUtils.scala 319:37]
+  wire  _T_328; // @[CFARUtils.scala 319:37]
+  wire  _T_329; // @[CFARUtils.scala 319:37]
+  wire  _T_330; // @[CFARUtils.scala 319:37]
+  wire  _T_331; // @[CFARUtils.scala 319:37]
+  wire  _T_332; // @[CFARUtils.scala 319:37]
+  wire  _T_333; // @[CFARUtils.scala 319:37]
+  wire  _T_334; // @[CFARUtils.scala 319:37]
+  wire  _T_335; // @[CFARUtils.scala 319:37]
+  wire  _T_336; // @[CFARUtils.scala 319:37]
+  wire  _T_337; // @[CFARUtils.scala 319:37]
+  wire  _T_338; // @[CFARUtils.scala 319:37]
+  wire  _T_339; // @[CFARUtils.scala 319:37]
+  wire  _T_340; // @[CFARUtils.scala 319:37]
+  wire  _T_341; // @[CFARUtils.scala 319:37]
+  wire  _T_342; // @[CFARUtils.scala 319:37]
+  wire  _T_343; // @[CFARUtils.scala 319:37]
+  wire  _T_344; // @[CFARUtils.scala 319:37]
+  wire  _T_345; // @[CFARUtils.scala 319:37]
+  wire  _T_346; // @[CFARUtils.scala 319:37]
+  reg  _T_348; // @[Reg.scala 27:20]
   reg [31:0] _RAND_5;
-  reg [15:0] adjShiftRegOut_4; // @[Reg.scala 27:20]
+  reg  _T_349; // @[Reg.scala 27:20]
   reg [31:0] _RAND_6;
-  reg [15:0] adjShiftRegOut_5; // @[Reg.scala 27:20]
+  reg  _T_350; // @[Reg.scala 27:20]
   reg [31:0] _RAND_7;
-  reg [15:0] adjShiftRegOut_6; // @[Reg.scala 27:20]
+  reg  _T_351; // @[Reg.scala 27:20]
   reg [31:0] _RAND_8;
-  reg [15:0] adjShiftRegOut_7; // @[Reg.scala 27:20]
+  reg  _T_352; // @[Reg.scala 27:20]
   reg [31:0] _RAND_9;
-  reg [15:0] adjShiftRegOut_8; // @[Reg.scala 27:20]
+  reg  _T_353; // @[Reg.scala 27:20]
   reg [31:0] _RAND_10;
-  reg [15:0] adjShiftRegOut_9; // @[Reg.scala 27:20]
+  reg  _T_354; // @[Reg.scala 27:20]
   reg [31:0] _RAND_11;
-  reg [15:0] adjShiftRegOut_10; // @[Reg.scala 27:20]
+  reg  _T_355; // @[Reg.scala 27:20]
   reg [31:0] _RAND_12;
-  reg [15:0] adjShiftRegOut_11; // @[Reg.scala 27:20]
+  reg  _T_356; // @[Reg.scala 27:20]
   reg [31:0] _RAND_13;
-  reg [15:0] adjShiftRegOut_12; // @[Reg.scala 27:20]
+  reg  _T_357; // @[Reg.scala 27:20]
   reg [31:0] _RAND_14;
-  reg [15:0] adjShiftRegOut_13; // @[Reg.scala 27:20]
+  reg  _T_358; // @[Reg.scala 27:20]
   reg [31:0] _RAND_15;
-  reg [15:0] adjShiftRegOut_14; // @[Reg.scala 27:20]
+  reg  _T_359; // @[Reg.scala 27:20]
   reg [31:0] _RAND_16;
-  reg [15:0] adjShiftRegOut_15; // @[Reg.scala 27:20]
+  reg  _T_360; // @[Reg.scala 27:20]
   reg [31:0] _RAND_17;
-  reg [15:0] adjShiftRegOut_16; // @[Reg.scala 27:20]
+  reg  _T_361; // @[Reg.scala 27:20]
   reg [31:0] _RAND_18;
-  reg [15:0] adjShiftRegOut_17; // @[Reg.scala 27:20]
+  reg  _T_362; // @[Reg.scala 27:20]
   reg [31:0] _RAND_19;
-  reg [15:0] adjShiftRegOut_18; // @[Reg.scala 27:20]
+  reg  _T_363; // @[Reg.scala 27:20]
   reg [31:0] _RAND_20;
-  reg [15:0] adjShiftRegOut_19; // @[Reg.scala 27:20]
+  reg  _T_364; // @[Reg.scala 27:20]
   reg [31:0] _RAND_21;
-  reg [15:0] adjShiftRegOut_20; // @[Reg.scala 27:20]
+  reg  _T_365; // @[Reg.scala 27:20]
   reg [31:0] _RAND_22;
-  reg [15:0] adjShiftRegOut_21; // @[Reg.scala 27:20]
+  reg  _T_366; // @[Reg.scala 27:20]
   reg [31:0] _RAND_23;
-  reg [15:0] adjShiftRegOut_22; // @[Reg.scala 27:20]
+  reg  _T_367; // @[Reg.scala 27:20]
   reg [31:0] _RAND_24;
-  reg [15:0] adjShiftRegOut_23; // @[Reg.scala 27:20]
+  reg  _T_368; // @[Reg.scala 27:20]
   reg [31:0] _RAND_25;
-  reg [15:0] adjShiftRegOut_24; // @[Reg.scala 27:20]
+  reg  _T_369; // @[Reg.scala 27:20]
   reg [31:0] _RAND_26;
-  reg [15:0] adjShiftRegOut_25; // @[Reg.scala 27:20]
+  reg  _T_370; // @[Reg.scala 27:20]
   reg [31:0] _RAND_27;
-  reg [15:0] adjShiftRegOut_26; // @[Reg.scala 27:20]
+  reg  _T_371; // @[Reg.scala 27:20]
   reg [31:0] _RAND_28;
-  reg [15:0] adjShiftRegOut_27; // @[Reg.scala 27:20]
+  reg  _T_372; // @[Reg.scala 27:20]
   reg [31:0] _RAND_29;
-  reg [15:0] adjShiftRegOut_28; // @[Reg.scala 27:20]
+  reg  _T_373; // @[Reg.scala 27:20]
   reg [31:0] _RAND_30;
-  reg [15:0] adjShiftRegOut_29; // @[Reg.scala 27:20]
+  reg  _T_374; // @[Reg.scala 27:20]
   reg [31:0] _RAND_31;
-  reg [15:0] adjShiftRegOut_30; // @[Reg.scala 27:20]
+  reg  _T_375; // @[Reg.scala 27:20]
   reg [31:0] _RAND_32;
-  reg [15:0] adjShiftRegOut_31; // @[Reg.scala 27:20]
+  reg  _T_376; // @[Reg.scala 27:20]
   reg [31:0] _RAND_33;
-  reg [15:0] adjShiftRegOut_32; // @[Reg.scala 27:20]
+  reg  _T_377; // @[Reg.scala 27:20]
   reg [31:0] _RAND_34;
-  reg [15:0] adjShiftRegOut_33; // @[Reg.scala 27:20]
+  reg  _T_378; // @[Reg.scala 27:20]
   reg [31:0] _RAND_35;
-  reg [15:0] adjShiftRegOut_34; // @[Reg.scala 27:20]
+  reg  _T_379; // @[Reg.scala 27:20]
   reg [31:0] _RAND_36;
-  reg [15:0] adjShiftRegOut_35; // @[Reg.scala 27:20]
+  reg  _T_380; // @[Reg.scala 27:20]
   reg [31:0] _RAND_37;
-  reg [15:0] adjShiftRegOut_36; // @[Reg.scala 27:20]
+  reg  _T_381; // @[Reg.scala 27:20]
   reg [31:0] _RAND_38;
-  reg [15:0] adjShiftRegOut_37; // @[Reg.scala 27:20]
+  reg  _T_382; // @[Reg.scala 27:20]
   reg [31:0] _RAND_39;
-  reg [15:0] adjShiftRegOut_38; // @[Reg.scala 27:20]
+  reg  _T_383; // @[Reg.scala 27:20]
   reg [31:0] _RAND_40;
-  reg [15:0] adjShiftRegOut_39; // @[Reg.scala 27:20]
+  reg  _T_384; // @[Reg.scala 27:20]
   reg [31:0] _RAND_41;
-  reg [15:0] adjShiftRegOut_40; // @[Reg.scala 27:20]
+  reg  _T_385; // @[Reg.scala 27:20]
   reg [31:0] _RAND_42;
-  reg [15:0] adjShiftRegOut_41; // @[Reg.scala 27:20]
+  reg  _T_386; // @[Reg.scala 27:20]
   reg [31:0] _RAND_43;
-  reg [15:0] adjShiftRegOut_42; // @[Reg.scala 27:20]
+  reg  _T_387; // @[Reg.scala 27:20]
   reg [31:0] _RAND_44;
-  reg [15:0] adjShiftRegOut_43; // @[Reg.scala 27:20]
+  reg  _T_388; // @[Reg.scala 27:20]
   reg [31:0] _RAND_45;
-  reg [15:0] adjShiftRegOut_44; // @[Reg.scala 27:20]
+  reg  _T_389; // @[Reg.scala 27:20]
   reg [31:0] _RAND_46;
-  reg [15:0] adjShiftRegOut_45; // @[Reg.scala 27:20]
+  reg  _T_390; // @[Reg.scala 27:20]
   reg [31:0] _RAND_47;
-  reg [15:0] adjShiftRegOut_46; // @[Reg.scala 27:20]
+  reg  _T_391; // @[Reg.scala 27:20]
   reg [31:0] _RAND_48;
-  reg [15:0] adjShiftRegOut_47; // @[Reg.scala 27:20]
+  reg  _T_392; // @[Reg.scala 27:20]
   reg [31:0] _RAND_49;
-  reg [15:0] adjShiftRegOut_48; // @[Reg.scala 27:20]
+  reg  _T_393; // @[Reg.scala 27:20]
   reg [31:0] _RAND_50;
-  reg [15:0] adjShiftRegOut_49; // @[Reg.scala 27:20]
+  reg  _T_394; // @[Reg.scala 27:20]
   reg [31:0] _RAND_51;
-  reg [15:0] adjShiftRegOut_50; // @[Reg.scala 27:20]
+  reg  _T_395; // @[Reg.scala 27:20]
   reg [31:0] _RAND_52;
-  reg [15:0] adjShiftRegOut_51; // @[Reg.scala 27:20]
+  reg  _T_396; // @[Reg.scala 27:20]
   reg [31:0] _RAND_53;
-  reg [15:0] adjShiftRegOut_52; // @[Reg.scala 27:20]
+  reg  _T_397; // @[Reg.scala 27:20]
   reg [31:0] _RAND_54;
-  reg [15:0] adjShiftRegOut_53; // @[Reg.scala 27:20]
+  reg  _T_398; // @[Reg.scala 27:20]
   reg [31:0] _RAND_55;
-  reg [15:0] adjShiftRegOut_54; // @[Reg.scala 27:20]
+  reg  _T_399; // @[Reg.scala 27:20]
   reg [31:0] _RAND_56;
-  reg [15:0] adjShiftRegOut_55; // @[Reg.scala 27:20]
+  reg  _T_400; // @[Reg.scala 27:20]
   reg [31:0] _RAND_57;
-  reg [15:0] adjShiftRegOut_56; // @[Reg.scala 27:20]
+  reg  _T_401; // @[Reg.scala 27:20]
   reg [31:0] _RAND_58;
-  reg [15:0] adjShiftRegOut_57; // @[Reg.scala 27:20]
+  reg  _T_402; // @[Reg.scala 27:20]
   reg [31:0] _RAND_59;
-  reg [15:0] adjShiftRegOut_58; // @[Reg.scala 27:20]
+  reg  _T_403; // @[Reg.scala 27:20]
   reg [31:0] _RAND_60;
-  reg [15:0] adjShiftRegOut_59; // @[Reg.scala 27:20]
+  reg  _T_404; // @[Reg.scala 27:20]
   reg [31:0] _RAND_61;
-  reg [15:0] adjShiftRegOut_60; // @[Reg.scala 27:20]
+  reg  _T_405; // @[Reg.scala 27:20]
   reg [31:0] _RAND_62;
-  reg [15:0] adjShiftRegOut_61; // @[Reg.scala 27:20]
+  reg  _T_406; // @[Reg.scala 27:20]
   reg [31:0] _RAND_63;
-  reg [15:0] adjShiftRegOut_62; // @[Reg.scala 27:20]
+  reg  _T_407; // @[Reg.scala 27:20]
   reg [31:0] _RAND_64;
-  reg [15:0] adjShiftRegOut_63; // @[Reg.scala 27:20]
+  reg  _T_408; // @[Reg.scala 27:20]
   reg [31:0] _RAND_65;
-  reg [6:0] cntIn; // @[CFARUtils.scala 390:23]
+  reg  _T_409; // @[Reg.scala 27:20]
   reg [31:0] _RAND_66;
-  wire  _T_395; // @[CFARUtils.scala 392:19]
-  wire  _GEN_64; // @[CFARUtils.scala 392:36]
-  wire [6:0] _T_398; // @[CFARUtils.scala 397:20]
-  wire  _T_399; // @[CFARUtils.scala 400:18]
-  wire  _T_402; // @[CFARUtils.scala 401:17]
-  wire  _T_404; // @[CFARUtils.scala 401:36]
-  wire  _GEN_66; // @[CFARUtils.scala 401:53]
-  wire  _T_406; // @[CFARUtils.scala 406:36]
-  wire  _T_407; // @[CFARUtils.scala 406:24]
-  wire  _GEN_67; // @[CFARUtils.scala 406:45]
-  wire  _T_409; // @[Decoupled.scala 40:37]
-  wire  _T_672; // @[CFARUtils.scala 319:37]
-  wire  _T_673; // @[CFARUtils.scala 319:37]
-  wire  _T_674; // @[CFARUtils.scala 319:37]
-  wire  _T_675; // @[CFARUtils.scala 319:37]
-  wire  _T_676; // @[CFARUtils.scala 319:37]
-  wire  _T_677; // @[CFARUtils.scala 319:37]
-  wire  _T_678; // @[CFARUtils.scala 319:37]
-  wire  _T_679; // @[CFARUtils.scala 319:37]
-  wire  _T_680; // @[CFARUtils.scala 319:37]
-  wire  _T_681; // @[CFARUtils.scala 319:37]
-  wire  _T_682; // @[CFARUtils.scala 319:37]
-  wire  _T_683; // @[CFARUtils.scala 319:37]
-  wire  _T_684; // @[CFARUtils.scala 319:37]
-  wire  _T_685; // @[CFARUtils.scala 319:37]
-  wire  _T_686; // @[CFARUtils.scala 319:37]
-  wire  _T_687; // @[CFARUtils.scala 319:37]
-  wire  _T_688; // @[CFARUtils.scala 319:37]
-  wire  _T_689; // @[CFARUtils.scala 319:37]
-  wire  _T_690; // @[CFARUtils.scala 319:37]
-  wire  _T_691; // @[CFARUtils.scala 319:37]
-  wire  _T_692; // @[CFARUtils.scala 319:37]
-  wire  _T_693; // @[CFARUtils.scala 319:37]
-  wire  _T_694; // @[CFARUtils.scala 319:37]
-  wire  _T_695; // @[CFARUtils.scala 319:37]
-  wire  _T_696; // @[CFARUtils.scala 319:37]
-  wire  _T_697; // @[CFARUtils.scala 319:37]
-  wire  _T_698; // @[CFARUtils.scala 319:37]
-  wire  _T_699; // @[CFARUtils.scala 319:37]
-  wire  _T_700; // @[CFARUtils.scala 319:37]
-  wire  _T_701; // @[CFARUtils.scala 319:37]
-  wire  _T_702; // @[CFARUtils.scala 319:37]
-  wire  _T_703; // @[CFARUtils.scala 319:37]
-  wire  _T_704; // @[CFARUtils.scala 319:37]
-  wire  _T_705; // @[CFARUtils.scala 319:37]
-  wire  _T_706; // @[CFARUtils.scala 319:37]
-  wire  _T_707; // @[CFARUtils.scala 319:37]
-  wire  _T_708; // @[CFARUtils.scala 319:37]
-  wire  _T_709; // @[CFARUtils.scala 319:37]
-  wire  _T_710; // @[CFARUtils.scala 319:37]
-  wire  _T_711; // @[CFARUtils.scala 319:37]
-  wire  _T_712; // @[CFARUtils.scala 319:37]
-  wire  _T_713; // @[CFARUtils.scala 319:37]
-  wire  _T_714; // @[CFARUtils.scala 319:37]
-  wire  _T_715; // @[CFARUtils.scala 319:37]
-  wire  _T_716; // @[CFARUtils.scala 319:37]
-  wire  _T_717; // @[CFARUtils.scala 319:37]
-  wire  _T_718; // @[CFARUtils.scala 319:37]
-  wire  _T_719; // @[CFARUtils.scala 319:37]
-  wire  _T_720; // @[CFARUtils.scala 319:37]
-  wire  _T_721; // @[CFARUtils.scala 319:37]
-  wire  _T_722; // @[CFARUtils.scala 319:37]
-  wire  _T_723; // @[CFARUtils.scala 319:37]
-  wire  _T_724; // @[CFARUtils.scala 319:37]
-  wire  _T_725; // @[CFARUtils.scala 319:37]
-  wire  _T_726; // @[CFARUtils.scala 319:37]
-  wire  _T_727; // @[CFARUtils.scala 319:37]
-  wire  _T_728; // @[CFARUtils.scala 319:37]
-  wire  _T_729; // @[CFARUtils.scala 319:37]
-  wire  _T_730; // @[CFARUtils.scala 319:37]
-  wire  _T_731; // @[CFARUtils.scala 319:37]
-  wire  _T_732; // @[CFARUtils.scala 319:37]
-  wire  _T_733; // @[CFARUtils.scala 319:37]
-  wire  _T_734; // @[CFARUtils.scala 319:37]
-  reg  _T_736; // @[Reg.scala 27:20]
+  reg  _T_410; // @[Reg.scala 27:20]
   reg [31:0] _RAND_67;
-  reg  _T_737; // @[Reg.scala 27:20]
+  reg  _T_411; // @[Reg.scala 27:20]
   reg [31:0] _RAND_68;
-  reg  _T_738; // @[Reg.scala 27:20]
+  wire  _GEN_68; // @[CFARUtils.scala 537:26]
+  wire  _GEN_69; // @[CFARUtils.scala 537:26]
+  wire  _GEN_70; // @[CFARUtils.scala 537:26]
+  wire  _GEN_71; // @[CFARUtils.scala 537:26]
+  wire  _GEN_72; // @[CFARUtils.scala 537:26]
+  wire  _GEN_73; // @[CFARUtils.scala 537:26]
+  wire  _GEN_74; // @[CFARUtils.scala 537:26]
+  wire  _GEN_75; // @[CFARUtils.scala 537:26]
+  wire  _GEN_76; // @[CFARUtils.scala 537:26]
+  wire  _GEN_77; // @[CFARUtils.scala 537:26]
+  wire  _GEN_78; // @[CFARUtils.scala 537:26]
+  wire  _GEN_79; // @[CFARUtils.scala 537:26]
+  wire  _GEN_80; // @[CFARUtils.scala 537:26]
+  wire  _GEN_81; // @[CFARUtils.scala 537:26]
+  wire  _GEN_82; // @[CFARUtils.scala 537:26]
+  wire  _GEN_83; // @[CFARUtils.scala 537:26]
+  wire  _GEN_84; // @[CFARUtils.scala 537:26]
+  wire  _GEN_85; // @[CFARUtils.scala 537:26]
+  wire  _GEN_86; // @[CFARUtils.scala 537:26]
+  wire  _GEN_87; // @[CFARUtils.scala 537:26]
+  wire  _GEN_88; // @[CFARUtils.scala 537:26]
+  wire  _GEN_89; // @[CFARUtils.scala 537:26]
+  wire  _GEN_90; // @[CFARUtils.scala 537:26]
+  wire  _GEN_91; // @[CFARUtils.scala 537:26]
+  wire  _GEN_92; // @[CFARUtils.scala 537:26]
+  wire  _GEN_93; // @[CFARUtils.scala 537:26]
+  wire  _GEN_94; // @[CFARUtils.scala 537:26]
+  wire  _GEN_95; // @[CFARUtils.scala 537:26]
+  wire  _GEN_96; // @[CFARUtils.scala 537:26]
+  wire  _GEN_97; // @[CFARUtils.scala 537:26]
+  wire  _GEN_98; // @[CFARUtils.scala 537:26]
+  wire  _GEN_99; // @[CFARUtils.scala 537:26]
+  wire  _GEN_100; // @[CFARUtils.scala 537:26]
+  wire  _GEN_101; // @[CFARUtils.scala 537:26]
+  wire  _GEN_102; // @[CFARUtils.scala 537:26]
+  wire  _GEN_103; // @[CFARUtils.scala 537:26]
+  wire  _GEN_104; // @[CFARUtils.scala 537:26]
+  wire  _GEN_105; // @[CFARUtils.scala 537:26]
+  wire  _GEN_106; // @[CFARUtils.scala 537:26]
+  wire  _GEN_107; // @[CFARUtils.scala 537:26]
+  wire  _GEN_108; // @[CFARUtils.scala 537:26]
+  wire  _GEN_109; // @[CFARUtils.scala 537:26]
+  wire  _GEN_110; // @[CFARUtils.scala 537:26]
+  wire  _GEN_111; // @[CFARUtils.scala 537:26]
+  wire  _GEN_112; // @[CFARUtils.scala 537:26]
+  wire  _GEN_113; // @[CFARUtils.scala 537:26]
+  wire  _GEN_114; // @[CFARUtils.scala 537:26]
+  wire  _GEN_115; // @[CFARUtils.scala 537:26]
+  wire  _GEN_116; // @[CFARUtils.scala 537:26]
+  wire  _GEN_117; // @[CFARUtils.scala 537:26]
+  wire  _GEN_118; // @[CFARUtils.scala 537:26]
+  wire  _GEN_119; // @[CFARUtils.scala 537:26]
+  wire  _GEN_120; // @[CFARUtils.scala 537:26]
+  wire  _GEN_121; // @[CFARUtils.scala 537:26]
+  wire  _GEN_122; // @[CFARUtils.scala 537:26]
+  wire  _GEN_123; // @[CFARUtils.scala 537:26]
+  wire  _GEN_124; // @[CFARUtils.scala 537:26]
+  wire  _GEN_125; // @[CFARUtils.scala 537:26]
+  wire  _GEN_126; // @[CFARUtils.scala 537:26]
+  wire  _GEN_127; // @[CFARUtils.scala 537:26]
+  wire  _GEN_128; // @[CFARUtils.scala 537:26]
+  wire  _GEN_129; // @[CFARUtils.scala 537:26]
+  wire  _GEN_130; // @[CFARUtils.scala 537:26]
+  wire  resetAll; // @[CFARUtils.scala 537:26]
+  wire  _T_416; // @[CFARUtils.scala 544:15]
+  wire  _T_417; // @[CFARUtils.scala 544:12]
+  wire  _T_419; // @[CFARUtils.scala 546:36]
+  reg [15:0] _T_426; // @[CFARUtils.scala 551:37]
   reg [31:0] _RAND_69;
-  reg  _T_739; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_70;
-  reg  _T_740; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_71;
-  reg  _T_741; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_72;
-  reg  _T_742; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_73;
-  reg  _T_743; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_74;
-  reg  _T_744; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_75;
-  reg  _T_745; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_76;
-  reg  _T_746; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_77;
-  reg  _T_747; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_78;
-  reg  _T_748; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_79;
-  reg  _T_749; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_80;
-  reg  _T_750; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_81;
-  reg  _T_751; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_82;
-  reg  _T_752; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_83;
-  reg  _T_753; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_84;
-  reg  _T_754; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_85;
-  reg  _T_755; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_86;
-  reg  _T_756; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_87;
-  reg  _T_757; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_88;
-  reg  _T_758; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_89;
-  reg  _T_759; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_90;
-  reg  _T_760; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_91;
-  reg  _T_761; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_92;
-  reg  _T_762; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_93;
-  reg  _T_763; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_94;
-  reg  _T_764; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_95;
-  reg  _T_765; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_96;
-  reg  _T_766; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_97;
-  reg  _T_767; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_98;
-  reg  _T_768; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_99;
-  reg  _T_769; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_100;
-  reg  _T_770; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_101;
-  reg  _T_771; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_102;
-  reg  _T_772; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_103;
-  reg  _T_773; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_104;
-  reg  _T_774; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_105;
-  reg  _T_775; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_106;
-  reg  _T_776; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_107;
-  reg  _T_777; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_108;
-  reg  _T_778; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_109;
-  reg  _T_779; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_110;
-  reg  _T_780; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_111;
-  reg  _T_781; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_112;
-  reg  _T_782; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_113;
-  reg  _T_783; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_114;
-  reg  _T_784; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_115;
-  reg  _T_785; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_116;
-  reg  _T_786; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_117;
-  reg  _T_787; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_118;
-  reg  _T_788; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_119;
-  reg  _T_789; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_120;
-  reg  _T_790; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_121;
-  reg  _T_791; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_122;
-  reg  _T_792; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_123;
-  reg  _T_793; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_124;
-  reg  _T_794; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_125;
-  reg  _T_795; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_126;
-  reg  _T_796; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_127;
-  reg  _T_797; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_128;
-  reg  _T_798; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_129;
-  reg  _T_799; // @[Reg.scala 27:20]
-  reg [31:0] _RAND_130;
-  wire  _GEN_134; // @[CFARUtils.scala 414:17]
-  wire  _GEN_135; // @[CFARUtils.scala 414:17]
-  wire  _GEN_136; // @[CFARUtils.scala 414:17]
-  wire  _GEN_137; // @[CFARUtils.scala 414:17]
-  wire  _GEN_138; // @[CFARUtils.scala 414:17]
-  wire  _GEN_139; // @[CFARUtils.scala 414:17]
-  wire  _GEN_140; // @[CFARUtils.scala 414:17]
-  wire  _GEN_141; // @[CFARUtils.scala 414:17]
-  wire  _GEN_142; // @[CFARUtils.scala 414:17]
-  wire  _GEN_143; // @[CFARUtils.scala 414:17]
-  wire  _GEN_144; // @[CFARUtils.scala 414:17]
-  wire  _GEN_145; // @[CFARUtils.scala 414:17]
-  wire  _GEN_146; // @[CFARUtils.scala 414:17]
-  wire  _GEN_147; // @[CFARUtils.scala 414:17]
-  wire  _GEN_148; // @[CFARUtils.scala 414:17]
-  wire  _GEN_149; // @[CFARUtils.scala 414:17]
-  wire  _GEN_150; // @[CFARUtils.scala 414:17]
-  wire  _GEN_151; // @[CFARUtils.scala 414:17]
-  wire  _GEN_152; // @[CFARUtils.scala 414:17]
-  wire  _GEN_153; // @[CFARUtils.scala 414:17]
-  wire  _GEN_154; // @[CFARUtils.scala 414:17]
-  wire  _GEN_155; // @[CFARUtils.scala 414:17]
-  wire  _GEN_156; // @[CFARUtils.scala 414:17]
-  wire  _GEN_157; // @[CFARUtils.scala 414:17]
-  wire  _GEN_158; // @[CFARUtils.scala 414:17]
-  wire  _GEN_159; // @[CFARUtils.scala 414:17]
-  wire  _GEN_160; // @[CFARUtils.scala 414:17]
-  wire  _GEN_161; // @[CFARUtils.scala 414:17]
-  wire  _GEN_162; // @[CFARUtils.scala 414:17]
-  wire  _GEN_163; // @[CFARUtils.scala 414:17]
-  wire  _GEN_164; // @[CFARUtils.scala 414:17]
-  wire  _GEN_165; // @[CFARUtils.scala 414:17]
-  wire  _GEN_166; // @[CFARUtils.scala 414:17]
-  wire  _GEN_167; // @[CFARUtils.scala 414:17]
-  wire  _GEN_168; // @[CFARUtils.scala 414:17]
-  wire  _GEN_169; // @[CFARUtils.scala 414:17]
-  wire  _GEN_170; // @[CFARUtils.scala 414:17]
-  wire  _GEN_171; // @[CFARUtils.scala 414:17]
-  wire  _GEN_172; // @[CFARUtils.scala 414:17]
-  wire  _GEN_173; // @[CFARUtils.scala 414:17]
-  wire  _GEN_174; // @[CFARUtils.scala 414:17]
-  wire  _GEN_175; // @[CFARUtils.scala 414:17]
-  wire  _GEN_176; // @[CFARUtils.scala 414:17]
-  wire  _GEN_177; // @[CFARUtils.scala 414:17]
-  wire  _GEN_178; // @[CFARUtils.scala 414:17]
-  wire  _GEN_179; // @[CFARUtils.scala 414:17]
-  wire  _GEN_180; // @[CFARUtils.scala 414:17]
-  wire  _GEN_181; // @[CFARUtils.scala 414:17]
-  wire  _GEN_182; // @[CFARUtils.scala 414:17]
-  wire  _GEN_183; // @[CFARUtils.scala 414:17]
-  wire  _GEN_184; // @[CFARUtils.scala 414:17]
-  wire  _GEN_185; // @[CFARUtils.scala 414:17]
-  wire  _GEN_186; // @[CFARUtils.scala 414:17]
-  wire  _GEN_187; // @[CFARUtils.scala 414:17]
-  wire  _GEN_188; // @[CFARUtils.scala 414:17]
-  wire  _GEN_189; // @[CFARUtils.scala 414:17]
-  wire  _GEN_190; // @[CFARUtils.scala 414:17]
-  wire  _GEN_191; // @[CFARUtils.scala 414:17]
-  wire  _GEN_192; // @[CFARUtils.scala 414:17]
-  wire  _GEN_193; // @[CFARUtils.scala 414:17]
-  wire  _GEN_194; // @[CFARUtils.scala 414:17]
-  wire  _GEN_195; // @[CFARUtils.scala 414:17]
-  wire  _GEN_196; // @[CFARUtils.scala 414:17]
-  wire  _T_804; // @[CFARUtils.scala 414:17]
-  wire  _T_808; // @[CFARUtils.scala 421:36]
-  wire  _T_810; // @[CFARUtils.scala 429:37]
-  wire  _T_812; // @[CFARUtils.scala 429:73]
-  wire  _T_821; // @[CFARUtils.scala 436:70]
-  wire  _T_822; // @[CFARUtils.scala 436:94]
-  wire  _T_823; // @[CFARUtils.scala 436:85]
-  assign _T_1 = io_in_ready & io_in_valid; // @[Decoupled.scala 40:37]
-  assign _T_2 = last & io_out_ready; // @[CFARUtils.scala 385:34]
-  assign en = _T_1 | _T_2; // @[CFARUtils.scala 385:25]
-  assign _T_3 = io_depth <= 7'h40; // @[CFARUtils.scala 345:18]
-  assign _T_5 = _T_3 | reset; // @[CFARUtils.scala 345:11]
-  assign _T_6 = ~_T_5; // @[CFARUtils.scala 345:11]
-  assign _T_8 = io_depth - 7'h1; // @[CFARUtils.scala 350:87]
-  assign _T_9 = 1'h1; // @[CFARUtils.scala 350:78]
-  assign _T_13 = 7'h1 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_14 = _T_13; // @[CFARUtils.scala 350:94]
-  assign _T_17 = 7'h2 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_18 = _T_17; // @[CFARUtils.scala 350:94]
-  assign _T_21 = 7'h3 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_22 = _T_21; // @[CFARUtils.scala 350:94]
-  assign _T_25 = 7'h4 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_26 = _T_25; // @[CFARUtils.scala 350:94]
-  assign _T_29 = 7'h5 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_30 = _T_29; // @[CFARUtils.scala 350:94]
-  assign _T_33 = 7'h6 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_34 = _T_33; // @[CFARUtils.scala 350:94]
-  assign _T_37 = 7'h7 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_38 = _T_37; // @[CFARUtils.scala 350:94]
-  assign _T_41 = 7'h8 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_42 = _T_41; // @[CFARUtils.scala 350:94]
-  assign _T_45 = 7'h9 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_46 = _T_45; // @[CFARUtils.scala 350:94]
-  assign _T_49 = 7'ha <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_50 = _T_49; // @[CFARUtils.scala 350:94]
-  assign _T_53 = 7'hb <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_54 = _T_53; // @[CFARUtils.scala 350:94]
-  assign _T_57 = 7'hc <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_58 = _T_57; // @[CFARUtils.scala 350:94]
-  assign _T_61 = 7'hd <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_62 = _T_61; // @[CFARUtils.scala 350:94]
-  assign _T_65 = 7'he <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_66 = _T_65; // @[CFARUtils.scala 350:94]
-  assign _T_69 = 7'hf <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_70 = _T_69; // @[CFARUtils.scala 350:94]
-  assign _T_73 = 7'h10 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_74 = _T_73; // @[CFARUtils.scala 350:94]
-  assign _T_77 = 7'h11 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_78 = _T_77; // @[CFARUtils.scala 350:94]
-  assign _T_81 = 7'h12 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_82 = _T_81; // @[CFARUtils.scala 350:94]
-  assign _T_85 = 7'h13 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_86 = _T_85; // @[CFARUtils.scala 350:94]
-  assign _T_89 = 7'h14 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_90 = _T_89; // @[CFARUtils.scala 350:94]
-  assign _T_93 = 7'h15 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_94 = _T_93; // @[CFARUtils.scala 350:94]
-  assign _T_97 = 7'h16 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_98 = _T_97; // @[CFARUtils.scala 350:94]
-  assign _T_101 = 7'h17 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_102 = _T_101; // @[CFARUtils.scala 350:94]
-  assign _T_105 = 7'h18 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_106 = _T_105; // @[CFARUtils.scala 350:94]
-  assign _T_109 = 7'h19 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_110 = _T_109; // @[CFARUtils.scala 350:94]
-  assign _T_113 = 7'h1a <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_114 = _T_113; // @[CFARUtils.scala 350:94]
-  assign _T_117 = 7'h1b <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_118 = _T_117; // @[CFARUtils.scala 350:94]
-  assign _T_121 = 7'h1c <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_122 = _T_121; // @[CFARUtils.scala 350:94]
-  assign _T_125 = 7'h1d <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_126 = _T_125; // @[CFARUtils.scala 350:94]
-  assign _T_129 = 7'h1e <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_130 = _T_129; // @[CFARUtils.scala 350:94]
-  assign _T_133 = 7'h1f <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_134 = _T_133; // @[CFARUtils.scala 350:94]
-  assign _T_137 = 7'h20 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_138 = _T_137; // @[CFARUtils.scala 350:94]
-  assign _T_141 = 7'h21 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_142 = _T_141; // @[CFARUtils.scala 350:94]
-  assign _T_145 = 7'h22 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_146 = _T_145; // @[CFARUtils.scala 350:94]
-  assign _T_149 = 7'h23 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_150 = _T_149; // @[CFARUtils.scala 350:94]
-  assign _T_153 = 7'h24 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_154 = _T_153; // @[CFARUtils.scala 350:94]
-  assign _T_157 = 7'h25 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_158 = _T_157; // @[CFARUtils.scala 350:94]
-  assign _T_161 = 7'h26 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_162 = _T_161; // @[CFARUtils.scala 350:94]
-  assign _T_165 = 7'h27 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_166 = _T_165; // @[CFARUtils.scala 350:94]
-  assign _T_169 = 7'h28 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_170 = _T_169; // @[CFARUtils.scala 350:94]
-  assign _T_173 = 7'h29 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_174 = _T_173; // @[CFARUtils.scala 350:94]
-  assign _T_177 = 7'h2a <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_178 = _T_177; // @[CFARUtils.scala 350:94]
-  assign _T_181 = 7'h2b <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_182 = _T_181; // @[CFARUtils.scala 350:94]
-  assign _T_185 = 7'h2c <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_186 = _T_185; // @[CFARUtils.scala 350:94]
-  assign _T_189 = 7'h2d <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_190 = _T_189; // @[CFARUtils.scala 350:94]
-  assign _T_193 = 7'h2e <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_194 = _T_193; // @[CFARUtils.scala 350:94]
-  assign _T_197 = 7'h2f <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_198 = _T_197; // @[CFARUtils.scala 350:94]
-  assign _T_201 = 7'h30 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_202 = _T_201; // @[CFARUtils.scala 350:94]
-  assign _T_205 = 7'h31 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_206 = _T_205; // @[CFARUtils.scala 350:94]
-  assign _T_209 = 7'h32 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_210 = _T_209; // @[CFARUtils.scala 350:94]
-  assign _T_213 = 7'h33 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_214 = _T_213; // @[CFARUtils.scala 350:94]
-  assign _T_217 = 7'h34 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_218 = _T_217; // @[CFARUtils.scala 350:94]
-  assign _T_221 = 7'h35 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_222 = _T_221; // @[CFARUtils.scala 350:94]
-  assign _T_225 = 7'h36 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_226 = _T_225; // @[CFARUtils.scala 350:94]
-  assign _T_229 = 7'h37 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_230 = _T_229; // @[CFARUtils.scala 350:94]
-  assign _T_233 = 7'h38 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_234 = _T_233; // @[CFARUtils.scala 350:94]
-  assign _T_237 = 7'h39 <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_238 = _T_237; // @[CFARUtils.scala 350:94]
-  assign _T_241 = 7'h3a <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_242 = _T_241; // @[CFARUtils.scala 350:94]
-  assign _T_245 = 7'h3b <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_246 = _T_245; // @[CFARUtils.scala 350:94]
-  assign _T_249 = 7'h3c <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_250 = _T_249; // @[CFARUtils.scala 350:94]
-  assign _T_253 = 7'h3d <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_254 = _T_253; // @[CFARUtils.scala 350:94]
-  assign _T_257 = 7'h3e <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_258 = _T_257; // @[CFARUtils.scala 350:94]
-  assign _T_261 = 7'h3f <= _T_8; // @[CFARUtils.scala 350:78]
-  assign _T_262 = _T_261; // @[CFARUtils.scala 350:94]
-  assign activeRegs_63 = _T_261; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_263 = _T_262 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_62 = _T_257; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_264 = _T_258 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_61 = _T_253; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_265 = _T_254 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_60 = _T_249; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_266 = _T_250 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_59 = _T_245; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_267 = _T_246 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_58 = _T_241; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_268 = _T_242 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_57 = _T_237; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_269 = _T_238 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_56 = _T_233; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_270 = _T_234 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_55 = _T_229; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_271 = _T_230 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_54 = _T_225; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_272 = _T_226 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_53 = _T_221; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_273 = _T_222 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_52 = _T_217; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_274 = _T_218 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_51 = _T_213; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_275 = _T_214 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_50 = _T_209; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_276 = _T_210 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_49 = _T_205; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_277 = _T_206 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_48 = _T_201; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_278 = _T_202 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_47 = _T_197; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_279 = _T_198 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_46 = _T_193; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_280 = _T_194 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_45 = _T_189; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_281 = _T_190 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_44 = _T_185; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_282 = _T_186 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_43 = _T_181; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_283 = _T_182 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_42 = _T_177; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_284 = _T_178 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_41 = _T_173; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_285 = _T_174 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_40 = _T_169; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_286 = _T_170 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_39 = _T_165; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_287 = _T_166 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_38 = _T_161; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_288 = _T_162 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_37 = _T_157; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_289 = _T_158 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_36 = _T_153; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_290 = _T_154 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_35 = _T_149; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_291 = _T_150 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_34 = _T_145; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_292 = _T_146 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_33 = _T_141; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_293 = _T_142 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_32 = _T_137; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_294 = _T_138 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_31 = _T_133; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_295 = _T_134 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_30 = _T_129; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_296 = _T_130 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_29 = _T_125; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_297 = _T_126 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_28 = _T_121; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_298 = _T_122 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_27 = _T_117; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_299 = _T_118 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_26 = _T_113; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_300 = _T_114 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_25 = _T_109; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_301 = _T_110 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_24 = _T_105; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_302 = _T_106 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_23 = _T_101; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_303 = _T_102 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_22 = _T_97; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_304 = _T_98 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_21 = _T_93; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_305 = _T_94 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_20 = _T_89; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_306 = _T_90 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_19 = _T_85; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_307 = _T_86 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_18 = _T_81; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_308 = _T_82 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_17 = _T_77; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_309 = _T_78 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_16 = _T_73; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_310 = _T_74 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_15 = _T_69; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_311 = _T_70 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_14 = _T_65; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_312 = _T_66 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_13 = _T_61; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_313 = _T_62 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_12 = _T_57; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_314 = _T_58 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_11 = _T_53; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_315 = _T_54 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_10 = _T_49; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_316 = _T_50 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_9 = _T_45; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_317 = _T_46 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_8 = _T_41; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_318 = _T_42 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_7 = _T_37; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_319 = _T_38 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_6 = _T_33; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_320 = _T_34 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_5 = _T_29; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_321 = _T_30 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_4 = _T_25; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_322 = _T_26 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_3 = _T_21; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_323 = _T_22 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_2 = _T_17; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_324 = _T_18 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_1 = _T_13; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_325 = _T_14 & en; // @[CFARUtils.scala 319:37]
-  assign activeRegs_0 = 1'h1; // @[CFARUtils.scala 347:26 CFARUtils.scala 350:66]
-  assign _T_326 = _T_9 & en; // @[CFARUtils.scala 319:37]
-  assign _T_395 = io_lastIn & _T_1; // @[CFARUtils.scala 392:19]
-  assign _GEN_64 = _T_395 | last; // @[CFARUtils.scala 392:36]
-  assign _T_398 = cntIn + 7'h1; // @[CFARUtils.scala 397:20]
-  assign _T_399 = io_depth > 7'h1; // @[CFARUtils.scala 400:18]
-  assign _T_402 = cntIn == _T_8; // @[CFARUtils.scala 401:17]
-  assign _T_404 = _T_402 & _T_1; // @[CFARUtils.scala 401:36]
-  assign _GEN_66 = _T_404 | InitialInDone; // @[CFARUtils.scala 401:53]
-  assign _T_406 = io_depth == 7'h1; // @[CFARUtils.scala 406:36]
-  assign _T_407 = _T_1 & _T_406; // @[CFARUtils.scala 406:24]
-  assign _GEN_67 = _T_407 | InitialInDone; // @[CFARUtils.scala 406:45]
-  assign _T_409 = io_out_ready & io_out_valid; // @[Decoupled.scala 40:37]
-  assign _T_672 = _T_261 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_673 = _T_257 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_674 = _T_253 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_675 = _T_249 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_676 = _T_245 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_677 = _T_241 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_678 = _T_237 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_679 = _T_233 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_680 = _T_229 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_681 = _T_225 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_682 = _T_221 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_683 = _T_217 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_684 = _T_213 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_685 = _T_209 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_686 = _T_205 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_687 = _T_201 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_688 = _T_197 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_689 = _T_193 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_690 = _T_189 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_691 = _T_185 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_692 = _T_181 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_693 = _T_177 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_694 = _T_173 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_695 = _T_169 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_696 = _T_165 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_697 = _T_161 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_698 = _T_157 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_699 = _T_153 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_700 = _T_149 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_701 = _T_145 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_702 = _T_141 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_703 = _T_137 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_704 = _T_133 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_705 = _T_129 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_706 = _T_125 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_707 = _T_121 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_708 = _T_117 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_709 = _T_113 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_710 = _T_109 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_711 = _T_105 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_712 = _T_101 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_713 = _T_97 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_714 = _T_93 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_715 = _T_89 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_716 = _T_85 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_717 = _T_81 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_718 = _T_77 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_719 = _T_73 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_720 = _T_69 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_721 = _T_65 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_722 = _T_61 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_723 = _T_57 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_724 = _T_53 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_725 = _T_49 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_726 = _T_45 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_727 = _T_41 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_728 = _T_37 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_729 = _T_33 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_730 = _T_29 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_731 = _T_25 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_732 = _T_21 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_733 = _T_17 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _T_734 = _T_13 & _T_409; // @[CFARUtils.scala 319:37]
-  assign _GEN_134 = 6'h1 == _T_8[5:0] ? _T_737 : _T_736; // @[CFARUtils.scala 414:17]
-  assign _GEN_135 = 6'h2 == _T_8[5:0] ? _T_738 : _GEN_134; // @[CFARUtils.scala 414:17]
-  assign _GEN_136 = 6'h3 == _T_8[5:0] ? _T_739 : _GEN_135; // @[CFARUtils.scala 414:17]
-  assign _GEN_137 = 6'h4 == _T_8[5:0] ? _T_740 : _GEN_136; // @[CFARUtils.scala 414:17]
-  assign _GEN_138 = 6'h5 == _T_8[5:0] ? _T_741 : _GEN_137; // @[CFARUtils.scala 414:17]
-  assign _GEN_139 = 6'h6 == _T_8[5:0] ? _T_742 : _GEN_138; // @[CFARUtils.scala 414:17]
-  assign _GEN_140 = 6'h7 == _T_8[5:0] ? _T_743 : _GEN_139; // @[CFARUtils.scala 414:17]
-  assign _GEN_141 = 6'h8 == _T_8[5:0] ? _T_744 : _GEN_140; // @[CFARUtils.scala 414:17]
-  assign _GEN_142 = 6'h9 == _T_8[5:0] ? _T_745 : _GEN_141; // @[CFARUtils.scala 414:17]
-  assign _GEN_143 = 6'ha == _T_8[5:0] ? _T_746 : _GEN_142; // @[CFARUtils.scala 414:17]
-  assign _GEN_144 = 6'hb == _T_8[5:0] ? _T_747 : _GEN_143; // @[CFARUtils.scala 414:17]
-  assign _GEN_145 = 6'hc == _T_8[5:0] ? _T_748 : _GEN_144; // @[CFARUtils.scala 414:17]
-  assign _GEN_146 = 6'hd == _T_8[5:0] ? _T_749 : _GEN_145; // @[CFARUtils.scala 414:17]
-  assign _GEN_147 = 6'he == _T_8[5:0] ? _T_750 : _GEN_146; // @[CFARUtils.scala 414:17]
-  assign _GEN_148 = 6'hf == _T_8[5:0] ? _T_751 : _GEN_147; // @[CFARUtils.scala 414:17]
-  assign _GEN_149 = 6'h10 == _T_8[5:0] ? _T_752 : _GEN_148; // @[CFARUtils.scala 414:17]
-  assign _GEN_150 = 6'h11 == _T_8[5:0] ? _T_753 : _GEN_149; // @[CFARUtils.scala 414:17]
-  assign _GEN_151 = 6'h12 == _T_8[5:0] ? _T_754 : _GEN_150; // @[CFARUtils.scala 414:17]
-  assign _GEN_152 = 6'h13 == _T_8[5:0] ? _T_755 : _GEN_151; // @[CFARUtils.scala 414:17]
-  assign _GEN_153 = 6'h14 == _T_8[5:0] ? _T_756 : _GEN_152; // @[CFARUtils.scala 414:17]
-  assign _GEN_154 = 6'h15 == _T_8[5:0] ? _T_757 : _GEN_153; // @[CFARUtils.scala 414:17]
-  assign _GEN_155 = 6'h16 == _T_8[5:0] ? _T_758 : _GEN_154; // @[CFARUtils.scala 414:17]
-  assign _GEN_156 = 6'h17 == _T_8[5:0] ? _T_759 : _GEN_155; // @[CFARUtils.scala 414:17]
-  assign _GEN_157 = 6'h18 == _T_8[5:0] ? _T_760 : _GEN_156; // @[CFARUtils.scala 414:17]
-  assign _GEN_158 = 6'h19 == _T_8[5:0] ? _T_761 : _GEN_157; // @[CFARUtils.scala 414:17]
-  assign _GEN_159 = 6'h1a == _T_8[5:0] ? _T_762 : _GEN_158; // @[CFARUtils.scala 414:17]
-  assign _GEN_160 = 6'h1b == _T_8[5:0] ? _T_763 : _GEN_159; // @[CFARUtils.scala 414:17]
-  assign _GEN_161 = 6'h1c == _T_8[5:0] ? _T_764 : _GEN_160; // @[CFARUtils.scala 414:17]
-  assign _GEN_162 = 6'h1d == _T_8[5:0] ? _T_765 : _GEN_161; // @[CFARUtils.scala 414:17]
-  assign _GEN_163 = 6'h1e == _T_8[5:0] ? _T_766 : _GEN_162; // @[CFARUtils.scala 414:17]
-  assign _GEN_164 = 6'h1f == _T_8[5:0] ? _T_767 : _GEN_163; // @[CFARUtils.scala 414:17]
-  assign _GEN_165 = 6'h20 == _T_8[5:0] ? _T_768 : _GEN_164; // @[CFARUtils.scala 414:17]
-  assign _GEN_166 = 6'h21 == _T_8[5:0] ? _T_769 : _GEN_165; // @[CFARUtils.scala 414:17]
-  assign _GEN_167 = 6'h22 == _T_8[5:0] ? _T_770 : _GEN_166; // @[CFARUtils.scala 414:17]
-  assign _GEN_168 = 6'h23 == _T_8[5:0] ? _T_771 : _GEN_167; // @[CFARUtils.scala 414:17]
-  assign _GEN_169 = 6'h24 == _T_8[5:0] ? _T_772 : _GEN_168; // @[CFARUtils.scala 414:17]
-  assign _GEN_170 = 6'h25 == _T_8[5:0] ? _T_773 : _GEN_169; // @[CFARUtils.scala 414:17]
-  assign _GEN_171 = 6'h26 == _T_8[5:0] ? _T_774 : _GEN_170; // @[CFARUtils.scala 414:17]
-  assign _GEN_172 = 6'h27 == _T_8[5:0] ? _T_775 : _GEN_171; // @[CFARUtils.scala 414:17]
-  assign _GEN_173 = 6'h28 == _T_8[5:0] ? _T_776 : _GEN_172; // @[CFARUtils.scala 414:17]
-  assign _GEN_174 = 6'h29 == _T_8[5:0] ? _T_777 : _GEN_173; // @[CFARUtils.scala 414:17]
-  assign _GEN_175 = 6'h2a == _T_8[5:0] ? _T_778 : _GEN_174; // @[CFARUtils.scala 414:17]
-  assign _GEN_176 = 6'h2b == _T_8[5:0] ? _T_779 : _GEN_175; // @[CFARUtils.scala 414:17]
-  assign _GEN_177 = 6'h2c == _T_8[5:0] ? _T_780 : _GEN_176; // @[CFARUtils.scala 414:17]
-  assign _GEN_178 = 6'h2d == _T_8[5:0] ? _T_781 : _GEN_177; // @[CFARUtils.scala 414:17]
-  assign _GEN_179 = 6'h2e == _T_8[5:0] ? _T_782 : _GEN_178; // @[CFARUtils.scala 414:17]
-  assign _GEN_180 = 6'h2f == _T_8[5:0] ? _T_783 : _GEN_179; // @[CFARUtils.scala 414:17]
-  assign _GEN_181 = 6'h30 == _T_8[5:0] ? _T_784 : _GEN_180; // @[CFARUtils.scala 414:17]
-  assign _GEN_182 = 6'h31 == _T_8[5:0] ? _T_785 : _GEN_181; // @[CFARUtils.scala 414:17]
-  assign _GEN_183 = 6'h32 == _T_8[5:0] ? _T_786 : _GEN_182; // @[CFARUtils.scala 414:17]
-  assign _GEN_184 = 6'h33 == _T_8[5:0] ? _T_787 : _GEN_183; // @[CFARUtils.scala 414:17]
-  assign _GEN_185 = 6'h34 == _T_8[5:0] ? _T_788 : _GEN_184; // @[CFARUtils.scala 414:17]
-  assign _GEN_186 = 6'h35 == _T_8[5:0] ? _T_789 : _GEN_185; // @[CFARUtils.scala 414:17]
-  assign _GEN_187 = 6'h36 == _T_8[5:0] ? _T_790 : _GEN_186; // @[CFARUtils.scala 414:17]
-  assign _GEN_188 = 6'h37 == _T_8[5:0] ? _T_791 : _GEN_187; // @[CFARUtils.scala 414:17]
-  assign _GEN_189 = 6'h38 == _T_8[5:0] ? _T_792 : _GEN_188; // @[CFARUtils.scala 414:17]
-  assign _GEN_190 = 6'h39 == _T_8[5:0] ? _T_793 : _GEN_189; // @[CFARUtils.scala 414:17]
-  assign _GEN_191 = 6'h3a == _T_8[5:0] ? _T_794 : _GEN_190; // @[CFARUtils.scala 414:17]
-  assign _GEN_192 = 6'h3b == _T_8[5:0] ? _T_795 : _GEN_191; // @[CFARUtils.scala 414:17]
-  assign _GEN_193 = 6'h3c == _T_8[5:0] ? _T_796 : _GEN_192; // @[CFARUtils.scala 414:17]
-  assign _GEN_194 = 6'h3d == _T_8[5:0] ? _T_797 : _GEN_193; // @[CFARUtils.scala 414:17]
-  assign _GEN_195 = 6'h3e == _T_8[5:0] ? _T_798 : _GEN_194; // @[CFARUtils.scala 414:17]
-  assign _GEN_196 = 6'h3f == _T_8[5:0] ? _T_799 : _GEN_195; // @[CFARUtils.scala 414:17]
-  assign _T_804 = _GEN_196 & _T_409; // @[CFARUtils.scala 414:17]
-  assign _T_808 = ~last; // @[CFARUtils.scala 421:36]
-  assign _T_810 = io_depth == 7'h0; // @[CFARUtils.scala 429:37]
-  assign _T_812 = io_out_ready & _T_808; // @[CFARUtils.scala 429:73]
-  assign _T_821 = InitialInDone & io_in_valid; // @[CFARUtils.scala 436:70]
-  assign _T_822 = last & en; // @[CFARUtils.scala 436:94]
-  assign _T_823 = _T_821 | _T_822; // @[CFARUtils.scala 436:85]
-  assign io_in_ready = _T_810 ? io_out_ready : _T_812; // @[CFARUtils.scala 429:20]
-  assign io_out_valid = _T_810 ? io_in_valid : _T_823; // @[CFARUtils.scala 436:18]
-  assign io_parallelOut_0 = adjShiftRegOut_0; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_1 = adjShiftRegOut_1; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_2 = adjShiftRegOut_2; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_3 = adjShiftRegOut_3; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_4 = adjShiftRegOut_4; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_5 = adjShiftRegOut_5; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_6 = adjShiftRegOut_6; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_7 = adjShiftRegOut_7; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_8 = adjShiftRegOut_8; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_9 = adjShiftRegOut_9; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_10 = adjShiftRegOut_10; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_11 = adjShiftRegOut_11; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_12 = adjShiftRegOut_12; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_13 = adjShiftRegOut_13; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_14 = adjShiftRegOut_14; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_15 = adjShiftRegOut_15; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_16 = adjShiftRegOut_16; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_17 = adjShiftRegOut_17; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_18 = adjShiftRegOut_18; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_19 = adjShiftRegOut_19; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_20 = adjShiftRegOut_20; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_21 = adjShiftRegOut_21; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_22 = adjShiftRegOut_22; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_23 = adjShiftRegOut_23; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_24 = adjShiftRegOut_24; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_25 = adjShiftRegOut_25; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_26 = adjShiftRegOut_26; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_27 = adjShiftRegOut_27; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_28 = adjShiftRegOut_28; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_29 = adjShiftRegOut_29; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_30 = adjShiftRegOut_30; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_31 = adjShiftRegOut_31; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_32 = adjShiftRegOut_32; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_33 = adjShiftRegOut_33; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_34 = adjShiftRegOut_34; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_35 = adjShiftRegOut_35; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_36 = adjShiftRegOut_36; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_37 = adjShiftRegOut_37; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_38 = adjShiftRegOut_38; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_39 = adjShiftRegOut_39; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_40 = adjShiftRegOut_40; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_41 = adjShiftRegOut_41; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_42 = adjShiftRegOut_42; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_43 = adjShiftRegOut_43; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_44 = adjShiftRegOut_44; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_45 = adjShiftRegOut_45; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_46 = adjShiftRegOut_46; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_47 = adjShiftRegOut_47; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_48 = adjShiftRegOut_48; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_49 = adjShiftRegOut_49; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_50 = adjShiftRegOut_50; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_51 = adjShiftRegOut_51; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_52 = adjShiftRegOut_52; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_53 = adjShiftRegOut_53; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_54 = adjShiftRegOut_54; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_55 = adjShiftRegOut_55; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_56 = adjShiftRegOut_56; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_57 = adjShiftRegOut_57; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_58 = adjShiftRegOut_58; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_59 = adjShiftRegOut_59; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_60 = adjShiftRegOut_60; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_61 = adjShiftRegOut_61; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_62 = adjShiftRegOut_62; // @[CFARUtils.scala 434:18]
-  assign io_parallelOut_63 = adjShiftRegOut_63; // @[CFARUtils.scala 434:18]
-  assign io_cnt = cntIn; // @[CFARUtils.scala 438:16]
-  assign io_regFull = InitialInDone & _T_808; // @[CFARUtils.scala 421:16]
+  wire  _T_430; // @[CFARUtils.scala 554:31]
+  wire  _T_431; // @[CFARUtils.scala 554:42]
+  wire  _T_433; // @[CFARUtils.scala 555:36]
+  wire  _T_437; // @[CFARUtils.scala 568:33]
+  wire  _T_438; // @[CFARUtils.scala 568:57]
+  wire [5:0] readIdx; // @[CFARUtils.scala 506:27 CFARUtils.scala 516:13 CFARUtils.scala 518:13]
+  Queue_5 outputQueue ( // @[CFARUtils.scala 549:27]
+    .clock(outputQueue_clock),
+    .reset(outputQueue_reset),
+    .io_enq_ready(outputQueue_io_enq_ready),
+    .io_enq_valid(outputQueue_io_enq_valid),
+    .io_enq_bits(outputQueue_io_enq_bits),
+    .io_deq_ready(outputQueue_io_deq_ready),
+    .io_deq_valid(outputQueue_io_deq_valid),
+    .io_deq_bits(outputQueue_io_deq_bits)
+  );
+  assign mem__T_423_addr = readIdx;
+  assign mem__T_423_data = mem[mem__T_423_addr]; // @[CFARUtils.scala 505:26]
+  assign mem__T_418_data = io_in_bits;
+  assign mem__T_418_addr = writeIdxReg;
+  assign mem__T_418_mask = 1'h1;
+  assign mem__T_418_en = en & _T_416;
+  assign _T = io_in_ready & io_in_valid; // @[Decoupled.scala 40:37]
+  assign _T_1 = last & io_out_ready; // @[CFARUtils.scala 511:45]
+  assign en = _T | _T_1; // @[CFARUtils.scala 511:36]
+  assign _T_3 = writeIdxReg + 6'h1; // @[CFARUtils.scala 515:21]
+  assign _GEN_140 = {{1'd0}, _T_3}; // @[CFARUtils.scala 515:27]
+  assign _T_4 = _GEN_140 >= io_depth; // @[CFARUtils.scala 515:27]
+  assign _GEN_141 = {{1'd0}, writeIdxReg}; // @[CFARUtils.scala 516:28]
+  assign _T_6 = _GEN_141 - io_depth; // @[CFARUtils.scala 516:28]
+  assign _T_8 = _T_6 + 7'h1; // @[CFARUtils.scala 516:39]
+  assign _T_10 = 7'h40 + _GEN_141; // @[CFARUtils.scala 518:27]
+  assign _T_12 = _T_10 + 7'h1; // @[CFARUtils.scala 518:41]
+  assign _T_14 = _T_12 - io_depth; // @[CFARUtils.scala 518:47]
+  assign _GEN_0 = _T_4 ? _T_8 : _T_14; // @[CFARUtils.scala 515:40]
+  assign _T_16 = io_depth - 7'h1; // @[CFARUtils.scala 528:34]
+  assign _T_17 = _GEN_141 == _T_16; // @[CFARUtils.scala 528:21]
+  assign _T_19 = _T_17 & _T; // @[CFARUtils.scala 528:40]
+  assign _GEN_1 = _T_19 | initialInDone; // @[CFARUtils.scala 528:57]
+  assign fireLastIn = io_lastIn & _T; // @[CFARUtils.scala 531:30]
+  assign _GEN_2 = fireLastIn | last; // @[CFARUtils.scala 533:21]
+  assign _T_21 = io_out_ready & io_out_valid; // @[Decoupled.scala 40:37]
+  assign _T_22 = io_depth <= 7'h40; // @[CFARUtils.scala 330:18]
+  assign _T_24 = _T_22 | reset; // @[CFARUtils.scala 330:11]
+  assign _T_25 = ~_T_24; // @[CFARUtils.scala 330:11]
+  assign _T_33 = 7'h1 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_37 = 7'h2 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_41 = 7'h3 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_45 = 7'h4 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_49 = 7'h5 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_53 = 7'h6 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_57 = 7'h7 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_61 = 7'h8 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_65 = 7'h9 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_69 = 7'ha <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_73 = 7'hb <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_77 = 7'hc <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_81 = 7'hd <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_85 = 7'he <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_89 = 7'hf <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_93 = 7'h10 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_97 = 7'h11 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_101 = 7'h12 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_105 = 7'h13 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_109 = 7'h14 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_113 = 7'h15 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_117 = 7'h16 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_121 = 7'h17 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_125 = 7'h18 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_129 = 7'h19 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_133 = 7'h1a <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_137 = 7'h1b <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_141 = 7'h1c <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_145 = 7'h1d <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_149 = 7'h1e <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_153 = 7'h1f <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_157 = 7'h20 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_161 = 7'h21 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_165 = 7'h22 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_169 = 7'h23 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_173 = 7'h24 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_177 = 7'h25 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_181 = 7'h26 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_185 = 7'h27 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_189 = 7'h28 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_193 = 7'h29 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_197 = 7'h2a <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_201 = 7'h2b <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_205 = 7'h2c <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_209 = 7'h2d <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_213 = 7'h2e <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_217 = 7'h2f <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_221 = 7'h30 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_225 = 7'h31 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_229 = 7'h32 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_233 = 7'h33 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_237 = 7'h34 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_241 = 7'h35 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_245 = 7'h36 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_249 = 7'h37 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_253 = 7'h38 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_257 = 7'h39 <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_261 = 7'h3a <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_265 = 7'h3b <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_269 = 7'h3c <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_273 = 7'h3d <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_277 = 7'h3e <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_281 = 7'h3f <= _T_16; // @[CFARUtils.scala 335:78]
+  assign _T_284 = _T_281 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_285 = _T_277 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_286 = _T_273 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_287 = _T_269 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_288 = _T_265 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_289 = _T_261 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_290 = _T_257 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_291 = _T_253 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_292 = _T_249 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_293 = _T_245 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_294 = _T_241 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_295 = _T_237 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_296 = _T_233 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_297 = _T_229 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_298 = _T_225 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_299 = _T_221 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_300 = _T_217 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_301 = _T_213 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_302 = _T_209 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_303 = _T_205 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_304 = _T_201 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_305 = _T_197 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_306 = _T_193 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_307 = _T_189 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_308 = _T_185 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_309 = _T_181 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_310 = _T_177 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_311 = _T_173 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_312 = _T_169 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_313 = _T_165 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_314 = _T_161 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_315 = _T_157 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_316 = _T_153 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_317 = _T_149 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_318 = _T_145 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_319 = _T_141 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_320 = _T_137 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_321 = _T_133 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_322 = _T_129 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_323 = _T_125 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_324 = _T_121 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_325 = _T_117 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_326 = _T_113 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_327 = _T_109 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_328 = _T_105 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_329 = _T_101 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_330 = _T_97 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_331 = _T_93 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_332 = _T_89 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_333 = _T_85 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_334 = _T_81 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_335 = _T_77 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_336 = _T_73 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_337 = _T_69 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_338 = _T_65 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_339 = _T_61 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_340 = _T_57 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_341 = _T_53 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_342 = _T_49 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_343 = _T_45 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_344 = _T_41 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_345 = _T_37 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _T_346 = _T_33 & _T_21; // @[CFARUtils.scala 319:37]
+  assign _GEN_68 = 6'h1 == _T_16[5:0] ? _T_349 : _T_348; // @[CFARUtils.scala 537:26]
+  assign _GEN_69 = 6'h2 == _T_16[5:0] ? _T_350 : _GEN_68; // @[CFARUtils.scala 537:26]
+  assign _GEN_70 = 6'h3 == _T_16[5:0] ? _T_351 : _GEN_69; // @[CFARUtils.scala 537:26]
+  assign _GEN_71 = 6'h4 == _T_16[5:0] ? _T_352 : _GEN_70; // @[CFARUtils.scala 537:26]
+  assign _GEN_72 = 6'h5 == _T_16[5:0] ? _T_353 : _GEN_71; // @[CFARUtils.scala 537:26]
+  assign _GEN_73 = 6'h6 == _T_16[5:0] ? _T_354 : _GEN_72; // @[CFARUtils.scala 537:26]
+  assign _GEN_74 = 6'h7 == _T_16[5:0] ? _T_355 : _GEN_73; // @[CFARUtils.scala 537:26]
+  assign _GEN_75 = 6'h8 == _T_16[5:0] ? _T_356 : _GEN_74; // @[CFARUtils.scala 537:26]
+  assign _GEN_76 = 6'h9 == _T_16[5:0] ? _T_357 : _GEN_75; // @[CFARUtils.scala 537:26]
+  assign _GEN_77 = 6'ha == _T_16[5:0] ? _T_358 : _GEN_76; // @[CFARUtils.scala 537:26]
+  assign _GEN_78 = 6'hb == _T_16[5:0] ? _T_359 : _GEN_77; // @[CFARUtils.scala 537:26]
+  assign _GEN_79 = 6'hc == _T_16[5:0] ? _T_360 : _GEN_78; // @[CFARUtils.scala 537:26]
+  assign _GEN_80 = 6'hd == _T_16[5:0] ? _T_361 : _GEN_79; // @[CFARUtils.scala 537:26]
+  assign _GEN_81 = 6'he == _T_16[5:0] ? _T_362 : _GEN_80; // @[CFARUtils.scala 537:26]
+  assign _GEN_82 = 6'hf == _T_16[5:0] ? _T_363 : _GEN_81; // @[CFARUtils.scala 537:26]
+  assign _GEN_83 = 6'h10 == _T_16[5:0] ? _T_364 : _GEN_82; // @[CFARUtils.scala 537:26]
+  assign _GEN_84 = 6'h11 == _T_16[5:0] ? _T_365 : _GEN_83; // @[CFARUtils.scala 537:26]
+  assign _GEN_85 = 6'h12 == _T_16[5:0] ? _T_366 : _GEN_84; // @[CFARUtils.scala 537:26]
+  assign _GEN_86 = 6'h13 == _T_16[5:0] ? _T_367 : _GEN_85; // @[CFARUtils.scala 537:26]
+  assign _GEN_87 = 6'h14 == _T_16[5:0] ? _T_368 : _GEN_86; // @[CFARUtils.scala 537:26]
+  assign _GEN_88 = 6'h15 == _T_16[5:0] ? _T_369 : _GEN_87; // @[CFARUtils.scala 537:26]
+  assign _GEN_89 = 6'h16 == _T_16[5:0] ? _T_370 : _GEN_88; // @[CFARUtils.scala 537:26]
+  assign _GEN_90 = 6'h17 == _T_16[5:0] ? _T_371 : _GEN_89; // @[CFARUtils.scala 537:26]
+  assign _GEN_91 = 6'h18 == _T_16[5:0] ? _T_372 : _GEN_90; // @[CFARUtils.scala 537:26]
+  assign _GEN_92 = 6'h19 == _T_16[5:0] ? _T_373 : _GEN_91; // @[CFARUtils.scala 537:26]
+  assign _GEN_93 = 6'h1a == _T_16[5:0] ? _T_374 : _GEN_92; // @[CFARUtils.scala 537:26]
+  assign _GEN_94 = 6'h1b == _T_16[5:0] ? _T_375 : _GEN_93; // @[CFARUtils.scala 537:26]
+  assign _GEN_95 = 6'h1c == _T_16[5:0] ? _T_376 : _GEN_94; // @[CFARUtils.scala 537:26]
+  assign _GEN_96 = 6'h1d == _T_16[5:0] ? _T_377 : _GEN_95; // @[CFARUtils.scala 537:26]
+  assign _GEN_97 = 6'h1e == _T_16[5:0] ? _T_378 : _GEN_96; // @[CFARUtils.scala 537:26]
+  assign _GEN_98 = 6'h1f == _T_16[5:0] ? _T_379 : _GEN_97; // @[CFARUtils.scala 537:26]
+  assign _GEN_99 = 6'h20 == _T_16[5:0] ? _T_380 : _GEN_98; // @[CFARUtils.scala 537:26]
+  assign _GEN_100 = 6'h21 == _T_16[5:0] ? _T_381 : _GEN_99; // @[CFARUtils.scala 537:26]
+  assign _GEN_101 = 6'h22 == _T_16[5:0] ? _T_382 : _GEN_100; // @[CFARUtils.scala 537:26]
+  assign _GEN_102 = 6'h23 == _T_16[5:0] ? _T_383 : _GEN_101; // @[CFARUtils.scala 537:26]
+  assign _GEN_103 = 6'h24 == _T_16[5:0] ? _T_384 : _GEN_102; // @[CFARUtils.scala 537:26]
+  assign _GEN_104 = 6'h25 == _T_16[5:0] ? _T_385 : _GEN_103; // @[CFARUtils.scala 537:26]
+  assign _GEN_105 = 6'h26 == _T_16[5:0] ? _T_386 : _GEN_104; // @[CFARUtils.scala 537:26]
+  assign _GEN_106 = 6'h27 == _T_16[5:0] ? _T_387 : _GEN_105; // @[CFARUtils.scala 537:26]
+  assign _GEN_107 = 6'h28 == _T_16[5:0] ? _T_388 : _GEN_106; // @[CFARUtils.scala 537:26]
+  assign _GEN_108 = 6'h29 == _T_16[5:0] ? _T_389 : _GEN_107; // @[CFARUtils.scala 537:26]
+  assign _GEN_109 = 6'h2a == _T_16[5:0] ? _T_390 : _GEN_108; // @[CFARUtils.scala 537:26]
+  assign _GEN_110 = 6'h2b == _T_16[5:0] ? _T_391 : _GEN_109; // @[CFARUtils.scala 537:26]
+  assign _GEN_111 = 6'h2c == _T_16[5:0] ? _T_392 : _GEN_110; // @[CFARUtils.scala 537:26]
+  assign _GEN_112 = 6'h2d == _T_16[5:0] ? _T_393 : _GEN_111; // @[CFARUtils.scala 537:26]
+  assign _GEN_113 = 6'h2e == _T_16[5:0] ? _T_394 : _GEN_112; // @[CFARUtils.scala 537:26]
+  assign _GEN_114 = 6'h2f == _T_16[5:0] ? _T_395 : _GEN_113; // @[CFARUtils.scala 537:26]
+  assign _GEN_115 = 6'h30 == _T_16[5:0] ? _T_396 : _GEN_114; // @[CFARUtils.scala 537:26]
+  assign _GEN_116 = 6'h31 == _T_16[5:0] ? _T_397 : _GEN_115; // @[CFARUtils.scala 537:26]
+  assign _GEN_117 = 6'h32 == _T_16[5:0] ? _T_398 : _GEN_116; // @[CFARUtils.scala 537:26]
+  assign _GEN_118 = 6'h33 == _T_16[5:0] ? _T_399 : _GEN_117; // @[CFARUtils.scala 537:26]
+  assign _GEN_119 = 6'h34 == _T_16[5:0] ? _T_400 : _GEN_118; // @[CFARUtils.scala 537:26]
+  assign _GEN_120 = 6'h35 == _T_16[5:0] ? _T_401 : _GEN_119; // @[CFARUtils.scala 537:26]
+  assign _GEN_121 = 6'h36 == _T_16[5:0] ? _T_402 : _GEN_120; // @[CFARUtils.scala 537:26]
+  assign _GEN_122 = 6'h37 == _T_16[5:0] ? _T_403 : _GEN_121; // @[CFARUtils.scala 537:26]
+  assign _GEN_123 = 6'h38 == _T_16[5:0] ? _T_404 : _GEN_122; // @[CFARUtils.scala 537:26]
+  assign _GEN_124 = 6'h39 == _T_16[5:0] ? _T_405 : _GEN_123; // @[CFARUtils.scala 537:26]
+  assign _GEN_125 = 6'h3a == _T_16[5:0] ? _T_406 : _GEN_124; // @[CFARUtils.scala 537:26]
+  assign _GEN_126 = 6'h3b == _T_16[5:0] ? _T_407 : _GEN_125; // @[CFARUtils.scala 537:26]
+  assign _GEN_127 = 6'h3c == _T_16[5:0] ? _T_408 : _GEN_126; // @[CFARUtils.scala 537:26]
+  assign _GEN_128 = 6'h3d == _T_16[5:0] ? _T_409 : _GEN_127; // @[CFARUtils.scala 537:26]
+  assign _GEN_129 = 6'h3e == _T_16[5:0] ? _T_410 : _GEN_128; // @[CFARUtils.scala 537:26]
+  assign _GEN_130 = 6'h3f == _T_16[5:0] ? _T_411 : _GEN_129; // @[CFARUtils.scala 537:26]
+  assign resetAll = _GEN_130 & _T_21; // @[CFARUtils.scala 537:26]
+  assign _T_416 = ~resetAll; // @[CFARUtils.scala 544:15]
+  assign _T_417 = en & _T_416; // @[CFARUtils.scala 544:12]
+  assign _T_419 = writeIdxReg < 6'h3f; // @[CFARUtils.scala 546:36]
+  assign _T_430 = writeIdxReg == 6'h0; // @[CFARUtils.scala 554:31]
+  assign _T_431 = ~initialInDone; // @[CFARUtils.scala 554:42]
+  assign _T_433 = ~last; // @[CFARUtils.scala 555:36]
+  assign _T_437 = initialInDone & io_in_valid; // @[CFARUtils.scala 568:33]
+  assign _T_438 = last & en; // @[CFARUtils.scala 568:57]
+  assign readIdx = _GEN_0[5:0]; // @[CFARUtils.scala 506:27 CFARUtils.scala 516:13 CFARUtils.scala 518:13]
+  assign io_in_ready = io_out_ready & _T_433; // @[CFARUtils.scala 562:18]
+  assign io_out_valid = _T_437 | _T_438; // @[CFARUtils.scala 568:16]
+  assign io_out_bits = outputQueue_io_deq_bits; // @[CFARUtils.scala 565:16]
+  assign io_memFull = initialInDone & _T_433; // @[CFARUtils.scala 555:16]
+  assign io_memEmpty = _T_430 & _T_431; // @[CFARUtils.scala 554:16]
+  assign outputQueue_clock = clock;
+  assign outputQueue_reset = reset;
+  assign outputQueue_io_enq_valid = validPrev; // @[CFARUtils.scala 550:28]
+  assign outputQueue_io_enq_bits = _T_426; // @[CFARUtils.scala 551:27]
+  assign outputQueue_io_deq_ready = _T | _T_1; // @[CFARUtils.scala 552:28]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -14777,1224 +13018,654 @@ initial begin
         #0.002 begin end
       `endif
     `endif
-  `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  InitialInDone = _RAND_0[0:0];
-  `endif // RANDOMIZE_REG_INIT
+  `ifdef RANDOMIZE_MEM_INIT
+  for (initvar = 0; initvar < 64; initvar = initvar+1)
+    mem[initvar] = _RAND_0[15:0];
+  `endif // RANDOMIZE_MEM_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
-  last = _RAND_1[0:0];
+  writeIdxReg = _RAND_1[5:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {1{`RANDOM}};
-  adjShiftRegOut_0 = _RAND_2[15:0];
+  last = _RAND_2[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_3 = {1{`RANDOM}};
-  adjShiftRegOut_1 = _RAND_3[15:0];
+  initialInDone = _RAND_3[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_4 = {1{`RANDOM}};
-  adjShiftRegOut_2 = _RAND_4[15:0];
+  validPrev = _RAND_4[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_5 = {1{`RANDOM}};
-  adjShiftRegOut_3 = _RAND_5[15:0];
+  _T_348 = _RAND_5[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_6 = {1{`RANDOM}};
-  adjShiftRegOut_4 = _RAND_6[15:0];
+  _T_349 = _RAND_6[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_7 = {1{`RANDOM}};
-  adjShiftRegOut_5 = _RAND_7[15:0];
+  _T_350 = _RAND_7[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_8 = {1{`RANDOM}};
-  adjShiftRegOut_6 = _RAND_8[15:0];
+  _T_351 = _RAND_8[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_9 = {1{`RANDOM}};
-  adjShiftRegOut_7 = _RAND_9[15:0];
+  _T_352 = _RAND_9[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_10 = {1{`RANDOM}};
-  adjShiftRegOut_8 = _RAND_10[15:0];
+  _T_353 = _RAND_10[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_11 = {1{`RANDOM}};
-  adjShiftRegOut_9 = _RAND_11[15:0];
+  _T_354 = _RAND_11[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_12 = {1{`RANDOM}};
-  adjShiftRegOut_10 = _RAND_12[15:0];
+  _T_355 = _RAND_12[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_13 = {1{`RANDOM}};
-  adjShiftRegOut_11 = _RAND_13[15:0];
+  _T_356 = _RAND_13[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_14 = {1{`RANDOM}};
-  adjShiftRegOut_12 = _RAND_14[15:0];
+  _T_357 = _RAND_14[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_15 = {1{`RANDOM}};
-  adjShiftRegOut_13 = _RAND_15[15:0];
+  _T_358 = _RAND_15[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_16 = {1{`RANDOM}};
-  adjShiftRegOut_14 = _RAND_16[15:0];
+  _T_359 = _RAND_16[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_17 = {1{`RANDOM}};
-  adjShiftRegOut_15 = _RAND_17[15:0];
+  _T_360 = _RAND_17[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_18 = {1{`RANDOM}};
-  adjShiftRegOut_16 = _RAND_18[15:0];
+  _T_361 = _RAND_18[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_19 = {1{`RANDOM}};
-  adjShiftRegOut_17 = _RAND_19[15:0];
+  _T_362 = _RAND_19[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_20 = {1{`RANDOM}};
-  adjShiftRegOut_18 = _RAND_20[15:0];
+  _T_363 = _RAND_20[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_21 = {1{`RANDOM}};
-  adjShiftRegOut_19 = _RAND_21[15:0];
+  _T_364 = _RAND_21[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_22 = {1{`RANDOM}};
-  adjShiftRegOut_20 = _RAND_22[15:0];
+  _T_365 = _RAND_22[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_23 = {1{`RANDOM}};
-  adjShiftRegOut_21 = _RAND_23[15:0];
+  _T_366 = _RAND_23[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_24 = {1{`RANDOM}};
-  adjShiftRegOut_22 = _RAND_24[15:0];
+  _T_367 = _RAND_24[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_25 = {1{`RANDOM}};
-  adjShiftRegOut_23 = _RAND_25[15:0];
+  _T_368 = _RAND_25[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_26 = {1{`RANDOM}};
-  adjShiftRegOut_24 = _RAND_26[15:0];
+  _T_369 = _RAND_26[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_27 = {1{`RANDOM}};
-  adjShiftRegOut_25 = _RAND_27[15:0];
+  _T_370 = _RAND_27[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_28 = {1{`RANDOM}};
-  adjShiftRegOut_26 = _RAND_28[15:0];
+  _T_371 = _RAND_28[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_29 = {1{`RANDOM}};
-  adjShiftRegOut_27 = _RAND_29[15:0];
+  _T_372 = _RAND_29[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_30 = {1{`RANDOM}};
-  adjShiftRegOut_28 = _RAND_30[15:0];
+  _T_373 = _RAND_30[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_31 = {1{`RANDOM}};
-  adjShiftRegOut_29 = _RAND_31[15:0];
+  _T_374 = _RAND_31[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_32 = {1{`RANDOM}};
-  adjShiftRegOut_30 = _RAND_32[15:0];
+  _T_375 = _RAND_32[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_33 = {1{`RANDOM}};
-  adjShiftRegOut_31 = _RAND_33[15:0];
+  _T_376 = _RAND_33[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_34 = {1{`RANDOM}};
-  adjShiftRegOut_32 = _RAND_34[15:0];
+  _T_377 = _RAND_34[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_35 = {1{`RANDOM}};
-  adjShiftRegOut_33 = _RAND_35[15:0];
+  _T_378 = _RAND_35[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_36 = {1{`RANDOM}};
-  adjShiftRegOut_34 = _RAND_36[15:0];
+  _T_379 = _RAND_36[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_37 = {1{`RANDOM}};
-  adjShiftRegOut_35 = _RAND_37[15:0];
+  _T_380 = _RAND_37[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_38 = {1{`RANDOM}};
-  adjShiftRegOut_36 = _RAND_38[15:0];
+  _T_381 = _RAND_38[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_39 = {1{`RANDOM}};
-  adjShiftRegOut_37 = _RAND_39[15:0];
+  _T_382 = _RAND_39[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_40 = {1{`RANDOM}};
-  adjShiftRegOut_38 = _RAND_40[15:0];
+  _T_383 = _RAND_40[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_41 = {1{`RANDOM}};
-  adjShiftRegOut_39 = _RAND_41[15:0];
+  _T_384 = _RAND_41[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_42 = {1{`RANDOM}};
-  adjShiftRegOut_40 = _RAND_42[15:0];
+  _T_385 = _RAND_42[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_43 = {1{`RANDOM}};
-  adjShiftRegOut_41 = _RAND_43[15:0];
+  _T_386 = _RAND_43[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_44 = {1{`RANDOM}};
-  adjShiftRegOut_42 = _RAND_44[15:0];
+  _T_387 = _RAND_44[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_45 = {1{`RANDOM}};
-  adjShiftRegOut_43 = _RAND_45[15:0];
+  _T_388 = _RAND_45[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_46 = {1{`RANDOM}};
-  adjShiftRegOut_44 = _RAND_46[15:0];
+  _T_389 = _RAND_46[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_47 = {1{`RANDOM}};
-  adjShiftRegOut_45 = _RAND_47[15:0];
+  _T_390 = _RAND_47[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_48 = {1{`RANDOM}};
-  adjShiftRegOut_46 = _RAND_48[15:0];
+  _T_391 = _RAND_48[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_49 = {1{`RANDOM}};
-  adjShiftRegOut_47 = _RAND_49[15:0];
+  _T_392 = _RAND_49[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_50 = {1{`RANDOM}};
-  adjShiftRegOut_48 = _RAND_50[15:0];
+  _T_393 = _RAND_50[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_51 = {1{`RANDOM}};
-  adjShiftRegOut_49 = _RAND_51[15:0];
+  _T_394 = _RAND_51[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_52 = {1{`RANDOM}};
-  adjShiftRegOut_50 = _RAND_52[15:0];
+  _T_395 = _RAND_52[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_53 = {1{`RANDOM}};
-  adjShiftRegOut_51 = _RAND_53[15:0];
+  _T_396 = _RAND_53[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_54 = {1{`RANDOM}};
-  adjShiftRegOut_52 = _RAND_54[15:0];
+  _T_397 = _RAND_54[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_55 = {1{`RANDOM}};
-  adjShiftRegOut_53 = _RAND_55[15:0];
+  _T_398 = _RAND_55[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_56 = {1{`RANDOM}};
-  adjShiftRegOut_54 = _RAND_56[15:0];
+  _T_399 = _RAND_56[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_57 = {1{`RANDOM}};
-  adjShiftRegOut_55 = _RAND_57[15:0];
+  _T_400 = _RAND_57[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_58 = {1{`RANDOM}};
-  adjShiftRegOut_56 = _RAND_58[15:0];
+  _T_401 = _RAND_58[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_59 = {1{`RANDOM}};
-  adjShiftRegOut_57 = _RAND_59[15:0];
+  _T_402 = _RAND_59[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_60 = {1{`RANDOM}};
-  adjShiftRegOut_58 = _RAND_60[15:0];
+  _T_403 = _RAND_60[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_61 = {1{`RANDOM}};
-  adjShiftRegOut_59 = _RAND_61[15:0];
+  _T_404 = _RAND_61[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_62 = {1{`RANDOM}};
-  adjShiftRegOut_60 = _RAND_62[15:0];
+  _T_405 = _RAND_62[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_63 = {1{`RANDOM}};
-  adjShiftRegOut_61 = _RAND_63[15:0];
+  _T_406 = _RAND_63[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_64 = {1{`RANDOM}};
-  adjShiftRegOut_62 = _RAND_64[15:0];
+  _T_407 = _RAND_64[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_65 = {1{`RANDOM}};
-  adjShiftRegOut_63 = _RAND_65[15:0];
+  _T_408 = _RAND_65[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_66 = {1{`RANDOM}};
-  cntIn = _RAND_66[6:0];
+  _T_409 = _RAND_66[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_67 = {1{`RANDOM}};
-  _T_736 = _RAND_67[0:0];
+  _T_410 = _RAND_67[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_68 = {1{`RANDOM}};
-  _T_737 = _RAND_68[0:0];
+  _T_411 = _RAND_68[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_69 = {1{`RANDOM}};
-  _T_738 = _RAND_69[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_70 = {1{`RANDOM}};
-  _T_739 = _RAND_70[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_71 = {1{`RANDOM}};
-  _T_740 = _RAND_71[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_72 = {1{`RANDOM}};
-  _T_741 = _RAND_72[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_73 = {1{`RANDOM}};
-  _T_742 = _RAND_73[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_74 = {1{`RANDOM}};
-  _T_743 = _RAND_74[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_75 = {1{`RANDOM}};
-  _T_744 = _RAND_75[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_76 = {1{`RANDOM}};
-  _T_745 = _RAND_76[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_77 = {1{`RANDOM}};
-  _T_746 = _RAND_77[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_78 = {1{`RANDOM}};
-  _T_747 = _RAND_78[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_79 = {1{`RANDOM}};
-  _T_748 = _RAND_79[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_80 = {1{`RANDOM}};
-  _T_749 = _RAND_80[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_81 = {1{`RANDOM}};
-  _T_750 = _RAND_81[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_82 = {1{`RANDOM}};
-  _T_751 = _RAND_82[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_83 = {1{`RANDOM}};
-  _T_752 = _RAND_83[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_84 = {1{`RANDOM}};
-  _T_753 = _RAND_84[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_85 = {1{`RANDOM}};
-  _T_754 = _RAND_85[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_86 = {1{`RANDOM}};
-  _T_755 = _RAND_86[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_87 = {1{`RANDOM}};
-  _T_756 = _RAND_87[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_88 = {1{`RANDOM}};
-  _T_757 = _RAND_88[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_89 = {1{`RANDOM}};
-  _T_758 = _RAND_89[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_90 = {1{`RANDOM}};
-  _T_759 = _RAND_90[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_91 = {1{`RANDOM}};
-  _T_760 = _RAND_91[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_92 = {1{`RANDOM}};
-  _T_761 = _RAND_92[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_93 = {1{`RANDOM}};
-  _T_762 = _RAND_93[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_94 = {1{`RANDOM}};
-  _T_763 = _RAND_94[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_95 = {1{`RANDOM}};
-  _T_764 = _RAND_95[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_96 = {1{`RANDOM}};
-  _T_765 = _RAND_96[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_97 = {1{`RANDOM}};
-  _T_766 = _RAND_97[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_98 = {1{`RANDOM}};
-  _T_767 = _RAND_98[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_99 = {1{`RANDOM}};
-  _T_768 = _RAND_99[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_100 = {1{`RANDOM}};
-  _T_769 = _RAND_100[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_101 = {1{`RANDOM}};
-  _T_770 = _RAND_101[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_102 = {1{`RANDOM}};
-  _T_771 = _RAND_102[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_103 = {1{`RANDOM}};
-  _T_772 = _RAND_103[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_104 = {1{`RANDOM}};
-  _T_773 = _RAND_104[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_105 = {1{`RANDOM}};
-  _T_774 = _RAND_105[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_106 = {1{`RANDOM}};
-  _T_775 = _RAND_106[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_107 = {1{`RANDOM}};
-  _T_776 = _RAND_107[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_108 = {1{`RANDOM}};
-  _T_777 = _RAND_108[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_109 = {1{`RANDOM}};
-  _T_778 = _RAND_109[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_110 = {1{`RANDOM}};
-  _T_779 = _RAND_110[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_111 = {1{`RANDOM}};
-  _T_780 = _RAND_111[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_112 = {1{`RANDOM}};
-  _T_781 = _RAND_112[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_113 = {1{`RANDOM}};
-  _T_782 = _RAND_113[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_114 = {1{`RANDOM}};
-  _T_783 = _RAND_114[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_115 = {1{`RANDOM}};
-  _T_784 = _RAND_115[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_116 = {1{`RANDOM}};
-  _T_785 = _RAND_116[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_117 = {1{`RANDOM}};
-  _T_786 = _RAND_117[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_118 = {1{`RANDOM}};
-  _T_787 = _RAND_118[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_119 = {1{`RANDOM}};
-  _T_788 = _RAND_119[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_120 = {1{`RANDOM}};
-  _T_789 = _RAND_120[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_121 = {1{`RANDOM}};
-  _T_790 = _RAND_121[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_122 = {1{`RANDOM}};
-  _T_791 = _RAND_122[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_123 = {1{`RANDOM}};
-  _T_792 = _RAND_123[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_124 = {1{`RANDOM}};
-  _T_793 = _RAND_124[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_125 = {1{`RANDOM}};
-  _T_794 = _RAND_125[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_126 = {1{`RANDOM}};
-  _T_795 = _RAND_126[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_127 = {1{`RANDOM}};
-  _T_796 = _RAND_127[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_128 = {1{`RANDOM}};
-  _T_797 = _RAND_128[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_129 = {1{`RANDOM}};
-  _T_798 = _RAND_129[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_130 = {1{`RANDOM}};
-  _T_799 = _RAND_130[0:0];
+  _T_426 = _RAND_69[15:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
+    if(mem__T_418_en & mem__T_418_mask) begin
+      mem[mem__T_418_addr] <= mem__T_418_data; // @[CFARUtils.scala 505:26]
+    end
     if (reset) begin
-      InitialInDone <= 1'h0;
-    end else if (_T_804) begin
-      InitialInDone <= 1'h0;
-    end else if (_T_399) begin
-      InitialInDone <= _GEN_66;
-    end else begin
-      InitialInDone <= _GEN_67;
+      writeIdxReg <= 6'h0;
+    end else if (_T_417) begin
+      if (_T_419) begin
+        writeIdxReg <= _T_3;
+      end else begin
+        writeIdxReg <= 6'h0;
+      end
+    end else if (resetAll) begin
+      writeIdxReg <= 6'h0;
     end
     if (reset) begin
       last <= 1'h0;
-    end else if (_T_804) begin
+    end else if (resetAll) begin
       last <= 1'h0;
     end else begin
-      last <= _GEN_64;
+      last <= _GEN_2;
     end
     if (reset) begin
-      adjShiftRegOut_0 <= 16'sh0;
+      initialInDone <= 1'h0;
+    end else if (resetAll) begin
+      initialInDone <= 1'h0;
+    end else begin
+      initialInDone <= _GEN_1;
+    end
+    if (reset) begin
+      validPrev <= 1'h0;
+    end else begin
+      validPrev <= io_in_valid;
+    end
+    if (reset) begin
+      _T_348 <= 1'h0;
+    end else if (_T_21) begin
+      _T_348 <= fireLastIn;
+    end
+    if (reset) begin
+      _T_349 <= 1'h0;
+    end else if (_T_346) begin
+      _T_349 <= _T_348;
+    end
+    if (reset) begin
+      _T_350 <= 1'h0;
+    end else if (_T_345) begin
+      _T_350 <= _T_349;
+    end
+    if (reset) begin
+      _T_351 <= 1'h0;
+    end else if (_T_344) begin
+      _T_351 <= _T_350;
+    end
+    if (reset) begin
+      _T_352 <= 1'h0;
+    end else if (_T_343) begin
+      _T_352 <= _T_351;
+    end
+    if (reset) begin
+      _T_353 <= 1'h0;
+    end else if (_T_342) begin
+      _T_353 <= _T_352;
+    end
+    if (reset) begin
+      _T_354 <= 1'h0;
+    end else if (_T_341) begin
+      _T_354 <= _T_353;
+    end
+    if (reset) begin
+      _T_355 <= 1'h0;
+    end else if (_T_340) begin
+      _T_355 <= _T_354;
+    end
+    if (reset) begin
+      _T_356 <= 1'h0;
+    end else if (_T_339) begin
+      _T_356 <= _T_355;
+    end
+    if (reset) begin
+      _T_357 <= 1'h0;
+    end else if (_T_338) begin
+      _T_357 <= _T_356;
+    end
+    if (reset) begin
+      _T_358 <= 1'h0;
+    end else if (_T_337) begin
+      _T_358 <= _T_357;
+    end
+    if (reset) begin
+      _T_359 <= 1'h0;
+    end else if (_T_336) begin
+      _T_359 <= _T_358;
+    end
+    if (reset) begin
+      _T_360 <= 1'h0;
+    end else if (_T_335) begin
+      _T_360 <= _T_359;
+    end
+    if (reset) begin
+      _T_361 <= 1'h0;
+    end else if (_T_334) begin
+      _T_361 <= _T_360;
+    end
+    if (reset) begin
+      _T_362 <= 1'h0;
+    end else if (_T_333) begin
+      _T_362 <= _T_361;
+    end
+    if (reset) begin
+      _T_363 <= 1'h0;
+    end else if (_T_332) begin
+      _T_363 <= _T_362;
+    end
+    if (reset) begin
+      _T_364 <= 1'h0;
+    end else if (_T_331) begin
+      _T_364 <= _T_363;
+    end
+    if (reset) begin
+      _T_365 <= 1'h0;
+    end else if (_T_330) begin
+      _T_365 <= _T_364;
+    end
+    if (reset) begin
+      _T_366 <= 1'h0;
+    end else if (_T_329) begin
+      _T_366 <= _T_365;
+    end
+    if (reset) begin
+      _T_367 <= 1'h0;
+    end else if (_T_328) begin
+      _T_367 <= _T_366;
+    end
+    if (reset) begin
+      _T_368 <= 1'h0;
+    end else if (_T_327) begin
+      _T_368 <= _T_367;
+    end
+    if (reset) begin
+      _T_369 <= 1'h0;
     end else if (_T_326) begin
-      adjShiftRegOut_0 <= io_in_bits;
+      _T_369 <= _T_368;
     end
     if (reset) begin
-      adjShiftRegOut_1 <= 16'sh0;
+      _T_370 <= 1'h0;
     end else if (_T_325) begin
-      adjShiftRegOut_1 <= adjShiftRegOut_0;
+      _T_370 <= _T_369;
     end
     if (reset) begin
-      adjShiftRegOut_2 <= 16'sh0;
+      _T_371 <= 1'h0;
     end else if (_T_324) begin
-      adjShiftRegOut_2 <= adjShiftRegOut_1;
+      _T_371 <= _T_370;
     end
     if (reset) begin
-      adjShiftRegOut_3 <= 16'sh0;
+      _T_372 <= 1'h0;
     end else if (_T_323) begin
-      adjShiftRegOut_3 <= adjShiftRegOut_2;
+      _T_372 <= _T_371;
     end
     if (reset) begin
-      adjShiftRegOut_4 <= 16'sh0;
+      _T_373 <= 1'h0;
     end else if (_T_322) begin
-      adjShiftRegOut_4 <= adjShiftRegOut_3;
+      _T_373 <= _T_372;
     end
     if (reset) begin
-      adjShiftRegOut_5 <= 16'sh0;
+      _T_374 <= 1'h0;
     end else if (_T_321) begin
-      adjShiftRegOut_5 <= adjShiftRegOut_4;
+      _T_374 <= _T_373;
     end
     if (reset) begin
-      adjShiftRegOut_6 <= 16'sh0;
+      _T_375 <= 1'h0;
     end else if (_T_320) begin
-      adjShiftRegOut_6 <= adjShiftRegOut_5;
+      _T_375 <= _T_374;
     end
     if (reset) begin
-      adjShiftRegOut_7 <= 16'sh0;
+      _T_376 <= 1'h0;
     end else if (_T_319) begin
-      adjShiftRegOut_7 <= adjShiftRegOut_6;
+      _T_376 <= _T_375;
     end
     if (reset) begin
-      adjShiftRegOut_8 <= 16'sh0;
+      _T_377 <= 1'h0;
     end else if (_T_318) begin
-      adjShiftRegOut_8 <= adjShiftRegOut_7;
+      _T_377 <= _T_376;
     end
     if (reset) begin
-      adjShiftRegOut_9 <= 16'sh0;
+      _T_378 <= 1'h0;
     end else if (_T_317) begin
-      adjShiftRegOut_9 <= adjShiftRegOut_8;
+      _T_378 <= _T_377;
     end
     if (reset) begin
-      adjShiftRegOut_10 <= 16'sh0;
+      _T_379 <= 1'h0;
     end else if (_T_316) begin
-      adjShiftRegOut_10 <= adjShiftRegOut_9;
+      _T_379 <= _T_378;
     end
     if (reset) begin
-      adjShiftRegOut_11 <= 16'sh0;
+      _T_380 <= 1'h0;
     end else if (_T_315) begin
-      adjShiftRegOut_11 <= adjShiftRegOut_10;
+      _T_380 <= _T_379;
     end
     if (reset) begin
-      adjShiftRegOut_12 <= 16'sh0;
+      _T_381 <= 1'h0;
     end else if (_T_314) begin
-      adjShiftRegOut_12 <= adjShiftRegOut_11;
+      _T_381 <= _T_380;
     end
     if (reset) begin
-      adjShiftRegOut_13 <= 16'sh0;
+      _T_382 <= 1'h0;
     end else if (_T_313) begin
-      adjShiftRegOut_13 <= adjShiftRegOut_12;
+      _T_382 <= _T_381;
     end
     if (reset) begin
-      adjShiftRegOut_14 <= 16'sh0;
+      _T_383 <= 1'h0;
     end else if (_T_312) begin
-      adjShiftRegOut_14 <= adjShiftRegOut_13;
+      _T_383 <= _T_382;
     end
     if (reset) begin
-      adjShiftRegOut_15 <= 16'sh0;
+      _T_384 <= 1'h0;
     end else if (_T_311) begin
-      adjShiftRegOut_15 <= adjShiftRegOut_14;
+      _T_384 <= _T_383;
     end
     if (reset) begin
-      adjShiftRegOut_16 <= 16'sh0;
+      _T_385 <= 1'h0;
     end else if (_T_310) begin
-      adjShiftRegOut_16 <= adjShiftRegOut_15;
+      _T_385 <= _T_384;
     end
     if (reset) begin
-      adjShiftRegOut_17 <= 16'sh0;
+      _T_386 <= 1'h0;
     end else if (_T_309) begin
-      adjShiftRegOut_17 <= adjShiftRegOut_16;
+      _T_386 <= _T_385;
     end
     if (reset) begin
-      adjShiftRegOut_18 <= 16'sh0;
+      _T_387 <= 1'h0;
     end else if (_T_308) begin
-      adjShiftRegOut_18 <= adjShiftRegOut_17;
+      _T_387 <= _T_386;
     end
     if (reset) begin
-      adjShiftRegOut_19 <= 16'sh0;
+      _T_388 <= 1'h0;
     end else if (_T_307) begin
-      adjShiftRegOut_19 <= adjShiftRegOut_18;
+      _T_388 <= _T_387;
     end
     if (reset) begin
-      adjShiftRegOut_20 <= 16'sh0;
+      _T_389 <= 1'h0;
     end else if (_T_306) begin
-      adjShiftRegOut_20 <= adjShiftRegOut_19;
+      _T_389 <= _T_388;
     end
     if (reset) begin
-      adjShiftRegOut_21 <= 16'sh0;
+      _T_390 <= 1'h0;
     end else if (_T_305) begin
-      adjShiftRegOut_21 <= adjShiftRegOut_20;
+      _T_390 <= _T_389;
     end
     if (reset) begin
-      adjShiftRegOut_22 <= 16'sh0;
+      _T_391 <= 1'h0;
     end else if (_T_304) begin
-      adjShiftRegOut_22 <= adjShiftRegOut_21;
+      _T_391 <= _T_390;
     end
     if (reset) begin
-      adjShiftRegOut_23 <= 16'sh0;
+      _T_392 <= 1'h0;
     end else if (_T_303) begin
-      adjShiftRegOut_23 <= adjShiftRegOut_22;
+      _T_392 <= _T_391;
     end
     if (reset) begin
-      adjShiftRegOut_24 <= 16'sh0;
+      _T_393 <= 1'h0;
     end else if (_T_302) begin
-      adjShiftRegOut_24 <= adjShiftRegOut_23;
+      _T_393 <= _T_392;
     end
     if (reset) begin
-      adjShiftRegOut_25 <= 16'sh0;
+      _T_394 <= 1'h0;
     end else if (_T_301) begin
-      adjShiftRegOut_25 <= adjShiftRegOut_24;
+      _T_394 <= _T_393;
     end
     if (reset) begin
-      adjShiftRegOut_26 <= 16'sh0;
+      _T_395 <= 1'h0;
     end else if (_T_300) begin
-      adjShiftRegOut_26 <= adjShiftRegOut_25;
+      _T_395 <= _T_394;
     end
     if (reset) begin
-      adjShiftRegOut_27 <= 16'sh0;
+      _T_396 <= 1'h0;
     end else if (_T_299) begin
-      adjShiftRegOut_27 <= adjShiftRegOut_26;
+      _T_396 <= _T_395;
     end
     if (reset) begin
-      adjShiftRegOut_28 <= 16'sh0;
+      _T_397 <= 1'h0;
     end else if (_T_298) begin
-      adjShiftRegOut_28 <= adjShiftRegOut_27;
+      _T_397 <= _T_396;
     end
     if (reset) begin
-      adjShiftRegOut_29 <= 16'sh0;
+      _T_398 <= 1'h0;
     end else if (_T_297) begin
-      adjShiftRegOut_29 <= adjShiftRegOut_28;
+      _T_398 <= _T_397;
     end
     if (reset) begin
-      adjShiftRegOut_30 <= 16'sh0;
+      _T_399 <= 1'h0;
     end else if (_T_296) begin
-      adjShiftRegOut_30 <= adjShiftRegOut_29;
+      _T_399 <= _T_398;
     end
     if (reset) begin
-      adjShiftRegOut_31 <= 16'sh0;
+      _T_400 <= 1'h0;
     end else if (_T_295) begin
-      adjShiftRegOut_31 <= adjShiftRegOut_30;
+      _T_400 <= _T_399;
     end
     if (reset) begin
-      adjShiftRegOut_32 <= 16'sh0;
+      _T_401 <= 1'h0;
     end else if (_T_294) begin
-      adjShiftRegOut_32 <= adjShiftRegOut_31;
+      _T_401 <= _T_400;
     end
     if (reset) begin
-      adjShiftRegOut_33 <= 16'sh0;
+      _T_402 <= 1'h0;
     end else if (_T_293) begin
-      adjShiftRegOut_33 <= adjShiftRegOut_32;
+      _T_402 <= _T_401;
     end
     if (reset) begin
-      adjShiftRegOut_34 <= 16'sh0;
+      _T_403 <= 1'h0;
     end else if (_T_292) begin
-      adjShiftRegOut_34 <= adjShiftRegOut_33;
+      _T_403 <= _T_402;
     end
     if (reset) begin
-      adjShiftRegOut_35 <= 16'sh0;
+      _T_404 <= 1'h0;
     end else if (_T_291) begin
-      adjShiftRegOut_35 <= adjShiftRegOut_34;
+      _T_404 <= _T_403;
     end
     if (reset) begin
-      adjShiftRegOut_36 <= 16'sh0;
+      _T_405 <= 1'h0;
     end else if (_T_290) begin
-      adjShiftRegOut_36 <= adjShiftRegOut_35;
+      _T_405 <= _T_404;
     end
     if (reset) begin
-      adjShiftRegOut_37 <= 16'sh0;
+      _T_406 <= 1'h0;
     end else if (_T_289) begin
-      adjShiftRegOut_37 <= adjShiftRegOut_36;
+      _T_406 <= _T_405;
     end
     if (reset) begin
-      adjShiftRegOut_38 <= 16'sh0;
+      _T_407 <= 1'h0;
     end else if (_T_288) begin
-      adjShiftRegOut_38 <= adjShiftRegOut_37;
+      _T_407 <= _T_406;
     end
     if (reset) begin
-      adjShiftRegOut_39 <= 16'sh0;
+      _T_408 <= 1'h0;
     end else if (_T_287) begin
-      adjShiftRegOut_39 <= adjShiftRegOut_38;
+      _T_408 <= _T_407;
     end
     if (reset) begin
-      adjShiftRegOut_40 <= 16'sh0;
+      _T_409 <= 1'h0;
     end else if (_T_286) begin
-      adjShiftRegOut_40 <= adjShiftRegOut_39;
+      _T_409 <= _T_408;
     end
     if (reset) begin
-      adjShiftRegOut_41 <= 16'sh0;
+      _T_410 <= 1'h0;
     end else if (_T_285) begin
-      adjShiftRegOut_41 <= adjShiftRegOut_40;
+      _T_410 <= _T_409;
     end
     if (reset) begin
-      adjShiftRegOut_42 <= 16'sh0;
+      _T_411 <= 1'h0;
     end else if (_T_284) begin
-      adjShiftRegOut_42 <= adjShiftRegOut_41;
+      _T_411 <= _T_410;
     end
     if (reset) begin
-      adjShiftRegOut_43 <= 16'sh0;
-    end else if (_T_283) begin
-      adjShiftRegOut_43 <= adjShiftRegOut_42;
-    end
-    if (reset) begin
-      adjShiftRegOut_44 <= 16'sh0;
-    end else if (_T_282) begin
-      adjShiftRegOut_44 <= adjShiftRegOut_43;
-    end
-    if (reset) begin
-      adjShiftRegOut_45 <= 16'sh0;
-    end else if (_T_281) begin
-      adjShiftRegOut_45 <= adjShiftRegOut_44;
-    end
-    if (reset) begin
-      adjShiftRegOut_46 <= 16'sh0;
-    end else if (_T_280) begin
-      adjShiftRegOut_46 <= adjShiftRegOut_45;
-    end
-    if (reset) begin
-      adjShiftRegOut_47 <= 16'sh0;
-    end else if (_T_279) begin
-      adjShiftRegOut_47 <= adjShiftRegOut_46;
-    end
-    if (reset) begin
-      adjShiftRegOut_48 <= 16'sh0;
-    end else if (_T_278) begin
-      adjShiftRegOut_48 <= adjShiftRegOut_47;
-    end
-    if (reset) begin
-      adjShiftRegOut_49 <= 16'sh0;
-    end else if (_T_277) begin
-      adjShiftRegOut_49 <= adjShiftRegOut_48;
-    end
-    if (reset) begin
-      adjShiftRegOut_50 <= 16'sh0;
-    end else if (_T_276) begin
-      adjShiftRegOut_50 <= adjShiftRegOut_49;
-    end
-    if (reset) begin
-      adjShiftRegOut_51 <= 16'sh0;
-    end else if (_T_275) begin
-      adjShiftRegOut_51 <= adjShiftRegOut_50;
-    end
-    if (reset) begin
-      adjShiftRegOut_52 <= 16'sh0;
-    end else if (_T_274) begin
-      adjShiftRegOut_52 <= adjShiftRegOut_51;
-    end
-    if (reset) begin
-      adjShiftRegOut_53 <= 16'sh0;
-    end else if (_T_273) begin
-      adjShiftRegOut_53 <= adjShiftRegOut_52;
-    end
-    if (reset) begin
-      adjShiftRegOut_54 <= 16'sh0;
-    end else if (_T_272) begin
-      adjShiftRegOut_54 <= adjShiftRegOut_53;
-    end
-    if (reset) begin
-      adjShiftRegOut_55 <= 16'sh0;
-    end else if (_T_271) begin
-      adjShiftRegOut_55 <= adjShiftRegOut_54;
-    end
-    if (reset) begin
-      adjShiftRegOut_56 <= 16'sh0;
-    end else if (_T_270) begin
-      adjShiftRegOut_56 <= adjShiftRegOut_55;
-    end
-    if (reset) begin
-      adjShiftRegOut_57 <= 16'sh0;
-    end else if (_T_269) begin
-      adjShiftRegOut_57 <= adjShiftRegOut_56;
-    end
-    if (reset) begin
-      adjShiftRegOut_58 <= 16'sh0;
-    end else if (_T_268) begin
-      adjShiftRegOut_58 <= adjShiftRegOut_57;
-    end
-    if (reset) begin
-      adjShiftRegOut_59 <= 16'sh0;
-    end else if (_T_267) begin
-      adjShiftRegOut_59 <= adjShiftRegOut_58;
-    end
-    if (reset) begin
-      adjShiftRegOut_60 <= 16'sh0;
-    end else if (_T_266) begin
-      adjShiftRegOut_60 <= adjShiftRegOut_59;
-    end
-    if (reset) begin
-      adjShiftRegOut_61 <= 16'sh0;
-    end else if (_T_265) begin
-      adjShiftRegOut_61 <= adjShiftRegOut_60;
-    end
-    if (reset) begin
-      adjShiftRegOut_62 <= 16'sh0;
-    end else if (_T_264) begin
-      adjShiftRegOut_62 <= adjShiftRegOut_61;
-    end
-    if (reset) begin
-      adjShiftRegOut_63 <= 16'sh0;
-    end else if (_T_263) begin
-      adjShiftRegOut_63 <= adjShiftRegOut_62;
-    end
-    if (reset) begin
-      cntIn <= 7'h0;
-    end else if (_T_804) begin
-      cntIn <= 7'h0;
-    end else if (_T_1) begin
-      cntIn <= _T_398;
-    end
-    if (reset) begin
-      _T_736 <= 1'h0;
-    end else if (_T_409) begin
-      _T_736 <= _T_395;
-    end
-    if (reset) begin
-      _T_737 <= 1'h0;
-    end else if (_T_734) begin
-      _T_737 <= _T_736;
-    end
-    if (reset) begin
-      _T_738 <= 1'h0;
-    end else if (_T_733) begin
-      _T_738 <= _T_737;
-    end
-    if (reset) begin
-      _T_739 <= 1'h0;
-    end else if (_T_732) begin
-      _T_739 <= _T_738;
-    end
-    if (reset) begin
-      _T_740 <= 1'h0;
-    end else if (_T_731) begin
-      _T_740 <= _T_739;
-    end
-    if (reset) begin
-      _T_741 <= 1'h0;
-    end else if (_T_730) begin
-      _T_741 <= _T_740;
-    end
-    if (reset) begin
-      _T_742 <= 1'h0;
-    end else if (_T_729) begin
-      _T_742 <= _T_741;
-    end
-    if (reset) begin
-      _T_743 <= 1'h0;
-    end else if (_T_728) begin
-      _T_743 <= _T_742;
-    end
-    if (reset) begin
-      _T_744 <= 1'h0;
-    end else if (_T_727) begin
-      _T_744 <= _T_743;
-    end
-    if (reset) begin
-      _T_745 <= 1'h0;
-    end else if (_T_726) begin
-      _T_745 <= _T_744;
-    end
-    if (reset) begin
-      _T_746 <= 1'h0;
-    end else if (_T_725) begin
-      _T_746 <= _T_745;
-    end
-    if (reset) begin
-      _T_747 <= 1'h0;
-    end else if (_T_724) begin
-      _T_747 <= _T_746;
-    end
-    if (reset) begin
-      _T_748 <= 1'h0;
-    end else if (_T_723) begin
-      _T_748 <= _T_747;
-    end
-    if (reset) begin
-      _T_749 <= 1'h0;
-    end else if (_T_722) begin
-      _T_749 <= _T_748;
-    end
-    if (reset) begin
-      _T_750 <= 1'h0;
-    end else if (_T_721) begin
-      _T_750 <= _T_749;
-    end
-    if (reset) begin
-      _T_751 <= 1'h0;
-    end else if (_T_720) begin
-      _T_751 <= _T_750;
-    end
-    if (reset) begin
-      _T_752 <= 1'h0;
-    end else if (_T_719) begin
-      _T_752 <= _T_751;
-    end
-    if (reset) begin
-      _T_753 <= 1'h0;
-    end else if (_T_718) begin
-      _T_753 <= _T_752;
-    end
-    if (reset) begin
-      _T_754 <= 1'h0;
-    end else if (_T_717) begin
-      _T_754 <= _T_753;
-    end
-    if (reset) begin
-      _T_755 <= 1'h0;
-    end else if (_T_716) begin
-      _T_755 <= _T_754;
-    end
-    if (reset) begin
-      _T_756 <= 1'h0;
-    end else if (_T_715) begin
-      _T_756 <= _T_755;
-    end
-    if (reset) begin
-      _T_757 <= 1'h0;
-    end else if (_T_714) begin
-      _T_757 <= _T_756;
-    end
-    if (reset) begin
-      _T_758 <= 1'h0;
-    end else if (_T_713) begin
-      _T_758 <= _T_757;
-    end
-    if (reset) begin
-      _T_759 <= 1'h0;
-    end else if (_T_712) begin
-      _T_759 <= _T_758;
-    end
-    if (reset) begin
-      _T_760 <= 1'h0;
-    end else if (_T_711) begin
-      _T_760 <= _T_759;
-    end
-    if (reset) begin
-      _T_761 <= 1'h0;
-    end else if (_T_710) begin
-      _T_761 <= _T_760;
-    end
-    if (reset) begin
-      _T_762 <= 1'h0;
-    end else if (_T_709) begin
-      _T_762 <= _T_761;
-    end
-    if (reset) begin
-      _T_763 <= 1'h0;
-    end else if (_T_708) begin
-      _T_763 <= _T_762;
-    end
-    if (reset) begin
-      _T_764 <= 1'h0;
-    end else if (_T_707) begin
-      _T_764 <= _T_763;
-    end
-    if (reset) begin
-      _T_765 <= 1'h0;
-    end else if (_T_706) begin
-      _T_765 <= _T_764;
-    end
-    if (reset) begin
-      _T_766 <= 1'h0;
-    end else if (_T_705) begin
-      _T_766 <= _T_765;
-    end
-    if (reset) begin
-      _T_767 <= 1'h0;
-    end else if (_T_704) begin
-      _T_767 <= _T_766;
-    end
-    if (reset) begin
-      _T_768 <= 1'h0;
-    end else if (_T_703) begin
-      _T_768 <= _T_767;
-    end
-    if (reset) begin
-      _T_769 <= 1'h0;
-    end else if (_T_702) begin
-      _T_769 <= _T_768;
-    end
-    if (reset) begin
-      _T_770 <= 1'h0;
-    end else if (_T_701) begin
-      _T_770 <= _T_769;
-    end
-    if (reset) begin
-      _T_771 <= 1'h0;
-    end else if (_T_700) begin
-      _T_771 <= _T_770;
-    end
-    if (reset) begin
-      _T_772 <= 1'h0;
-    end else if (_T_699) begin
-      _T_772 <= _T_771;
-    end
-    if (reset) begin
-      _T_773 <= 1'h0;
-    end else if (_T_698) begin
-      _T_773 <= _T_772;
-    end
-    if (reset) begin
-      _T_774 <= 1'h0;
-    end else if (_T_697) begin
-      _T_774 <= _T_773;
-    end
-    if (reset) begin
-      _T_775 <= 1'h0;
-    end else if (_T_696) begin
-      _T_775 <= _T_774;
-    end
-    if (reset) begin
-      _T_776 <= 1'h0;
-    end else if (_T_695) begin
-      _T_776 <= _T_775;
-    end
-    if (reset) begin
-      _T_777 <= 1'h0;
-    end else if (_T_694) begin
-      _T_777 <= _T_776;
-    end
-    if (reset) begin
-      _T_778 <= 1'h0;
-    end else if (_T_693) begin
-      _T_778 <= _T_777;
-    end
-    if (reset) begin
-      _T_779 <= 1'h0;
-    end else if (_T_692) begin
-      _T_779 <= _T_778;
-    end
-    if (reset) begin
-      _T_780 <= 1'h0;
-    end else if (_T_691) begin
-      _T_780 <= _T_779;
-    end
-    if (reset) begin
-      _T_781 <= 1'h0;
-    end else if (_T_690) begin
-      _T_781 <= _T_780;
-    end
-    if (reset) begin
-      _T_782 <= 1'h0;
-    end else if (_T_689) begin
-      _T_782 <= _T_781;
-    end
-    if (reset) begin
-      _T_783 <= 1'h0;
-    end else if (_T_688) begin
-      _T_783 <= _T_782;
-    end
-    if (reset) begin
-      _T_784 <= 1'h0;
-    end else if (_T_687) begin
-      _T_784 <= _T_783;
-    end
-    if (reset) begin
-      _T_785 <= 1'h0;
-    end else if (_T_686) begin
-      _T_785 <= _T_784;
-    end
-    if (reset) begin
-      _T_786 <= 1'h0;
-    end else if (_T_685) begin
-      _T_786 <= _T_785;
-    end
-    if (reset) begin
-      _T_787 <= 1'h0;
-    end else if (_T_684) begin
-      _T_787 <= _T_786;
-    end
-    if (reset) begin
-      _T_788 <= 1'h0;
-    end else if (_T_683) begin
-      _T_788 <= _T_787;
-    end
-    if (reset) begin
-      _T_789 <= 1'h0;
-    end else if (_T_682) begin
-      _T_789 <= _T_788;
-    end
-    if (reset) begin
-      _T_790 <= 1'h0;
-    end else if (_T_681) begin
-      _T_790 <= _T_789;
-    end
-    if (reset) begin
-      _T_791 <= 1'h0;
-    end else if (_T_680) begin
-      _T_791 <= _T_790;
-    end
-    if (reset) begin
-      _T_792 <= 1'h0;
-    end else if (_T_679) begin
-      _T_792 <= _T_791;
-    end
-    if (reset) begin
-      _T_793 <= 1'h0;
-    end else if (_T_678) begin
-      _T_793 <= _T_792;
-    end
-    if (reset) begin
-      _T_794 <= 1'h0;
-    end else if (_T_677) begin
-      _T_794 <= _T_793;
-    end
-    if (reset) begin
-      _T_795 <= 1'h0;
-    end else if (_T_676) begin
-      _T_795 <= _T_794;
-    end
-    if (reset) begin
-      _T_796 <= 1'h0;
-    end else if (_T_675) begin
-      _T_796 <= _T_795;
-    end
-    if (reset) begin
-      _T_797 <= 1'h0;
-    end else if (_T_674) begin
-      _T_797 <= _T_796;
-    end
-    if (reset) begin
-      _T_798 <= 1'h0;
-    end else if (_T_673) begin
-      _T_798 <= _T_797;
-    end
-    if (reset) begin
-      _T_799 <= 1'h0;
-    end else if (_T_672) begin
-      _T_799 <= _T_798;
+      _T_426 <= 16'sh0;
+    end else begin
+      _T_426 <= mem__T_423_data;
     end
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_T_6) begin
-          $fwrite(32'h80000002,"Assertion failed\n    at CFARUtils.scala:345 assert(depth <= maxDepth.U)\n"); // @[CFARUtils.scala 345:11]
-        end
-    `ifdef PRINTF_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef STOP_COND
-      if (`STOP_COND) begin
-    `endif
-        if (_T_6) begin
-          $fatal; // @[CFARUtils.scala 345:11]
-        end
-    `ifdef STOP_COND
-      end
-    `endif
-    `endif // SYNTHESIS
-    `ifndef SYNTHESIS
-    `ifdef PRINTF_COND
-      if (`PRINTF_COND) begin
-    `endif
-        if (_T_6) begin
+        if (_T_25) begin
           $fwrite(32'h80000002,"Assertion failed\n    at CFARUtils.scala:330 assert(depth <= maxDepth.U)\n"); // @[CFARUtils.scala 330:11]
         end
     `ifdef PRINTF_COND
@@ -16005,7 +13676,7 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_T_6) begin
+        if (_T_25) begin
           $fatal; // @[CFARUtils.scala 330:11]
         end
     `ifdef STOP_COND
@@ -16014,248 +13685,7 @@ end // initial
     `endif // SYNTHESIS
   end
 endmodule
-module MinimumCircuit(
-  input         clock,
-  input  [19:0] io_in_0,
-  input  [19:0] io_in_1,
-  input  [19:0] io_in_2,
-  input  [19:0] io_in_3,
-  input  [19:0] io_in_4,
-  input  [19:0] io_in_5,
-  input  [19:0] io_in_6,
-  input  [19:0] io_in_7,
-  input  [19:0] io_in_8,
-  input  [19:0] io_in_9,
-  input  [19:0] io_in_10,
-  input  [19:0] io_in_11,
-  input  [19:0] io_in_12,
-  input  [19:0] io_in_13,
-  input  [19:0] io_in_14,
-  input  [19:0] io_in_15,
-  input  [4:0]  io_inSize,
-  output [19:0] io_out
-);
-  wire  _T; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_1; // @[MinimumCircuit.scala 52:54]
-  wire  _T_2; // @[MinimumCircuit.scala 28:23]
-  wire  _T_3; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_4; // @[MinimumCircuit.scala 52:54]
-  wire  _T_5; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_6; // @[MinimumCircuit.scala 52:54]
-  wire  _T_7; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_8; // @[MinimumCircuit.scala 52:54]
-  wire  _T_9; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_10; // @[MinimumCircuit.scala 52:54]
-  wire  _T_11; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_12; // @[MinimumCircuit.scala 52:54]
-  wire  _T_13; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_14; // @[MinimumCircuit.scala 52:54]
-  wire  _T_15; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_16; // @[MinimumCircuit.scala 52:54]
-  wire [19:0] _T_17; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_18; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_19; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_20; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_21; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_22; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_23; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_24; // @[MinimumCircuit.scala 30:62]
-  wire  _T_25; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_26; // @[MinimumCircuit.scala 31:57]
-  wire  _T_27; // @[MinimumCircuit.scala 28:23]
-  wire  _T_28; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_29; // @[MinimumCircuit.scala 31:57]
-  wire  _T_30; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_31; // @[MinimumCircuit.scala 31:57]
-  wire  _T_32; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_33; // @[MinimumCircuit.scala 31:57]
-  wire [19:0] _T_34; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_35; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_36; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_37; // @[MinimumCircuit.scala 30:62]
-  wire  _T_38; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_39; // @[MinimumCircuit.scala 31:57]
-  wire  _T_40; // @[MinimumCircuit.scala 28:23]
-  wire  _T_41; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] _T_42; // @[MinimumCircuit.scala 31:57]
-  wire [19:0] _T_43; // @[MinimumCircuit.scala 30:62]
-  wire [19:0] _T_44; // @[MinimumCircuit.scala 30:62]
-  wire  _T_45; // @[FixedPointTypeClass.scala 53:59]
-  reg [19:0] _T_47; // @[MinimumCircuit.scala 53:41]
-  reg [31:0] _RAND_0;
-  wire  _T_48; // @[MinimumCircuit.scala 55:27]
-  reg [19:0] _T_49; // @[MinimumCircuit.scala 57:28]
-  reg [31:0] _RAND_1;
-  assign _T = $signed(io_in_0) < $signed(io_in_1); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_1 = _T ? $signed(io_in_0) : $signed(io_in_1); // @[MinimumCircuit.scala 52:54]
-  assign _T_2 = 5'h8 == io_inSize; // @[MinimumCircuit.scala 28:23]
-  assign _T_3 = $signed(io_in_2) < $signed(io_in_3); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_4 = _T_3 ? $signed(io_in_2) : $signed(io_in_3); // @[MinimumCircuit.scala 52:54]
-  assign _T_5 = $signed(io_in_4) < $signed(io_in_5); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_6 = _T_5 ? $signed(io_in_4) : $signed(io_in_5); // @[MinimumCircuit.scala 52:54]
-  assign _T_7 = $signed(io_in_6) < $signed(io_in_7); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_8 = _T_7 ? $signed(io_in_6) : $signed(io_in_7); // @[MinimumCircuit.scala 52:54]
-  assign _T_9 = $signed(io_in_8) < $signed(io_in_9); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_10 = _T_9 ? $signed(io_in_8) : $signed(io_in_9); // @[MinimumCircuit.scala 52:54]
-  assign _T_11 = $signed(io_in_10) < $signed(io_in_11); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_12 = _T_11 ? $signed(io_in_10) : $signed(io_in_11); // @[MinimumCircuit.scala 52:54]
-  assign _T_13 = $signed(io_in_12) < $signed(io_in_13); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_14 = _T_13 ? $signed(io_in_12) : $signed(io_in_13); // @[MinimumCircuit.scala 52:54]
-  assign _T_15 = $signed(io_in_14) < $signed(io_in_15); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_16 = _T_15 ? $signed(io_in_14) : $signed(io_in_15); // @[MinimumCircuit.scala 52:54]
-  assign _T_17 = _T_2 ? $signed(io_in_0) : $signed(_T_1); // @[MinimumCircuit.scala 30:62]
-  assign _T_18 = _T_2 ? $signed(io_in_1) : $signed(_T_4); // @[MinimumCircuit.scala 30:62]
-  assign _T_19 = _T_2 ? $signed(io_in_2) : $signed(_T_6); // @[MinimumCircuit.scala 30:62]
-  assign _T_20 = _T_2 ? $signed(io_in_3) : $signed(_T_8); // @[MinimumCircuit.scala 30:62]
-  assign _T_21 = _T_2 ? $signed(io_in_4) : $signed(_T_10); // @[MinimumCircuit.scala 30:62]
-  assign _T_22 = _T_2 ? $signed(io_in_5) : $signed(_T_12); // @[MinimumCircuit.scala 30:62]
-  assign _T_23 = _T_2 ? $signed(io_in_6) : $signed(_T_14); // @[MinimumCircuit.scala 30:62]
-  assign _T_24 = _T_2 ? $signed(io_in_7) : $signed(_T_16); // @[MinimumCircuit.scala 30:62]
-  assign _T_25 = $signed(_T_17) < $signed(_T_18); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_26 = _T_25 ? $signed(_T_17) : $signed(_T_18); // @[MinimumCircuit.scala 31:57]
-  assign _T_27 = 5'h4 == io_inSize; // @[MinimumCircuit.scala 28:23]
-  assign _T_28 = $signed(_T_19) < $signed(_T_20); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_29 = _T_28 ? $signed(_T_19) : $signed(_T_20); // @[MinimumCircuit.scala 31:57]
-  assign _T_30 = $signed(_T_21) < $signed(_T_22); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_31 = _T_30 ? $signed(_T_21) : $signed(_T_22); // @[MinimumCircuit.scala 31:57]
-  assign _T_32 = $signed(_T_23) < $signed(_T_24); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_33 = _T_32 ? $signed(_T_23) : $signed(_T_24); // @[MinimumCircuit.scala 31:57]
-  assign _T_34 = _T_27 ? $signed(io_in_0) : $signed(_T_26); // @[MinimumCircuit.scala 30:62]
-  assign _T_35 = _T_27 ? $signed(io_in_1) : $signed(_T_29); // @[MinimumCircuit.scala 30:62]
-  assign _T_36 = _T_27 ? $signed(io_in_2) : $signed(_T_31); // @[MinimumCircuit.scala 30:62]
-  assign _T_37 = _T_27 ? $signed(io_in_3) : $signed(_T_33); // @[MinimumCircuit.scala 30:62]
-  assign _T_38 = $signed(_T_34) < $signed(_T_35); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_39 = _T_38 ? $signed(_T_34) : $signed(_T_35); // @[MinimumCircuit.scala 31:57]
-  assign _T_40 = 5'h2 == io_inSize; // @[MinimumCircuit.scala 28:23]
-  assign _T_41 = $signed(_T_36) < $signed(_T_37); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_42 = _T_41 ? $signed(_T_36) : $signed(_T_37); // @[MinimumCircuit.scala 31:57]
-  assign _T_43 = _T_40 ? $signed(io_in_0) : $signed(_T_39); // @[MinimumCircuit.scala 30:62]
-  assign _T_44 = _T_40 ? $signed(io_in_1) : $signed(_T_42); // @[MinimumCircuit.scala 30:62]
-  assign _T_45 = $signed(_T_43) < $signed(_T_44); // @[FixedPointTypeClass.scala 53:59]
-  assign _T_48 = io_inSize == 5'h1; // @[MinimumCircuit.scala 55:27]
-  assign io_out = _T_48 ? $signed(_T_49) : $signed(_T_47); // @[MinimumCircuit.scala 57:18 MinimumCircuit.scala 62:16]
-`ifdef RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_REG_INIT
-`define RANDOMIZE
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-`define RANDOMIZE
-`endif
-`ifndef RANDOM
-`define RANDOM $random
-`endif
-`ifdef RANDOMIZE_MEM_INIT
-  integer initvar;
-`endif
-`ifndef SYNTHESIS
-initial begin
-  `ifdef RANDOMIZE
-    `ifdef INIT_RANDOM
-      `INIT_RANDOM
-    `endif
-    `ifndef VERILATOR
-      `ifdef RANDOMIZE_DELAY
-        #`RANDOMIZE_DELAY begin end
-      `else
-        #0.002 begin end
-      `endif
-    `endif
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_0 = {1{`RANDOM}};
-  _T_47 = _RAND_0[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_1 = {1{`RANDOM}};
-  _T_49 = _RAND_1[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `endif // RANDOMIZE
-end // initial
-`endif // SYNTHESIS
-  always @(posedge clock) begin
-    if (_T_45) begin
-      if (_T_40) begin
-        _T_47 <= io_in_0;
-      end else if (_T_38) begin
-        if (_T_27) begin
-          _T_47 <= io_in_0;
-        end else if (_T_25) begin
-          if (_T_2) begin
-            _T_47 <= io_in_0;
-          end else if (_T) begin
-            _T_47 <= io_in_0;
-          end else begin
-            _T_47 <= io_in_1;
-          end
-        end else if (_T_2) begin
-          _T_47 <= io_in_1;
-        end else if (_T_3) begin
-          _T_47 <= io_in_2;
-        end else begin
-          _T_47 <= io_in_3;
-        end
-      end else if (_T_27) begin
-        _T_47 <= io_in_1;
-      end else if (_T_28) begin
-        if (_T_2) begin
-          _T_47 <= io_in_2;
-        end else if (_T_5) begin
-          _T_47 <= io_in_4;
-        end else begin
-          _T_47 <= io_in_5;
-        end
-      end else if (_T_2) begin
-        _T_47 <= io_in_3;
-      end else if (_T_7) begin
-        _T_47 <= io_in_6;
-      end else begin
-        _T_47 <= io_in_7;
-      end
-    end else if (_T_40) begin
-      _T_47 <= io_in_1;
-    end else if (_T_41) begin
-      if (_T_27) begin
-        _T_47 <= io_in_2;
-      end else if (_T_30) begin
-        if (_T_2) begin
-          _T_47 <= io_in_4;
-        end else if (_T_9) begin
-          _T_47 <= io_in_8;
-        end else begin
-          _T_47 <= io_in_9;
-        end
-      end else if (_T_2) begin
-        _T_47 <= io_in_5;
-      end else if (_T_11) begin
-        _T_47 <= io_in_10;
-      end else begin
-        _T_47 <= io_in_11;
-      end
-    end else if (_T_27) begin
-      _T_47 <= io_in_3;
-    end else if (_T_32) begin
-      if (_T_2) begin
-        _T_47 <= io_in_6;
-      end else if (_T_13) begin
-        _T_47 <= io_in_12;
-      end else begin
-        _T_47 <= io_in_13;
-      end
-    end else if (_T_2) begin
-      _T_47 <= io_in_7;
-    end else if (_T_15) begin
-      _T_47 <= io_in_14;
-    end else begin
-      _T_47 <= io_in_15;
-    end
-    _T_49 <= io_in_0;
-  end
-endmodule
-module Queue_5(
+module Queue_7(
   input         clock,
   input         reset,
   output        io_enq_ready,
@@ -16444,7 +13874,7 @@ end // initial
     end
   end
 endmodule
-module Queue_6(
+module Queue_9(
   input   clock,
   input   reset,
   output  io_enq_ready,
@@ -16583,7 +14013,7 @@ end // initial
     end
   end
 endmodule
-module CFARCoreWithASR(
+module CFARCoreWithMem(
   input         clock,
   input         reset,
   output        io_in_ready,
@@ -16597,7 +14027,6 @@ module CFARCoreWithASR(
   input  [1:0]  io_cfarMode,
   input  [6:0]  io_windowCells,
   input  [3:0]  io_guardCells,
-  input  [6:0]  io_subCells,
   input         io_out_ready,
   output        io_out_valid,
   output        io_out_bits_peak,
@@ -16606,1375 +14035,217 @@ module CFARCoreWithASR(
   output        io_lastOut,
   output [8:0]  io_fftBin
 );
-  wire  laggWindow_clock; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_reset; // @[CFARCoreWithASR.scala 43:30]
-  wire [6:0] laggWindow_io_depth; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_in_ready; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_in_valid; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_in_bits; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_lastIn; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_out_ready; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_out_valid; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_out_bits; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_lastOut; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_0; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_1; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_2; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_3; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_4; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_5; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_6; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_7; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_8; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_9; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_10; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_11; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_12; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_13; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_14; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_15; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_16; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_17; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_18; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_19; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_20; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_21; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_22; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_23; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_24; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_25; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_26; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_27; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_28; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_29; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_30; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_31; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_32; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_33; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_34; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_35; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_36; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_37; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_38; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_39; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_40; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_41; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_42; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_43; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_44; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_45; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_46; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_47; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_48; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_49; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_50; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_51; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_52; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_53; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_54; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_55; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_56; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_57; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_58; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_59; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_60; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_61; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_62; // @[CFARCoreWithASR.scala 43:30]
-  wire [15:0] laggWindow_io_parallelOut_63; // @[CFARCoreWithASR.scala 43:30]
-  wire [6:0] laggWindow_io_cnt; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggWindow_io_regFull; // @[CFARCoreWithASR.scala 43:30]
-  wire  laggGuard_clock; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_reset; // @[CFARCoreWithASR.scala 58:29]
-  wire [3:0] laggGuard_io_depth; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_io_in_ready; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_io_in_valid; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_in_bits; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_io_lastIn; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_io_out_ready; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_io_out_valid; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_out_bits; // @[CFARCoreWithASR.scala 58:29]
-  wire  laggGuard_io_lastOut; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_0; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_1; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_2; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_3; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_4; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_5; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_6; // @[CFARCoreWithASR.scala 58:29]
-  wire [15:0] laggGuard_io_parallelOut_7; // @[CFARCoreWithASR.scala 58:29]
-  wire  cellUnderTest_clock; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_reset; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_io_in_ready; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_io_in_valid; // @[CFARCoreWithASR.scala 63:29]
-  wire [15:0] cellUnderTest_io_in_bits; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_io_lastIn; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_io_out_ready; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_io_out_valid; // @[CFARCoreWithASR.scala 63:29]
-  wire [15:0] cellUnderTest_io_out_bits; // @[CFARCoreWithASR.scala 63:29]
-  wire  cellUnderTest_io_lastOut; // @[CFARCoreWithASR.scala 63:29]
-  wire  leadGuard_clock; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_reset; // @[CFARCoreWithASR.scala 68:25]
-  wire [3:0] leadGuard_io_depth; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_io_in_ready; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_io_in_valid; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_in_bits; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_io_lastIn; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_io_out_ready; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_io_out_valid; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_out_bits; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadGuard_io_lastOut; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_0; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_1; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_2; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_3; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_4; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_5; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_6; // @[CFARCoreWithASR.scala 68:25]
-  wire [15:0] leadGuard_io_parallelOut_7; // @[CFARCoreWithASR.scala 68:25]
-  wire  leadWindow_clock; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_reset; // @[CFARCoreWithASR.scala 74:26]
-  wire [6:0] leadWindow_io_depth; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_io_in_ready; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_io_in_valid; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_in_bits; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_io_lastIn; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_io_out_ready; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_io_out_valid; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_0; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_1; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_2; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_3; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_4; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_5; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_6; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_7; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_8; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_9; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_10; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_11; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_12; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_13; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_14; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_15; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_16; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_17; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_18; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_19; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_20; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_21; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_22; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_23; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_24; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_25; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_26; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_27; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_28; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_29; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_30; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_31; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_32; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_33; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_34; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_35; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_36; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_37; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_38; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_39; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_40; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_41; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_42; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_43; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_44; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_45; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_46; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_47; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_48; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_49; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_50; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_51; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_52; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_53; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_54; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_55; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_56; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_57; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_58; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_59; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_60; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_61; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_62; // @[CFARCoreWithASR.scala 74:26]
-  wire [15:0] leadWindow_io_parallelOut_63; // @[CFARCoreWithASR.scala 74:26]
-  wire [6:0] leadWindow_io_cnt; // @[CFARCoreWithASR.scala 74:26]
-  wire  leadWindow_io_regFull; // @[CFARCoreWithASR.scala 74:26]
-  wire  minCircuit_clock; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_0; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_1; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_2; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_3; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_4; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_5; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_6; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_7; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_8; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_9; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_10; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_11; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_12; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_13; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_14; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_in_15; // @[CFARCoreWithASR.scala 207:26]
-  wire [4:0] minCircuit_io_inSize; // @[CFARCoreWithASR.scala 207:26]
-  wire [19:0] minCircuit_io_out; // @[CFARCoreWithASR.scala 207:26]
-  wire  Queue_clock; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_reset; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_io_enq_ready; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_io_enq_valid; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_io_enq_bits_peak; // @[CFARCoreWithASR.scala 417:27]
-  wire [15:0] Queue_io_enq_bits_cut; // @[CFARCoreWithASR.scala 417:27]
-  wire [15:0] Queue_io_enq_bits_threshold; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_io_deq_ready; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_io_deq_valid; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_io_deq_bits_peak; // @[CFARCoreWithASR.scala 417:27]
-  wire [15:0] Queue_io_deq_bits_cut; // @[CFARCoreWithASR.scala 417:27]
-  wire [15:0] Queue_io_deq_bits_threshold; // @[CFARCoreWithASR.scala 417:27]
-  wire  Queue_1_clock; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_reset; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_io_enq_ready; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_io_enq_valid; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_io_enq_bits; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_io_deq_ready; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_io_deq_valid; // @[CFARCoreWithASR.scala 434:27]
-  wire  Queue_1_io_deq_bits; // @[CFARCoreWithASR.scala 434:27]
-  wire  _T; // @[CFARCoreWithASR.scala 20:25]
-  wire  _T_2; // @[CFARCoreWithASR.scala 20:9]
-  wire  _T_3; // @[CFARCoreWithASR.scala 20:9]
-  reg  flushing; // @[CFARCoreWithASR.scala 23:25]
+  wire  laggWindow_clock; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_reset; // @[CFARCoreWithMem.scala 40:30]
+  wire [6:0] laggWindow_io_depth; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_in_ready; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_in_valid; // @[CFARCoreWithMem.scala 40:30]
+  wire [15:0] laggWindow_io_in_bits; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_lastIn; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_out_ready; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_out_valid; // @[CFARCoreWithMem.scala 40:30]
+  wire [15:0] laggWindow_io_out_bits; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_lastOut; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggWindow_io_memFull; // @[CFARCoreWithMem.scala 40:30]
+  wire  laggGuard_clock; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_reset; // @[CFARCoreWithMem.scala 45:29]
+  wire [3:0] laggGuard_io_depth; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_io_in_ready; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_io_in_valid; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_in_bits; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_io_lastIn; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_io_out_ready; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_io_out_valid; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_out_bits; // @[CFARCoreWithMem.scala 45:29]
+  wire  laggGuard_io_lastOut; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_0; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_1; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_2; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_3; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_4; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_5; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_6; // @[CFARCoreWithMem.scala 45:29]
+  wire [15:0] laggGuard_io_parallelOut_7; // @[CFARCoreWithMem.scala 45:29]
+  wire  cellUnderTest_clock; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_reset; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_io_in_ready; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_io_in_valid; // @[CFARCoreWithMem.scala 50:29]
+  wire [15:0] cellUnderTest_io_in_bits; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_io_lastIn; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_io_out_ready; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_io_out_valid; // @[CFARCoreWithMem.scala 50:29]
+  wire [15:0] cellUnderTest_io_out_bits; // @[CFARCoreWithMem.scala 50:29]
+  wire  cellUnderTest_io_lastOut; // @[CFARCoreWithMem.scala 50:29]
+  wire  leadGuard_clock; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_reset; // @[CFARCoreWithMem.scala 55:25]
+  wire [3:0] leadGuard_io_depth; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_io_in_ready; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_io_in_valid; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_in_bits; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_io_lastIn; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_io_out_ready; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_io_out_valid; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_out_bits; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadGuard_io_lastOut; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_0; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_1; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_2; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_3; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_4; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_5; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_6; // @[CFARCoreWithMem.scala 55:25]
+  wire [15:0] leadGuard_io_parallelOut_7; // @[CFARCoreWithMem.scala 55:25]
+  wire  leadWindow_clock; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_reset; // @[CFARCoreWithMem.scala 63:29]
+  wire [6:0] leadWindow_io_depth; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_in_ready; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_in_valid; // @[CFARCoreWithMem.scala 63:29]
+  wire [15:0] leadWindow_io_in_bits; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_lastIn; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_out_ready; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_out_valid; // @[CFARCoreWithMem.scala 63:29]
+  wire [15:0] leadWindow_io_out_bits; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_memFull; // @[CFARCoreWithMem.scala 63:29]
+  wire  leadWindow_io_memEmpty; // @[CFARCoreWithMem.scala 63:29]
+  wire  Queue_clock; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_reset; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_io_enq_ready; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_io_enq_valid; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_io_enq_bits_peak; // @[CFARCoreWithMem.scala 214:27]
+  wire [15:0] Queue_io_enq_bits_cut; // @[CFARCoreWithMem.scala 214:27]
+  wire [15:0] Queue_io_enq_bits_threshold; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_io_deq_ready; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_io_deq_valid; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_io_deq_bits_peak; // @[CFARCoreWithMem.scala 214:27]
+  wire [15:0] Queue_io_deq_bits_cut; // @[CFARCoreWithMem.scala 214:27]
+  wire [15:0] Queue_io_deq_bits_threshold; // @[CFARCoreWithMem.scala 214:27]
+  wire  Queue_2_clock; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_reset; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_io_enq_ready; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_io_enq_valid; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_io_enq_bits; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_io_deq_ready; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_io_deq_valid; // @[CFARCoreWithMem.scala 230:27]
+  wire  Queue_2_io_deq_bits; // @[CFARCoreWithMem.scala 230:27]
+  reg  lastCut; // @[CFARCoreWithMem.scala 20:24]
   reg [31:0] _RAND_0;
-  reg [8:0] cntIn; // @[CFARCoreWithASR.scala 24:22]
+  reg  flushing; // @[CFARCoreWithMem.scala 21:25]
   reg [31:0] _RAND_1;
-  reg [8:0] cntOut; // @[CFARCoreWithASR.scala 25:23]
+  reg [8:0] cntIn; // @[CFARCoreWithMem.scala 22:22]
   reg [31:0] _RAND_2;
-  reg  initialInDone; // @[CFARCoreWithASR.scala 26:30]
+  reg [8:0] cntOut; // @[CFARCoreWithMem.scala 23:23]
   reg [31:0] _RAND_3;
-  wire [6:0] _GEN_733; // @[CFARCoreWithASR.scala 37:32]
-  wire [7:0] _T_4; // @[CFARCoreWithASR.scala 37:32]
-  wire [8:0] latency; // @[CFARCoreWithASR.scala 37:49]
-  wire [8:0] _T_5; // @[CFARCoreWithASR.scala 38:26]
-  wire [5:0] _T_6; // @[CFARCoreWithASR.scala 38:49]
-  wire [8:0] _GEN_734; // @[CFARCoreWithASR.scala 38:43]
-  wire [8:0] _T_8; // @[CFARCoreWithASR.scala 38:43]
-  wire [8:0] _T_10; // @[CFARCoreWithASR.scala 38:65]
-  wire [9:0] _GEN_735; // @[CFARCoreWithASR.scala 38:20]
-  wire  _T_11; // @[CFARCoreWithASR.scala 38:20]
-  wire  _T_13; // @[CFARCoreWithASR.scala 38:9]
-  wire  _T_14; // @[CFARCoreWithASR.scala 38:9]
-  reg  lastOut; // @[Reg.scala 15:16]
+  reg  initialInDone; // @[CFARCoreWithMem.scala 24:30]
   reg [31:0] _RAND_4;
-  reg [19:0] sumSubLaggs_0; // @[CFARCoreWithASR.scala 86:28]
+  wire [6:0] _GEN_41; // @[CFARCoreWithMem.scala 32:32]
+  wire [7:0] _T; // @[CFARCoreWithMem.scala 32:32]
+  wire [8:0] latency; // @[CFARCoreWithMem.scala 32:49]
+  wire [8:0] _T_1; // @[CFARCoreWithMem.scala 33:26]
+  wire [5:0] _T_2; // @[CFARCoreWithMem.scala 33:49]
+  wire [8:0] _GEN_42; // @[CFARCoreWithMem.scala 33:43]
+  wire [8:0] _T_4; // @[CFARCoreWithMem.scala 33:43]
+  wire [8:0] _T_6; // @[CFARCoreWithMem.scala 33:65]
+  wire [9:0] _GEN_43; // @[CFARCoreWithMem.scala 33:20]
+  wire  _T_7; // @[CFARCoreWithMem.scala 33:20]
+  wire  _T_9; // @[CFARCoreWithMem.scala 33:9]
+  wire  _T_10; // @[CFARCoreWithMem.scala 33:9]
+  wire  _T_11; // @[CFARCoreWithMem.scala 34:24]
+  wire  _T_13; // @[CFARCoreWithMem.scala 34:9]
+  wire  _T_14; // @[CFARCoreWithMem.scala 34:9]
+  reg [19:0] sumlagg; // @[CFARCoreWithMem.scala 37:24]
   reg [31:0] _RAND_5;
-  reg [19:0] sumSubLaggs_1; // @[CFARCoreWithASR.scala 86:28]
+  reg [19:0] sumlead; // @[CFARCoreWithMem.scala 38:24]
   reg [31:0] _RAND_6;
-  reg [19:0] sumSubLaggs_2; // @[CFARCoreWithASR.scala 86:28]
+  reg  lastOut; // @[Reg.scala 15:16]
   reg [31:0] _RAND_7;
-  reg [19:0] sumSubLaggs_3; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_8;
-  reg [19:0] sumSubLaggs_4; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_9;
-  reg [19:0] sumSubLaggs_5; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_10;
-  reg [19:0] sumSubLaggs_6; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_11;
-  reg [19:0] sumSubLaggs_7; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_12;
-  reg [19:0] sumSubLaggs_8; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_13;
-  reg [19:0] sumSubLaggs_9; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_14;
-  reg [19:0] sumSubLaggs_10; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_15;
-  reg [19:0] sumSubLaggs_11; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_16;
-  reg [19:0] sumSubLaggs_12; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_17;
-  reg [19:0] sumSubLaggs_13; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_18;
-  reg [19:0] sumSubLaggs_14; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_19;
-  reg [19:0] sumSubLaggs_15; // @[CFARCoreWithASR.scala 86:28]
-  reg [31:0] _RAND_20;
-  reg [19:0] sumSubLeads_0; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_21;
-  reg [19:0] sumSubLeads_1; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_22;
-  reg [19:0] sumSubLeads_2; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_23;
-  reg [19:0] sumSubLeads_3; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_24;
-  reg [19:0] sumSubLeads_4; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_25;
-  reg [19:0] sumSubLeads_5; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_26;
-  reg [19:0] sumSubLeads_6; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_27;
-  reg [19:0] sumSubLeads_7; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_28;
-  reg [19:0] sumSubLeads_8; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_29;
-  reg [19:0] sumSubLeads_9; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_30;
-  reg [19:0] sumSubLeads_10; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_31;
-  reg [19:0] sumSubLeads_11; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_32;
-  reg [19:0] sumSubLeads_12; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_33;
-  reg [19:0] sumSubLeads_13; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_34;
-  reg [19:0] sumSubLeads_14; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_35;
-  reg [19:0] sumSubLeads_15; // @[CFARCoreWithASR.scala 87:28]
-  reg [31:0] _RAND_36;
-  wire  _T_86; // @[CFARCoreWithASR.scala 108:55]
-  wire  _T_87; // @[CFARCoreWithASR.scala 108:55]
-  wire  _T_88; // @[CFARCoreWithASR.scala 108:55]
-  wire  _T_89; // @[CFARCoreWithASR.scala 108:55]
-  wire  _T_90; // @[CFARCoreWithASR.scala 108:55]
-  wire  _T_92; // @[CFARCoreWithASR.scala 110:58]
-  wire  _T_93; // @[CFARCoreWithASR.scala 110:58]
-  wire  _T_94; // @[CFARCoreWithASR.scala 110:58]
-  wire  _T_95; // @[CFARCoreWithASR.scala 110:58]
-  wire  _T_96; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_97; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_98; // @[Mux.scala 87:16]
-  wire [15:0] _T_99; // @[Mux.scala 87:16]
-  wire [15:0] _T_100; // @[Mux.scala 87:16]
-  wire [15:0] _T_101; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg; // @[Mux.scala 87:16]
-  wire [15:0] _T_102; // @[Mux.scala 87:16]
-  wire [15:0] _T_103; // @[Mux.scala 87:16]
-  wire [15:0] _T_104; // @[Mux.scala 87:16]
-  wire [15:0] _T_105; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead; // @[Mux.scala 87:16]
-  wire [6:0] _T_107; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_108; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_111; // @[CFARCoreWithASR.scala 133:57]
-  wire  _T_114; // @[Decoupled.scala 40:37]
-  wire  maybeFullLagg_0; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_115; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_736; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_118; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_737; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_121; // @[FixedPointTypeClass.scala 30:68]
-  wire  _T_127; // @[Decoupled.scala 40:37]
-  wire  _T_128; // @[Decoupled.scala 40:37]
-  wire  _T_129; // @[CFARCoreWithASR.scala 170:40]
-  wire  maybeFullLead_0; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_130; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_739; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_133; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_740; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_136; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_141; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_145; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_146; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_1; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_1; // @[Mux.scala 87:16]
-  wire [6:0] _T_148; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_149; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_152; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_1; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_156; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_742; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_159; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_743; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_162; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_1; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_171; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_745; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_174; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_746; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_177; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_182; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_1; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_188; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_189; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_190; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_2; // @[Mux.scala 87:16]
-  wire [15:0] _T_191; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_2; // @[Mux.scala 87:16]
-  wire [6:0] _T_193; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_194; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_197; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_2; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_201; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_748; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_204; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_749; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_207; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_2; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_216; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_751; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_219; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_752; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_222; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_227; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_2; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_231; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_232; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_3; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_3; // @[Mux.scala 87:16]
-  wire [6:0] _T_234; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_235; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_238; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_3; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_242; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_754; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_245; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_755; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_248; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_3; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_257; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_757; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_260; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_758; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_263; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_268; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_3; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_276; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_277; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_278; // @[Mux.scala 87:16]
-  wire [15:0] _T_279; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_4; // @[Mux.scala 87:16]
-  wire [15:0] _T_280; // @[Mux.scala 87:16]
-  wire [15:0] _T_281; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_4; // @[Mux.scala 87:16]
-  wire [6:0] _T_283; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_284; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_287; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_4; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_291; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_760; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_294; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_761; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_297; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_4; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_306; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_763; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_309; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_764; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_312; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_317; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_4; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_321; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_322; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_5; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_5; // @[Mux.scala 87:16]
-  wire [6:0] _T_324; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_325; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_328; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_5; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_332; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_766; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_335; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_767; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_338; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_5; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_347; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_769; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_350; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_770; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_353; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_358; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_5; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_364; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_365; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_366; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_6; // @[Mux.scala 87:16]
-  wire [15:0] _T_367; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_6; // @[Mux.scala 87:16]
-  wire [6:0] _T_369; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_370; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_373; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_6; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_377; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_772; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_380; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_773; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_383; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_6; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_392; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_775; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_395; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_776; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_398; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_403; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_6; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_407; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_408; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_7; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_7; // @[Mux.scala 87:16]
-  wire [6:0] _T_410; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_411; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_414; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_7; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_418; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_778; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_421; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_779; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_424; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_7; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_433; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_781; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_436; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_782; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_439; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_444; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_7; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_454; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_455; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_456; // @[Mux.scala 87:16]
-  wire [15:0] _T_457; // @[Mux.scala 87:16]
-  wire [15:0] _T_458; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_8; // @[Mux.scala 87:16]
-  wire [15:0] _T_459; // @[Mux.scala 87:16]
-  wire [15:0] _T_460; // @[Mux.scala 87:16]
-  wire [15:0] _T_461; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_8; // @[Mux.scala 87:16]
-  wire [6:0] _T_463; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_464; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_467; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_8; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_471; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_784; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_474; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_785; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_477; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_8; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_486; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_787; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_489; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_788; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_492; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_497; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_8; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_501; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_502; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_9; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_9; // @[Mux.scala 87:16]
-  wire [6:0] _T_504; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_505; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_508; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_9; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_512; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_790; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_515; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_791; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_518; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_9; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_527; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_793; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_530; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_794; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_533; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_538; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_9; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_544; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_545; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_546; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_10; // @[Mux.scala 87:16]
-  wire [15:0] _T_547; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_10; // @[Mux.scala 87:16]
-  wire [6:0] _T_549; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_550; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_553; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_10; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_557; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_796; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_560; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_797; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_563; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_10; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_572; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_799; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_575; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_800; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_578; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_583; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_10; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_587; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_588; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_11; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_11; // @[Mux.scala 87:16]
-  wire [6:0] _T_590; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_591; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_594; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_11; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_598; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_802; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_601; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_803; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_604; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_11; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_613; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_805; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_616; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_806; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_619; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_624; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_11; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_632; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_633; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_634; // @[Mux.scala 87:16]
-  wire [15:0] _T_635; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_12; // @[Mux.scala 87:16]
-  wire [15:0] _T_636; // @[Mux.scala 87:16]
-  wire [15:0] _T_637; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_12; // @[Mux.scala 87:16]
-  wire [6:0] _T_639; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_640; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_643; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_12; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_647; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_808; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_650; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_809; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_653; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_12; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_662; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_811; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_665; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_812; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_668; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_673; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_12; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_677; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_678; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_13; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_13; // @[Mux.scala 87:16]
-  wire [6:0] _T_680; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_681; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_684; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_13; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_688; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_814; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_691; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_815; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_694; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_13; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_703; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_817; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_706; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_818; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_709; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_714; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_13; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_720; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_721; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] _T_722; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLagg_14; // @[Mux.scala 87:16]
-  wire [15:0] _T_723; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_14; // @[Mux.scala 87:16]
-  wire [6:0] _T_725; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_726; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_729; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_14; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_733; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_820; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_736; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_821; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_739; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_14; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_748; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_823; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_751; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_824; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_754; // @[FixedPointTypeClass.scala 30:68]
-  wire [6:0] _T_759; // @[CFARCoreWithASR.scala 103:76]
-  wire [6:0] endIndex_14; // @[CFARCoreWithASR.scala 103:94]
-  wire  _T_763; // @[CFARCoreWithASR.scala 110:76]
-  wire  _T_764; // @[CFARCoreWithASR.scala 110:64]
-  wire [15:0] minusOperandLagg_15; // @[Mux.scala 87:16]
-  wire [15:0] minusOperandLead_15; // @[Mux.scala 87:16]
-  wire [6:0] _T_766; // @[CFARCoreWithASR.scala 132:69]
-  wire  _T_767; // @[CFARCoreWithASR.scala 132:57]
-  wire  _T_770; // @[CFARCoreWithASR.scala 133:57]
-  wire  maybeFullLagg_15; // @[CFARCoreWithASR.scala 133:32]
-  wire  _T_774; // @[CFARCoreWithASR.scala 147:35]
-  wire [19:0] _GEN_826; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_777; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_827; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_780; // @[FixedPointTypeClass.scala 30:68]
-  wire  maybeFullLead_15; // @[CFARCoreWithASR.scala 132:32]
-  wire  _T_789; // @[CFARCoreWithASR.scala 172:35]
-  wire [19:0] _GEN_829; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _T_792; // @[FixedPointTypeClass.scala 20:58]
-  wire [19:0] _GEN_830; // @[FixedPointTypeClass.scala 30:68]
-  wire [19:0] _T_795; // @[FixedPointTypeClass.scala 30:68]
-  wire  _T_801; // @[CircuitMath.scala 37:22]
-  wire [1:0] _T_804; // @[CircuitMath.scala 32:10]
-  wire [1:0] _T_808; // @[CircuitMath.scala 32:10]
-  wire [1:0] _T_809; // @[CircuitMath.scala 32:10]
-  wire [1:0] _T_810; // @[CircuitMath.scala 38:21]
-  wire [2:0] _T_811; // @[Cat.scala 29:58]
-  wire [2:0] diffInSubSize; // @[CFARCoreWithASR.scala 193:45]
-  wire  _T_814; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_0; // @[Order.scala 56:31]
-  wire  _T_815; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_1; // @[Order.scala 56:31]
-  wire  _T_816; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_2; // @[Order.scala 56:31]
-  wire  _T_817; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_3; // @[Order.scala 56:31]
-  wire  _T_818; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_4; // @[Order.scala 56:31]
-  wire  _T_819; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_5; // @[Order.scala 56:31]
-  wire  _T_820; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_6; // @[Order.scala 56:31]
-  wire  _T_821; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_7; // @[Order.scala 56:31]
-  wire  _T_822; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_8; // @[Order.scala 56:31]
-  wire  _T_823; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_9; // @[Order.scala 56:31]
-  wire  _T_824; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_10; // @[Order.scala 56:31]
-  wire  _T_825; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_11; // @[Order.scala 56:31]
-  wire  _T_826; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_12; // @[Order.scala 56:31]
-  wire  _T_827; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_13; // @[Order.scala 56:31]
-  wire  _T_828; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_14; // @[Order.scala 56:31]
-  wire  _T_829; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] max_15; // @[Order.scala 56:31]
-  wire  activeSums_0; // @[CFARCoreWithASR.scala 110:29]
-  wire  _T_864; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_127; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_128; // @[CFARCoreWithASR.scala 202:27]
-  wire [1:0] _GEN_832; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_129; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_130; // @[CFARCoreWithASR.scala 202:27]
-  wire [2:0] _GEN_834; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_131; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_132; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_133; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_134; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_838; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_135; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_136; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_137; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_138; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_139; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_140; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_141; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_142; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_143; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_144; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_145; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_146; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_147; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_148; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_149; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_150; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_151; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_152; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_153; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_154; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_155; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_156; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_157; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_158; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_1; // @[CFARCoreWithASR.scala 110:29]
-  wire  _T_866; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_159; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_160; // @[CFARCoreWithASR.scala 202:27]
-  wire [1:0] _GEN_846; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_161; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_162; // @[CFARCoreWithASR.scala 202:27]
-  wire [2:0] _GEN_848; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_163; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_164; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_165; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_166; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_852; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_167; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_168; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_169; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_170; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_171; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_172; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_173; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_174; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_175; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_176; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_177; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_178; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_179; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_180; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_181; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_182; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_183; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_184; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_185; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_186; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_187; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_188; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_189; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_190; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_2; // @[CFARCoreWithASR.scala 110:29]
-  wire [1:0] _T_868; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_191; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_192; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_193; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_194; // @[CFARCoreWithASR.scala 202:27]
-  wire [2:0] _GEN_860; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_195; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_196; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_197; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_198; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_864; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_199; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_200; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_201; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_202; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_203; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_204; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_205; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_206; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_207; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_208; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_209; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_210; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_211; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_212; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_213; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_214; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_215; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_216; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_217; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_218; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_219; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_220; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_221; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_222; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_3; // @[CFARCoreWithASR.scala 110:29]
-  wire [1:0] _T_870; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_223; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_224; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_225; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_226; // @[CFARCoreWithASR.scala 202:27]
-  wire [2:0] _GEN_872; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_227; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_228; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_229; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_230; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_876; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_231; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_232; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_233; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_234; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_235; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_236; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_237; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_238; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_239; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_240; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_241; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_242; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_243; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_244; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_245; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_246; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_247; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_248; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_249; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_250; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_251; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_252; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_253; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_254; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_4; // @[CFARCoreWithASR.scala 110:29]
-  wire [2:0] _T_872; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_255; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_256; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_257; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_258; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_259; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_260; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_261; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_262; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_884; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_263; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_264; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_265; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_266; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_267; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_268; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_269; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_270; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_271; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_272; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_273; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_274; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_275; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_276; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_277; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_278; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_279; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_280; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_281; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_282; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_283; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_284; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_285; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_286; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_5; // @[CFARCoreWithASR.scala 110:29]
-  wire [2:0] _T_874; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_287; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_288; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_289; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_290; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_291; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_292; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_293; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_294; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_892; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_295; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_296; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_297; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_298; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_299; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_300; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_301; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_302; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_303; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_304; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_305; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_306; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_307; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_308; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_309; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_310; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_311; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_312; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_313; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_314; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_315; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_316; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_317; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_318; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_6; // @[CFARCoreWithASR.scala 110:29]
-  wire [2:0] _T_876; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_319; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_320; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_321; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_322; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_323; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_324; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_325; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_326; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_900; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_327; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_328; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_329; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_330; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_331; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_332; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_333; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_334; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_335; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_336; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_337; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_338; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_339; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_340; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_341; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_342; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_343; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_344; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_345; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_346; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_347; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_348; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_349; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_350; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_7; // @[CFARCoreWithASR.scala 110:29]
-  wire [2:0] _T_878; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_351; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_352; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_353; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_354; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_355; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_356; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_357; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_358; // @[CFARCoreWithASR.scala 202:27]
-  wire [3:0] _GEN_908; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_359; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_360; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_361; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_362; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_363; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_364; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_365; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_366; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_367; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_368; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_369; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_370; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_371; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_372; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_373; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_374; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_375; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_376; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_377; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_378; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_379; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_380; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_381; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_382; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_8; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_880; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_383; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_384; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_385; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_386; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_387; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_388; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_389; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_390; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_391; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_392; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_393; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_394; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_395; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_396; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_397; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_398; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_399; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_400; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_401; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_402; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_403; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_404; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_405; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_406; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_407; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_408; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_409; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_410; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_411; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_412; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_413; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_414; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_9; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_882; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_415; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_416; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_417; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_418; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_419; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_420; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_421; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_422; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_423; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_424; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_425; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_426; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_427; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_428; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_429; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_430; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_431; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_432; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_433; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_434; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_435; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_436; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_437; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_438; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_439; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_440; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_441; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_442; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_443; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_444; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_445; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_446; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_10; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_884; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_447; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_448; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_449; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_450; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_451; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_452; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_453; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_454; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_455; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_456; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_457; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_458; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_459; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_460; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_461; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_462; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_463; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_464; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_465; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_466; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_467; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_468; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_469; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_470; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_471; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_472; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_473; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_474; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_475; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_476; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_477; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_478; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_11; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_886; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_479; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_480; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_481; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_482; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_483; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_484; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_485; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_486; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_487; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_488; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_489; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_490; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_491; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_492; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_493; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_494; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_495; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_496; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_497; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_498; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_499; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_500; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_501; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_502; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_503; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_504; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_505; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_506; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_507; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_508; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_509; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_510; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_12; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_888; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_511; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_512; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_513; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_514; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_515; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_516; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_517; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_518; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_519; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_520; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_521; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_522; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_523; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_524; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_525; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_526; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_527; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_528; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_529; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_530; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_531; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_532; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_533; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_534; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_535; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_536; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_537; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_538; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_539; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_540; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_541; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_542; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_13; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_890; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_543; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_544; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_545; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_546; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_547; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_548; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_549; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_550; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_551; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_552; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_553; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_554; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_555; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_556; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_557; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_558; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_559; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_560; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_561; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_562; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_563; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_564; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_565; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_566; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_567; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_568; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_569; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_570; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_571; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_572; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_573; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_574; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_14; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_892; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_575; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_576; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_577; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_578; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_579; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_580; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_581; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_582; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_583; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_584; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_585; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_586; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_587; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_588; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_589; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_590; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_591; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_592; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_593; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_594; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_595; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_596; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_597; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_598; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_599; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_600; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_601; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_602; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_603; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_604; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_605; // @[CFARCoreWithASR.scala 200:32]
-  wire [19:0] _GEN_606; // @[CFARCoreWithASR.scala 200:32]
-  wire  activeSums_15; // @[CFARCoreWithASR.scala 110:29]
-  wire [3:0] _T_894; // @[CFARCoreWithASR.scala 201:29]
-  wire [19:0] _GEN_607; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_608; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_609; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_610; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_611; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_612; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_613; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_614; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_615; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_616; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_617; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_618; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_619; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_620; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_621; // @[CFARCoreWithASR.scala 202:27]
-  wire [19:0] _GEN_622; // @[CFARCoreWithASR.scala 202:27]
-  wire [6:0] _T_908; // @[CFARCoreWithASR.scala 209:46]
-  wire [19:0] clutterRepr; // @[FixedPointTypeClass.scala 118:51]
-  wire [8:0] _T_924; // @[CFARCoreWithASR.scala 216:20]
-  wire [8:0] _T_926; // @[CFARCoreWithASR.scala 218:28]
-  wire  _T_927; // @[CFARCoreWithASR.scala 218:15]
-  wire  _T_929; // @[CFARCoreWithASR.scala 218:35]
-  wire  _GEN_640; // @[CFARCoreWithASR.scala 218:52]
-  wire  _T_930; // @[Decoupled.scala 40:37]
-  wire  _T_931; // @[CFARCoreWithASR.scala 222:20]
-  wire [8:0] _T_934; // @[CFARCoreWithASR.scala 226:22]
-  wire [9:0] _T_936; // @[CFARCoreWithASR.scala 228:31]
-  wire [9:0] _GEN_916; // @[CFARCoreWithASR.scala 228:16]
-  wire  _T_937; // @[CFARCoreWithASR.scala 228:16]
-  wire  _T_939; // @[CFARCoreWithASR.scala 228:38]
-  wire  _T_942; // @[CFARCoreWithASR.scala 228:55]
-  wire  _GEN_644; // @[CFARCoreWithASR.scala 232:20]
+  wire  _T_21; // @[Decoupled.scala 40:37]
+  wire [8:0] _T_23; // @[CFARCoreWithMem.scala 75:20]
+  wire [8:0] _T_25; // @[CFARCoreWithMem.scala 77:28]
+  wire  _T_26; // @[CFARCoreWithMem.scala 77:15]
+  wire  _T_28; // @[CFARCoreWithMem.scala 77:35]
+  wire  _GEN_2; // @[CFARCoreWithMem.scala 77:52]
+  wire  _T_29; // @[Decoupled.scala 40:37]
+  wire  _T_30; // @[CFARCoreWithMem.scala 81:20]
+  wire [8:0] _T_33; // @[CFARCoreWithMem.scala 85:22]
+  wire [9:0] _T_35; // @[CFARCoreWithMem.scala 87:31]
+  wire [9:0] _GEN_44; // @[CFARCoreWithMem.scala 87:16]
+  wire  _T_36; // @[CFARCoreWithMem.scala 87:16]
+  wire  _T_38; // @[CFARCoreWithMem.scala 87:38]
+  wire  _T_41; // @[CFARCoreWithMem.scala 87:55]
+  wire  _T_42; // @[CFARCoreWithMem.scala 93:19]
+  wire  _GEN_6; // @[CFARCoreWithMem.scala 93:35]
   reg  flushingDelayed; // @[CFARUtils.scala 286:20]
-  reg [31:0] _RAND_37;
+  reg [31:0] _RAND_8;
+  wire  _GEN_9; // @[CFARCoreWithMem.scala 101:21]
+  wire  _T_43; // @[CFARCoreWithMem.scala 106:32]
+  wire  _T_47; // @[Decoupled.scala 40:37]
+  wire [19:0] _GEN_45; // @[FixedPointTypeClass.scala 20:58]
+  wire [19:0] _T_50; // @[FixedPointTypeClass.scala 20:58]
+  wire [19:0] _GEN_46; // @[FixedPointTypeClass.scala 30:68]
+  wire [19:0] _T_53; // @[FixedPointTypeClass.scala 30:68]
+  wire  _T_59; // @[Decoupled.scala 40:37]
+  wire  _T_60; // @[Decoupled.scala 40:37]
+  wire [19:0] _GEN_48; // @[FixedPointTypeClass.scala 20:58]
+  wire [19:0] _T_63; // @[FixedPointTypeClass.scala 20:58]
+  wire [19:0] _GEN_49; // @[FixedPointTypeClass.scala 30:68]
+  wire [19:0] _T_66; // @[FixedPointTypeClass.scala 30:68]
   wire [19:0] leftThr; // @[FixedPointTypeClass.scala 118:51]
   wire [19:0] rightThr; // @[FixedPointTypeClass.scala 118:51]
-  wire  _T_944; // @[FixedPointTypeClass.scala 55:59]
-  wire [19:0] greatestOf; // @[CFARCoreWithASR.scala 289:23]
-  wire  _T_945; // @[FixedPointTypeClass.scala 53:59]
-  wire [19:0] smallestOf; // @[CFARCoreWithASR.scala 290:23]
-  wire [19:0] _T_948; // @[FixedPointTypeClass.scala 20:58]
-  wire [18:0] _T_949; // @[FixedPointTypeClass.scala 117:50]
-  wire  _T_950; // @[Mux.scala 68:19]
-  wire [19:0] _T_951; // @[Mux.scala 68:16]
-  wire  _T_952; // @[Mux.scala 68:19]
-  wire [19:0] _T_953; // @[Mux.scala 68:16]
-  wire  _T_954; // @[Mux.scala 68:19]
-  wire [19:0] _T_955; // @[Mux.scala 68:16]
-  wire  _T_956; // @[Mux.scala 68:19]
+  wire  _T_70; // @[FixedPointTypeClass.scala 55:59]
+  wire [19:0] greatestOf; // @[CFARCoreWithMem.scala 143:23]
+  wire  _T_71; // @[FixedPointTypeClass.scala 53:59]
+  wire [19:0] smallestOf; // @[CFARCoreWithMem.scala 144:23]
+  wire [19:0] _T_74; // @[FixedPointTypeClass.scala 20:58]
+  wire [18:0] _T_75; // @[FixedPointTypeClass.scala 117:50]
+  wire  _T_78; // @[Mux.scala 68:19]
+  wire [19:0] _T_79; // @[Mux.scala 68:16]
+  wire  _T_80; // @[Mux.scala 68:19]
   wire [19:0] thrByModes; // @[Mux.scala 68:16]
-  reg  enableRightThr; // @[CFARCoreWithASR.scala 299:31]
-  reg [31:0] _RAND_38;
-  wire  _T_957; // @[CFARCoreWithASR.scala 300:9]
-  wire  _T_958; // @[Decoupled.scala 40:37]
-  wire  _T_959; // @[CFARCoreWithASR.scala 300:34]
-  wire  _GEN_651; // @[CFARCoreWithASR.scala 300:63]
-  wire  _T_960; // @[CFARCoreWithASR.scala 313:50]
-  wire  _T_961; // @[CFARCoreWithASR.scala 315:60]
-  wire  _T_962; // @[CFARCoreWithASR.scala 315:57]
-  wire [19:0] _T_963; // @[CFARCoreWithASR.scala 315:87]
-  wire [19:0] _T_964; // @[CFARCoreWithASR.scala 315:41]
-  wire [19:0] thrWithoutScaling; // @[CFARCoreWithASR.scala 313:27]
-  wire [19:0] _GEN_917; // @[FixedPointTypeClass.scala 211:35]
-  reg [35:0] _T_966; // @[Reg.scala 15:16]
-  reg [63:0] _RAND_39;
+  reg  enableRightThr; // @[CFARCoreWithMem.scala 151:31]
+  reg [31:0] _RAND_9;
+  wire  _T_81; // @[CFARCoreWithMem.scala 152:9]
+  wire  _T_83; // @[CFARCoreWithMem.scala 152:34]
+  wire  _GEN_21; // @[CFARCoreWithMem.scala 152:63]
+  wire  _T_84; // @[CFARCoreWithMem.scala 172:33]
+  wire  _T_86; // @[CFARCoreWithMem.scala 172:56]
+  wire  _T_90; // @[CFARCoreWithMem.scala 174:57]
+  wire [19:0] _T_91; // @[CFARCoreWithMem.scala 177:36]
+  wire [19:0] _T_92; // @[CFARCoreWithMem.scala 174:34]
+  wire [19:0] thrWithoutScaling; // @[CFARCoreWithMem.scala 172:32]
+  wire [19:0] _GEN_51; // @[FixedPointTypeClass.scala 211:35]
+  reg [35:0] _T_94; // @[Reg.scala 15:16]
+  reg [63:0] _RAND_10;
   wire [22:0] threshold; // @[FixedPointTypeClass.scala 153:43]
   reg [15:0] cutDelayed; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_40;
-  wire  _T_967; // @[CFARCoreWithASR.scala 394:53]
-  wire [6:0] _T_969; // @[CFARCoreWithASR.scala 394:103]
-  wire [3:0] _T_972; // @[CFARCoreWithASR.scala 394:150]
-  wire [15:0] _GEN_655; // @[CFARCoreWithASR.scala 394:38]
-  wire [15:0] _GEN_719; // @[CFARCoreWithASR.scala 394:38]
+  reg [31:0] _RAND_11;
+  wire [3:0] _T_96; // @[CFARCoreWithMem.scala 197:74]
   reg [15:0] leftNeighb; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_41;
+  reg [31:0] _RAND_12;
+  wire [15:0] _GEN_25; // @[Reg.scala 16:23]
   reg [15:0] rightNeighb; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_42;
-  wire  _T_977; // @[FixedPointTypeClass.scala 55:59]
-  wire  _T_978; // @[FixedPointTypeClass.scala 55:59]
-  wire  isLocalMax; // @[CFARCoreWithASR.scala 396:44]
-  wire [16:0] _GEN_918; // @[FixedPointTypeClass.scala 55:59]
-  wire [22:0] _GEN_919; // @[FixedPointTypeClass.scala 55:59]
+  reg [31:0] _RAND_13;
+  wire  _T_98; // @[FixedPointTypeClass.scala 55:59]
+  wire  _T_99; // @[FixedPointTypeClass.scala 55:59]
+  wire  isLocalMax; // @[CFARCoreWithMem.scala 199:44]
+  wire [16:0] _GEN_52; // @[FixedPointTypeClass.scala 55:59]
+  wire [22:0] _GEN_53; // @[FixedPointTypeClass.scala 55:59]
   wire  isPeak; // @[FixedPointTypeClass.scala 55:59]
-  wire  _T_979; // @[CFARCoreWithASR.scala 418:20]
-  wire  _T_980; // @[CFARCoreWithASR.scala 418:54]
-  wire  _T_981; // @[CFARCoreWithASR.scala 418:51]
-  reg  _T_985; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_43;
-  reg  _T_986; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_44;
-  wire  _T_987; // @[CFARCoreWithASR.scala 419:121]
-  wire  _T_989; // @[CFARCoreWithASR.scala 430:65]
-  reg  _T_993; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_45;
-  reg  _T_994; // @[Reg.scala 15:16]
-  reg [31:0] _RAND_46;
-  wire  _T_995; // @[CFARCoreWithASR.scala 435:121]
-  wire [21:0] _GEN_921; // @[CFARCoreWithASR.scala 423:37]
-  AdjustableShiftRegisterStream laggWindow ( // @[CFARCoreWithASR.scala 43:30]
+  wire  _T_100; // @[CFARCoreWithMem.scala 216:20]
+  wire  _T_101; // @[CFARCoreWithMem.scala 216:54]
+  wire  _T_102; // @[CFARCoreWithMem.scala 216:51]
+  reg  _T_106; // @[Reg.scala 15:16]
+  reg [31:0] _RAND_14;
+  reg  _T_107; // @[Reg.scala 15:16]
+  reg [31:0] _RAND_15;
+  wire  _T_108; // @[CFARCoreWithMem.scala 218:123]
+  wire  _T_110; // @[CFARCoreWithMem.scala 223:63]
+  reg  _T_120; // @[Reg.scala 15:16]
+  reg [31:0] _RAND_16;
+  reg  _T_121; // @[Reg.scala 15:16]
+  reg [31:0] _RAND_17;
+  wire  _T_122; // @[CFARCoreWithMem.scala 231:123]
+  wire [21:0] _GEN_55; // @[CFARCoreWithMem.scala 222:37]
+  ShiftRegisterMemStream laggWindow ( // @[CFARCoreWithMem.scala 40:30]
     .clock(laggWindow_clock),
     .reset(laggWindow_reset),
     .io_depth(laggWindow_io_depth),
@@ -17986,74 +14257,9 @@ module CFARCoreWithASR(
     .io_out_valid(laggWindow_io_out_valid),
     .io_out_bits(laggWindow_io_out_bits),
     .io_lastOut(laggWindow_io_lastOut),
-    .io_parallelOut_0(laggWindow_io_parallelOut_0),
-    .io_parallelOut_1(laggWindow_io_parallelOut_1),
-    .io_parallelOut_2(laggWindow_io_parallelOut_2),
-    .io_parallelOut_3(laggWindow_io_parallelOut_3),
-    .io_parallelOut_4(laggWindow_io_parallelOut_4),
-    .io_parallelOut_5(laggWindow_io_parallelOut_5),
-    .io_parallelOut_6(laggWindow_io_parallelOut_6),
-    .io_parallelOut_7(laggWindow_io_parallelOut_7),
-    .io_parallelOut_8(laggWindow_io_parallelOut_8),
-    .io_parallelOut_9(laggWindow_io_parallelOut_9),
-    .io_parallelOut_10(laggWindow_io_parallelOut_10),
-    .io_parallelOut_11(laggWindow_io_parallelOut_11),
-    .io_parallelOut_12(laggWindow_io_parallelOut_12),
-    .io_parallelOut_13(laggWindow_io_parallelOut_13),
-    .io_parallelOut_14(laggWindow_io_parallelOut_14),
-    .io_parallelOut_15(laggWindow_io_parallelOut_15),
-    .io_parallelOut_16(laggWindow_io_parallelOut_16),
-    .io_parallelOut_17(laggWindow_io_parallelOut_17),
-    .io_parallelOut_18(laggWindow_io_parallelOut_18),
-    .io_parallelOut_19(laggWindow_io_parallelOut_19),
-    .io_parallelOut_20(laggWindow_io_parallelOut_20),
-    .io_parallelOut_21(laggWindow_io_parallelOut_21),
-    .io_parallelOut_22(laggWindow_io_parallelOut_22),
-    .io_parallelOut_23(laggWindow_io_parallelOut_23),
-    .io_parallelOut_24(laggWindow_io_parallelOut_24),
-    .io_parallelOut_25(laggWindow_io_parallelOut_25),
-    .io_parallelOut_26(laggWindow_io_parallelOut_26),
-    .io_parallelOut_27(laggWindow_io_parallelOut_27),
-    .io_parallelOut_28(laggWindow_io_parallelOut_28),
-    .io_parallelOut_29(laggWindow_io_parallelOut_29),
-    .io_parallelOut_30(laggWindow_io_parallelOut_30),
-    .io_parallelOut_31(laggWindow_io_parallelOut_31),
-    .io_parallelOut_32(laggWindow_io_parallelOut_32),
-    .io_parallelOut_33(laggWindow_io_parallelOut_33),
-    .io_parallelOut_34(laggWindow_io_parallelOut_34),
-    .io_parallelOut_35(laggWindow_io_parallelOut_35),
-    .io_parallelOut_36(laggWindow_io_parallelOut_36),
-    .io_parallelOut_37(laggWindow_io_parallelOut_37),
-    .io_parallelOut_38(laggWindow_io_parallelOut_38),
-    .io_parallelOut_39(laggWindow_io_parallelOut_39),
-    .io_parallelOut_40(laggWindow_io_parallelOut_40),
-    .io_parallelOut_41(laggWindow_io_parallelOut_41),
-    .io_parallelOut_42(laggWindow_io_parallelOut_42),
-    .io_parallelOut_43(laggWindow_io_parallelOut_43),
-    .io_parallelOut_44(laggWindow_io_parallelOut_44),
-    .io_parallelOut_45(laggWindow_io_parallelOut_45),
-    .io_parallelOut_46(laggWindow_io_parallelOut_46),
-    .io_parallelOut_47(laggWindow_io_parallelOut_47),
-    .io_parallelOut_48(laggWindow_io_parallelOut_48),
-    .io_parallelOut_49(laggWindow_io_parallelOut_49),
-    .io_parallelOut_50(laggWindow_io_parallelOut_50),
-    .io_parallelOut_51(laggWindow_io_parallelOut_51),
-    .io_parallelOut_52(laggWindow_io_parallelOut_52),
-    .io_parallelOut_53(laggWindow_io_parallelOut_53),
-    .io_parallelOut_54(laggWindow_io_parallelOut_54),
-    .io_parallelOut_55(laggWindow_io_parallelOut_55),
-    .io_parallelOut_56(laggWindow_io_parallelOut_56),
-    .io_parallelOut_57(laggWindow_io_parallelOut_57),
-    .io_parallelOut_58(laggWindow_io_parallelOut_58),
-    .io_parallelOut_59(laggWindow_io_parallelOut_59),
-    .io_parallelOut_60(laggWindow_io_parallelOut_60),
-    .io_parallelOut_61(laggWindow_io_parallelOut_61),
-    .io_parallelOut_62(laggWindow_io_parallelOut_62),
-    .io_parallelOut_63(laggWindow_io_parallelOut_63),
-    .io_cnt(laggWindow_io_cnt),
-    .io_regFull(laggWindow_io_regFull)
+    .io_memFull(laggWindow_io_memFull)
   );
-  AdjustableShiftRegisterStream_1 laggGuard ( // @[CFARCoreWithASR.scala 58:29]
+  AdjustableShiftRegisterStream laggGuard ( // @[CFARCoreWithMem.scala 45:29]
     .clock(laggGuard_clock),
     .reset(laggGuard_reset),
     .io_depth(laggGuard_io_depth),
@@ -18074,7 +14280,7 @@ module CFARCoreWithASR(
     .io_parallelOut_6(laggGuard_io_parallelOut_6),
     .io_parallelOut_7(laggGuard_io_parallelOut_7)
   );
-  CellUnderTest cellUnderTest ( // @[CFARCoreWithASR.scala 63:29]
+  CellUnderTest cellUnderTest ( // @[CFARCoreWithMem.scala 50:29]
     .clock(cellUnderTest_clock),
     .reset(cellUnderTest_reset),
     .io_in_ready(cellUnderTest_io_in_ready),
@@ -18086,7 +14292,7 @@ module CFARCoreWithASR(
     .io_out_bits(cellUnderTest_io_out_bits),
     .io_lastOut(cellUnderTest_io_lastOut)
   );
-  AdjustableShiftRegisterStream_1 leadGuard ( // @[CFARCoreWithASR.scala 68:25]
+  AdjustableShiftRegisterStream leadGuard ( // @[CFARCoreWithMem.scala 55:25]
     .clock(leadGuard_clock),
     .reset(leadGuard_reset),
     .io_depth(leadGuard_io_depth),
@@ -18107,7 +14313,7 @@ module CFARCoreWithASR(
     .io_parallelOut_6(leadGuard_io_parallelOut_6),
     .io_parallelOut_7(leadGuard_io_parallelOut_7)
   );
-  AdjustableShiftRegisterStream_3 leadWindow ( // @[CFARCoreWithASR.scala 74:26]
+  ShiftRegisterMemStream_1 leadWindow ( // @[CFARCoreWithMem.scala 63:29]
     .clock(leadWindow_clock),
     .reset(leadWindow_reset),
     .io_depth(leadWindow_io_depth),
@@ -18117,95 +14323,11 @@ module CFARCoreWithASR(
     .io_lastIn(leadWindow_io_lastIn),
     .io_out_ready(leadWindow_io_out_ready),
     .io_out_valid(leadWindow_io_out_valid),
-    .io_parallelOut_0(leadWindow_io_parallelOut_0),
-    .io_parallelOut_1(leadWindow_io_parallelOut_1),
-    .io_parallelOut_2(leadWindow_io_parallelOut_2),
-    .io_parallelOut_3(leadWindow_io_parallelOut_3),
-    .io_parallelOut_4(leadWindow_io_parallelOut_4),
-    .io_parallelOut_5(leadWindow_io_parallelOut_5),
-    .io_parallelOut_6(leadWindow_io_parallelOut_6),
-    .io_parallelOut_7(leadWindow_io_parallelOut_7),
-    .io_parallelOut_8(leadWindow_io_parallelOut_8),
-    .io_parallelOut_9(leadWindow_io_parallelOut_9),
-    .io_parallelOut_10(leadWindow_io_parallelOut_10),
-    .io_parallelOut_11(leadWindow_io_parallelOut_11),
-    .io_parallelOut_12(leadWindow_io_parallelOut_12),
-    .io_parallelOut_13(leadWindow_io_parallelOut_13),
-    .io_parallelOut_14(leadWindow_io_parallelOut_14),
-    .io_parallelOut_15(leadWindow_io_parallelOut_15),
-    .io_parallelOut_16(leadWindow_io_parallelOut_16),
-    .io_parallelOut_17(leadWindow_io_parallelOut_17),
-    .io_parallelOut_18(leadWindow_io_parallelOut_18),
-    .io_parallelOut_19(leadWindow_io_parallelOut_19),
-    .io_parallelOut_20(leadWindow_io_parallelOut_20),
-    .io_parallelOut_21(leadWindow_io_parallelOut_21),
-    .io_parallelOut_22(leadWindow_io_parallelOut_22),
-    .io_parallelOut_23(leadWindow_io_parallelOut_23),
-    .io_parallelOut_24(leadWindow_io_parallelOut_24),
-    .io_parallelOut_25(leadWindow_io_parallelOut_25),
-    .io_parallelOut_26(leadWindow_io_parallelOut_26),
-    .io_parallelOut_27(leadWindow_io_parallelOut_27),
-    .io_parallelOut_28(leadWindow_io_parallelOut_28),
-    .io_parallelOut_29(leadWindow_io_parallelOut_29),
-    .io_parallelOut_30(leadWindow_io_parallelOut_30),
-    .io_parallelOut_31(leadWindow_io_parallelOut_31),
-    .io_parallelOut_32(leadWindow_io_parallelOut_32),
-    .io_parallelOut_33(leadWindow_io_parallelOut_33),
-    .io_parallelOut_34(leadWindow_io_parallelOut_34),
-    .io_parallelOut_35(leadWindow_io_parallelOut_35),
-    .io_parallelOut_36(leadWindow_io_parallelOut_36),
-    .io_parallelOut_37(leadWindow_io_parallelOut_37),
-    .io_parallelOut_38(leadWindow_io_parallelOut_38),
-    .io_parallelOut_39(leadWindow_io_parallelOut_39),
-    .io_parallelOut_40(leadWindow_io_parallelOut_40),
-    .io_parallelOut_41(leadWindow_io_parallelOut_41),
-    .io_parallelOut_42(leadWindow_io_parallelOut_42),
-    .io_parallelOut_43(leadWindow_io_parallelOut_43),
-    .io_parallelOut_44(leadWindow_io_parallelOut_44),
-    .io_parallelOut_45(leadWindow_io_parallelOut_45),
-    .io_parallelOut_46(leadWindow_io_parallelOut_46),
-    .io_parallelOut_47(leadWindow_io_parallelOut_47),
-    .io_parallelOut_48(leadWindow_io_parallelOut_48),
-    .io_parallelOut_49(leadWindow_io_parallelOut_49),
-    .io_parallelOut_50(leadWindow_io_parallelOut_50),
-    .io_parallelOut_51(leadWindow_io_parallelOut_51),
-    .io_parallelOut_52(leadWindow_io_parallelOut_52),
-    .io_parallelOut_53(leadWindow_io_parallelOut_53),
-    .io_parallelOut_54(leadWindow_io_parallelOut_54),
-    .io_parallelOut_55(leadWindow_io_parallelOut_55),
-    .io_parallelOut_56(leadWindow_io_parallelOut_56),
-    .io_parallelOut_57(leadWindow_io_parallelOut_57),
-    .io_parallelOut_58(leadWindow_io_parallelOut_58),
-    .io_parallelOut_59(leadWindow_io_parallelOut_59),
-    .io_parallelOut_60(leadWindow_io_parallelOut_60),
-    .io_parallelOut_61(leadWindow_io_parallelOut_61),
-    .io_parallelOut_62(leadWindow_io_parallelOut_62),
-    .io_parallelOut_63(leadWindow_io_parallelOut_63),
-    .io_cnt(leadWindow_io_cnt),
-    .io_regFull(leadWindow_io_regFull)
+    .io_out_bits(leadWindow_io_out_bits),
+    .io_memFull(leadWindow_io_memFull),
+    .io_memEmpty(leadWindow_io_memEmpty)
   );
-  MinimumCircuit minCircuit ( // @[CFARCoreWithASR.scala 207:26]
-    .clock(minCircuit_clock),
-    .io_in_0(minCircuit_io_in_0),
-    .io_in_1(minCircuit_io_in_1),
-    .io_in_2(minCircuit_io_in_2),
-    .io_in_3(minCircuit_io_in_3),
-    .io_in_4(minCircuit_io_in_4),
-    .io_in_5(minCircuit_io_in_5),
-    .io_in_6(minCircuit_io_in_6),
-    .io_in_7(minCircuit_io_in_7),
-    .io_in_8(minCircuit_io_in_8),
-    .io_in_9(minCircuit_io_in_9),
-    .io_in_10(minCircuit_io_in_10),
-    .io_in_11(minCircuit_io_in_11),
-    .io_in_12(minCircuit_io_in_12),
-    .io_in_13(minCircuit_io_in_13),
-    .io_in_14(minCircuit_io_in_14),
-    .io_in_15(minCircuit_io_in_15),
-    .io_inSize(minCircuit_io_inSize),
-    .io_out(minCircuit_io_out)
-  );
-  Queue_5 Queue ( // @[CFARCoreWithASR.scala 417:27]
+  Queue_7 Queue ( // @[CFARCoreWithMem.scala 214:27]
     .clock(Queue_clock),
     .reset(Queue_reset),
     .io_enq_ready(Queue_io_enq_ready),
@@ -18219,1122 +14341,151 @@ module CFARCoreWithASR(
     .io_deq_bits_cut(Queue_io_deq_bits_cut),
     .io_deq_bits_threshold(Queue_io_deq_bits_threshold)
   );
-  Queue_6 Queue_1 ( // @[CFARCoreWithASR.scala 434:27]
-    .clock(Queue_1_clock),
-    .reset(Queue_1_reset),
-    .io_enq_ready(Queue_1_io_enq_ready),
-    .io_enq_valid(Queue_1_io_enq_valid),
-    .io_enq_bits(Queue_1_io_enq_bits),
-    .io_deq_ready(Queue_1_io_deq_ready),
-    .io_deq_valid(Queue_1_io_deq_valid),
-    .io_deq_bits(Queue_1_io_deq_bits)
+  Queue_9 Queue_2 ( // @[CFARCoreWithMem.scala 230:27]
+    .clock(Queue_2_clock),
+    .reset(Queue_2_reset),
+    .io_enq_ready(Queue_2_io_enq_ready),
+    .io_enq_valid(Queue_2_io_enq_valid),
+    .io_enq_bits(Queue_2_io_enq_bits),
+    .io_deq_ready(Queue_2_io_deq_ready),
+    .io_deq_valid(Queue_2_io_deq_valid),
+    .io_deq_bits(Queue_2_io_deq_bits)
   );
-  assign _T = io_windowCells >= io_subCells; // @[CFARCoreWithASR.scala 20:25]
-  assign _T_2 = _T | reset; // @[CFARCoreWithASR.scala 20:9]
-  assign _T_3 = ~_T_2; // @[CFARCoreWithASR.scala 20:9]
-  assign _GEN_733 = {{3'd0}, io_guardCells}; // @[CFARCoreWithASR.scala 37:32]
-  assign _T_4 = io_windowCells + _GEN_733; // @[CFARCoreWithASR.scala 37:32]
-  assign latency = _T_4 + 8'h1; // @[CFARCoreWithASR.scala 37:49]
-  assign _T_5 = 7'h2 * io_windowCells; // @[CFARCoreWithASR.scala 38:26]
-  assign _T_6 = 4'h2 * io_guardCells; // @[CFARCoreWithASR.scala 38:49]
-  assign _GEN_734 = {{3'd0}, _T_6}; // @[CFARCoreWithASR.scala 38:43]
-  assign _T_8 = _T_5 + _GEN_734; // @[CFARCoreWithASR.scala 38:43]
-  assign _T_10 = _T_8 + 9'h1; // @[CFARCoreWithASR.scala 38:65]
-  assign _GEN_735 = {{1'd0}, _T_10}; // @[CFARCoreWithASR.scala 38:20]
-  assign _T_11 = io_fftWin > _GEN_735; // @[CFARCoreWithASR.scala 38:20]
-  assign _T_13 = _T_11 | reset; // @[CFARCoreWithASR.scala 38:9]
-  assign _T_14 = ~_T_13; // @[CFARCoreWithASR.scala 38:9]
-  assign _T_86 = 7'h4 == io_subCells; // @[CFARCoreWithASR.scala 108:55]
-  assign _T_87 = 7'h8 == io_subCells; // @[CFARCoreWithASR.scala 108:55]
-  assign _T_88 = 7'h10 == io_subCells; // @[CFARCoreWithASR.scala 108:55]
-  assign _T_89 = 7'h20 == io_subCells; // @[CFARCoreWithASR.scala 108:55]
-  assign _T_90 = 7'h40 == io_subCells; // @[CFARCoreWithASR.scala 108:55]
-  assign _T_92 = _T_86 | _T_87; // @[CFARCoreWithASR.scala 110:58]
-  assign _T_93 = _T_92 | _T_88; // @[CFARCoreWithASR.scala 110:58]
-  assign _T_94 = _T_93 | _T_89; // @[CFARCoreWithASR.scala 110:58]
-  assign _T_95 = _T_94 | _T_90; // @[CFARCoreWithASR.scala 110:58]
-  assign _T_96 = io_subCells <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_97 = _T_95 & _T_96; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_98 = _T_90 ? $signed(laggWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_99 = _T_89 ? $signed(laggWindow_io_parallelOut_31) : $signed(_T_98); // @[Mux.scala 87:16]
-  assign _T_100 = _T_88 ? $signed(laggWindow_io_parallelOut_15) : $signed(_T_99); // @[Mux.scala 87:16]
-  assign _T_101 = _T_87 ? $signed(laggWindow_io_parallelOut_7) : $signed(_T_100); // @[Mux.scala 87:16]
-  assign minusOperandLagg = _T_86 ? $signed(laggWindow_io_parallelOut_3) : $signed(_T_101); // @[Mux.scala 87:16]
-  assign _T_102 = _T_90 ? $signed(leadWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_103 = _T_89 ? $signed(leadWindow_io_parallelOut_31) : $signed(_T_102); // @[Mux.scala 87:16]
-  assign _T_104 = _T_88 ? $signed(leadWindow_io_parallelOut_15) : $signed(_T_103); // @[Mux.scala 87:16]
-  assign _T_105 = _T_87 ? $signed(leadWindow_io_parallelOut_7) : $signed(_T_104); // @[Mux.scala 87:16]
-  assign minusOperandLead = _T_86 ? $signed(leadWindow_io_parallelOut_3) : $signed(_T_105); // @[Mux.scala 87:16]
-  assign _T_107 = io_subCells - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_108 = leadWindow_io_cnt > _T_107; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_111 = laggWindow_io_cnt > _T_107; // @[CFARCoreWithASR.scala 133:57]
-  assign _T_114 = io_in_ready & io_in_valid; // @[Decoupled.scala 40:37]
-  assign maybeFullLagg_0 = _T_111; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_115 = laggWindow_io_regFull | maybeFullLagg_0; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_736 = {{4{laggWindow_io_in_bits[15]}},laggWindow_io_in_bits}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_118 = $signed(sumSubLaggs_0) + $signed(_GEN_736); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_737 = {{4{minusOperandLagg[15]}},minusOperandLagg}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_121 = $signed(_T_118) - $signed(_GEN_737); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_127 = leadWindow_io_in_ready & leadWindow_io_in_valid; // @[Decoupled.scala 40:37]
-  assign _T_128 = cellUnderTest_io_out_ready & cellUnderTest_io_out_valid; // @[Decoupled.scala 40:37]
-  assign _T_129 = _T_127 & _T_128; // @[CFARCoreWithASR.scala 170:40]
-  assign maybeFullLead_0 = _T_108; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_130 = leadWindow_io_regFull | maybeFullLead_0; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_739 = {{4{leadWindow_io_in_bits[15]}},leadWindow_io_in_bits}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_133 = $signed(sumSubLeads_0) + $signed(_GEN_739); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_740 = {{4{minusOperandLead[15]}},minusOperandLead}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_136 = $signed(_T_133) - $signed(_GEN_740); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_141 = 7'h3 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex = _T_141 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_145 = endIndex <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_146 = _T_86 & _T_145; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_1 = _T_86 ? $signed(laggWindow_io_parallelOut_7) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_1 = _T_86 ? $signed(leadWindow_io_parallelOut_7) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_148 = endIndex - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_149 = leadWindow_io_cnt > _T_148; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_152 = laggWindow_io_cnt > _T_148; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_1 = _T_152; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_156 = laggWindow_io_regFull | maybeFullLagg_1; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_742 = {{4{laggWindow_io_parallelOut_3[15]}},laggWindow_io_parallelOut_3}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_159 = $signed(sumSubLaggs_1) + $signed(_GEN_742); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_743 = {{4{minusOperandLagg_1[15]}},minusOperandLagg_1}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_162 = $signed(_T_159) - $signed(_GEN_743); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_1 = _T_149; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_171 = leadWindow_io_regFull | maybeFullLead_1; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_745 = {{4{leadWindow_io_parallelOut_3[15]}},leadWindow_io_parallelOut_3}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_174 = $signed(sumSubLeads_1) + $signed(_GEN_745); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_746 = {{4{minusOperandLead_1[15]}},minusOperandLead_1}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_177 = $signed(_T_174) - $signed(_GEN_746); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_182 = 7'h7 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_1 = _T_182 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_188 = endIndex_1 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_189 = _T_92 & _T_188; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_190 = _T_87 ? $signed(laggWindow_io_parallelOut_15) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLagg_2 = _T_86 ? $signed(laggWindow_io_parallelOut_11) : $signed(_T_190); // @[Mux.scala 87:16]
-  assign _T_191 = _T_87 ? $signed(leadWindow_io_parallelOut_15) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_2 = _T_86 ? $signed(leadWindow_io_parallelOut_11) : $signed(_T_191); // @[Mux.scala 87:16]
-  assign _T_193 = endIndex_1 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_194 = leadWindow_io_cnt > _T_193; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_197 = laggWindow_io_cnt > _T_193; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_2 = _T_197; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_201 = laggWindow_io_regFull | maybeFullLagg_2; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_748 = {{4{laggWindow_io_parallelOut_7[15]}},laggWindow_io_parallelOut_7}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_204 = $signed(sumSubLaggs_2) + $signed(_GEN_748); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_749 = {{4{minusOperandLagg_2[15]}},minusOperandLagg_2}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_207 = $signed(_T_204) - $signed(_GEN_749); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_2 = _T_194; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_216 = leadWindow_io_regFull | maybeFullLead_2; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_751 = {{4{leadWindow_io_parallelOut_7[15]}},leadWindow_io_parallelOut_7}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_219 = $signed(sumSubLeads_2) + $signed(_GEN_751); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_752 = {{4{minusOperandLead_2[15]}},minusOperandLead_2}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_222 = $signed(_T_219) - $signed(_GEN_752); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_227 = 7'hb + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_2 = _T_227 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_231 = endIndex_2 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_232 = _T_86 & _T_231; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_3 = _T_86 ? $signed(laggWindow_io_parallelOut_15) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_3 = _T_86 ? $signed(leadWindow_io_parallelOut_15) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_234 = endIndex_2 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_235 = leadWindow_io_cnt > _T_234; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_238 = laggWindow_io_cnt > _T_234; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_3 = _T_238; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_242 = laggWindow_io_regFull | maybeFullLagg_3; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_754 = {{4{laggWindow_io_parallelOut_11[15]}},laggWindow_io_parallelOut_11}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_245 = $signed(sumSubLaggs_3) + $signed(_GEN_754); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_755 = {{4{minusOperandLagg_3[15]}},minusOperandLagg_3}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_248 = $signed(_T_245) - $signed(_GEN_755); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_3 = _T_235; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_257 = leadWindow_io_regFull | maybeFullLead_3; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_757 = {{4{leadWindow_io_parallelOut_11[15]}},leadWindow_io_parallelOut_11}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_260 = $signed(sumSubLeads_3) + $signed(_GEN_757); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_758 = {{4{minusOperandLead_3[15]}},minusOperandLead_3}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_263 = $signed(_T_260) - $signed(_GEN_758); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_268 = 7'hf + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_3 = _T_268 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_276 = endIndex_3 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_277 = _T_93 & _T_276; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_278 = _T_88 ? $signed(laggWindow_io_parallelOut_31) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_279 = _T_87 ? $signed(laggWindow_io_parallelOut_23) : $signed(_T_278); // @[Mux.scala 87:16]
-  assign minusOperandLagg_4 = _T_86 ? $signed(laggWindow_io_parallelOut_19) : $signed(_T_279); // @[Mux.scala 87:16]
-  assign _T_280 = _T_88 ? $signed(leadWindow_io_parallelOut_31) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_281 = _T_87 ? $signed(leadWindow_io_parallelOut_23) : $signed(_T_280); // @[Mux.scala 87:16]
-  assign minusOperandLead_4 = _T_86 ? $signed(leadWindow_io_parallelOut_19) : $signed(_T_281); // @[Mux.scala 87:16]
-  assign _T_283 = endIndex_3 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_284 = leadWindow_io_cnt > _T_283; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_287 = laggWindow_io_cnt > _T_283; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_4 = _T_287; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_291 = laggWindow_io_regFull | maybeFullLagg_4; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_760 = {{4{laggWindow_io_parallelOut_15[15]}},laggWindow_io_parallelOut_15}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_294 = $signed(sumSubLaggs_4) + $signed(_GEN_760); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_761 = {{4{minusOperandLagg_4[15]}},minusOperandLagg_4}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_297 = $signed(_T_294) - $signed(_GEN_761); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_4 = _T_284; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_306 = leadWindow_io_regFull | maybeFullLead_4; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_763 = {{4{leadWindow_io_parallelOut_15[15]}},leadWindow_io_parallelOut_15}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_309 = $signed(sumSubLeads_4) + $signed(_GEN_763); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_764 = {{4{minusOperandLead_4[15]}},minusOperandLead_4}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_312 = $signed(_T_309) - $signed(_GEN_764); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_317 = 7'h13 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_4 = _T_317 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_321 = endIndex_4 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_322 = _T_86 & _T_321; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_5 = _T_86 ? $signed(laggWindow_io_parallelOut_23) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_5 = _T_86 ? $signed(leadWindow_io_parallelOut_23) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_324 = endIndex_4 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_325 = leadWindow_io_cnt > _T_324; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_328 = laggWindow_io_cnt > _T_324; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_5 = _T_328; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_332 = laggWindow_io_regFull | maybeFullLagg_5; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_766 = {{4{laggWindow_io_parallelOut_19[15]}},laggWindow_io_parallelOut_19}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_335 = $signed(sumSubLaggs_5) + $signed(_GEN_766); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_767 = {{4{minusOperandLagg_5[15]}},minusOperandLagg_5}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_338 = $signed(_T_335) - $signed(_GEN_767); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_5 = _T_325; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_347 = leadWindow_io_regFull | maybeFullLead_5; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_769 = {{4{leadWindow_io_parallelOut_19[15]}},leadWindow_io_parallelOut_19}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_350 = $signed(sumSubLeads_5) + $signed(_GEN_769); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_770 = {{4{minusOperandLead_5[15]}},minusOperandLead_5}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_353 = $signed(_T_350) - $signed(_GEN_770); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_358 = 7'h17 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_5 = _T_358 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_364 = endIndex_5 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_365 = _T_92 & _T_364; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_366 = _T_87 ? $signed(laggWindow_io_parallelOut_31) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLagg_6 = _T_86 ? $signed(laggWindow_io_parallelOut_27) : $signed(_T_366); // @[Mux.scala 87:16]
-  assign _T_367 = _T_87 ? $signed(leadWindow_io_parallelOut_31) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_6 = _T_86 ? $signed(leadWindow_io_parallelOut_27) : $signed(_T_367); // @[Mux.scala 87:16]
-  assign _T_369 = endIndex_5 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_370 = leadWindow_io_cnt > _T_369; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_373 = laggWindow_io_cnt > _T_369; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_6 = _T_373; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_377 = laggWindow_io_regFull | maybeFullLagg_6; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_772 = {{4{laggWindow_io_parallelOut_23[15]}},laggWindow_io_parallelOut_23}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_380 = $signed(sumSubLaggs_6) + $signed(_GEN_772); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_773 = {{4{minusOperandLagg_6[15]}},minusOperandLagg_6}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_383 = $signed(_T_380) - $signed(_GEN_773); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_6 = _T_370; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_392 = leadWindow_io_regFull | maybeFullLead_6; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_775 = {{4{leadWindow_io_parallelOut_23[15]}},leadWindow_io_parallelOut_23}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_395 = $signed(sumSubLeads_6) + $signed(_GEN_775); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_776 = {{4{minusOperandLead_6[15]}},minusOperandLead_6}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_398 = $signed(_T_395) - $signed(_GEN_776); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_403 = 7'h1b + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_6 = _T_403 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_407 = endIndex_6 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_408 = _T_86 & _T_407; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_7 = _T_86 ? $signed(laggWindow_io_parallelOut_31) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_7 = _T_86 ? $signed(leadWindow_io_parallelOut_31) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_410 = endIndex_6 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_411 = leadWindow_io_cnt > _T_410; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_414 = laggWindow_io_cnt > _T_410; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_7 = _T_414; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_418 = laggWindow_io_regFull | maybeFullLagg_7; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_778 = {{4{laggWindow_io_parallelOut_27[15]}},laggWindow_io_parallelOut_27}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_421 = $signed(sumSubLaggs_7) + $signed(_GEN_778); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_779 = {{4{minusOperandLagg_7[15]}},minusOperandLagg_7}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_424 = $signed(_T_421) - $signed(_GEN_779); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_7 = _T_411; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_433 = leadWindow_io_regFull | maybeFullLead_7; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_781 = {{4{leadWindow_io_parallelOut_27[15]}},leadWindow_io_parallelOut_27}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_436 = $signed(sumSubLeads_7) + $signed(_GEN_781); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_782 = {{4{minusOperandLead_7[15]}},minusOperandLead_7}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_439 = $signed(_T_436) - $signed(_GEN_782); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_444 = 7'h1f + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_7 = _T_444 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_454 = endIndex_7 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_455 = _T_94 & _T_454; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_456 = _T_89 ? $signed(laggWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_457 = _T_88 ? $signed(laggWindow_io_parallelOut_47) : $signed(_T_456); // @[Mux.scala 87:16]
-  assign _T_458 = _T_87 ? $signed(laggWindow_io_parallelOut_39) : $signed(_T_457); // @[Mux.scala 87:16]
-  assign minusOperandLagg_8 = _T_86 ? $signed(laggWindow_io_parallelOut_35) : $signed(_T_458); // @[Mux.scala 87:16]
-  assign _T_459 = _T_89 ? $signed(leadWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_460 = _T_88 ? $signed(leadWindow_io_parallelOut_47) : $signed(_T_459); // @[Mux.scala 87:16]
-  assign _T_461 = _T_87 ? $signed(leadWindow_io_parallelOut_39) : $signed(_T_460); // @[Mux.scala 87:16]
-  assign minusOperandLead_8 = _T_86 ? $signed(leadWindow_io_parallelOut_35) : $signed(_T_461); // @[Mux.scala 87:16]
-  assign _T_463 = endIndex_7 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_464 = leadWindow_io_cnt > _T_463; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_467 = laggWindow_io_cnt > _T_463; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_8 = _T_467; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_471 = laggWindow_io_regFull | maybeFullLagg_8; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_784 = {{4{laggWindow_io_parallelOut_31[15]}},laggWindow_io_parallelOut_31}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_474 = $signed(sumSubLaggs_8) + $signed(_GEN_784); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_785 = {{4{minusOperandLagg_8[15]}},minusOperandLagg_8}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_477 = $signed(_T_474) - $signed(_GEN_785); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_8 = _T_464; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_486 = leadWindow_io_regFull | maybeFullLead_8; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_787 = {{4{leadWindow_io_parallelOut_31[15]}},leadWindow_io_parallelOut_31}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_489 = $signed(sumSubLeads_8) + $signed(_GEN_787); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_788 = {{4{minusOperandLead_8[15]}},minusOperandLead_8}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_492 = $signed(_T_489) - $signed(_GEN_788); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_497 = 7'h23 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_8 = _T_497 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_501 = endIndex_8 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_502 = _T_86 & _T_501; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_9 = _T_86 ? $signed(laggWindow_io_parallelOut_39) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_9 = _T_86 ? $signed(leadWindow_io_parallelOut_39) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_504 = endIndex_8 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_505 = leadWindow_io_cnt > _T_504; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_508 = laggWindow_io_cnt > _T_504; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_9 = _T_508; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_512 = laggWindow_io_regFull | maybeFullLagg_9; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_790 = {{4{laggWindow_io_parallelOut_35[15]}},laggWindow_io_parallelOut_35}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_515 = $signed(sumSubLaggs_9) + $signed(_GEN_790); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_791 = {{4{minusOperandLagg_9[15]}},minusOperandLagg_9}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_518 = $signed(_T_515) - $signed(_GEN_791); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_9 = _T_505; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_527 = leadWindow_io_regFull | maybeFullLead_9; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_793 = {{4{leadWindow_io_parallelOut_35[15]}},leadWindow_io_parallelOut_35}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_530 = $signed(sumSubLeads_9) + $signed(_GEN_793); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_794 = {{4{minusOperandLead_9[15]}},minusOperandLead_9}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_533 = $signed(_T_530) - $signed(_GEN_794); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_538 = 7'h27 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_9 = _T_538 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_544 = endIndex_9 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_545 = _T_92 & _T_544; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_546 = _T_87 ? $signed(laggWindow_io_parallelOut_47) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLagg_10 = _T_86 ? $signed(laggWindow_io_parallelOut_43) : $signed(_T_546); // @[Mux.scala 87:16]
-  assign _T_547 = _T_87 ? $signed(leadWindow_io_parallelOut_47) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_10 = _T_86 ? $signed(leadWindow_io_parallelOut_43) : $signed(_T_547); // @[Mux.scala 87:16]
-  assign _T_549 = endIndex_9 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_550 = leadWindow_io_cnt > _T_549; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_553 = laggWindow_io_cnt > _T_549; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_10 = _T_553; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_557 = laggWindow_io_regFull | maybeFullLagg_10; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_796 = {{4{laggWindow_io_parallelOut_39[15]}},laggWindow_io_parallelOut_39}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_560 = $signed(sumSubLaggs_10) + $signed(_GEN_796); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_797 = {{4{minusOperandLagg_10[15]}},minusOperandLagg_10}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_563 = $signed(_T_560) - $signed(_GEN_797); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_10 = _T_550; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_572 = leadWindow_io_regFull | maybeFullLead_10; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_799 = {{4{leadWindow_io_parallelOut_39[15]}},leadWindow_io_parallelOut_39}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_575 = $signed(sumSubLeads_10) + $signed(_GEN_799); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_800 = {{4{minusOperandLead_10[15]}},minusOperandLead_10}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_578 = $signed(_T_575) - $signed(_GEN_800); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_583 = 7'h2b + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_10 = _T_583 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_587 = endIndex_10 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_588 = _T_86 & _T_587; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_11 = _T_86 ? $signed(laggWindow_io_parallelOut_47) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_11 = _T_86 ? $signed(leadWindow_io_parallelOut_47) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_590 = endIndex_10 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_591 = leadWindow_io_cnt > _T_590; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_594 = laggWindow_io_cnt > _T_590; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_11 = _T_594; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_598 = laggWindow_io_regFull | maybeFullLagg_11; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_802 = {{4{laggWindow_io_parallelOut_43[15]}},laggWindow_io_parallelOut_43}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_601 = $signed(sumSubLaggs_11) + $signed(_GEN_802); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_803 = {{4{minusOperandLagg_11[15]}},minusOperandLagg_11}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_604 = $signed(_T_601) - $signed(_GEN_803); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_11 = _T_591; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_613 = leadWindow_io_regFull | maybeFullLead_11; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_805 = {{4{leadWindow_io_parallelOut_43[15]}},leadWindow_io_parallelOut_43}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_616 = $signed(sumSubLeads_11) + $signed(_GEN_805); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_806 = {{4{minusOperandLead_11[15]}},minusOperandLead_11}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_619 = $signed(_T_616) - $signed(_GEN_806); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_624 = 7'h2f + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_11 = _T_624 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_632 = endIndex_11 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_633 = _T_93 & _T_632; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_634 = _T_88 ? $signed(laggWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_635 = _T_87 ? $signed(laggWindow_io_parallelOut_55) : $signed(_T_634); // @[Mux.scala 87:16]
-  assign minusOperandLagg_12 = _T_86 ? $signed(laggWindow_io_parallelOut_51) : $signed(_T_635); // @[Mux.scala 87:16]
-  assign _T_636 = _T_88 ? $signed(leadWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_637 = _T_87 ? $signed(leadWindow_io_parallelOut_55) : $signed(_T_636); // @[Mux.scala 87:16]
-  assign minusOperandLead_12 = _T_86 ? $signed(leadWindow_io_parallelOut_51) : $signed(_T_637); // @[Mux.scala 87:16]
-  assign _T_639 = endIndex_11 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_640 = leadWindow_io_cnt > _T_639; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_643 = laggWindow_io_cnt > _T_639; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_12 = _T_643; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_647 = laggWindow_io_regFull | maybeFullLagg_12; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_808 = {{4{laggWindow_io_parallelOut_47[15]}},laggWindow_io_parallelOut_47}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_650 = $signed(sumSubLaggs_12) + $signed(_GEN_808); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_809 = {{4{minusOperandLagg_12[15]}},minusOperandLagg_12}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_653 = $signed(_T_650) - $signed(_GEN_809); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_12 = _T_640; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_662 = leadWindow_io_regFull | maybeFullLead_12; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_811 = {{4{leadWindow_io_parallelOut_47[15]}},leadWindow_io_parallelOut_47}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_665 = $signed(sumSubLeads_12) + $signed(_GEN_811); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_812 = {{4{minusOperandLead_12[15]}},minusOperandLead_12}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_668 = $signed(_T_665) - $signed(_GEN_812); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_673 = 7'h33 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_12 = _T_673 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_677 = endIndex_12 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_678 = _T_86 & _T_677; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_13 = _T_86 ? $signed(laggWindow_io_parallelOut_55) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_13 = _T_86 ? $signed(leadWindow_io_parallelOut_55) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_680 = endIndex_12 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_681 = leadWindow_io_cnt > _T_680; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_684 = laggWindow_io_cnt > _T_680; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_13 = _T_684; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_688 = laggWindow_io_regFull | maybeFullLagg_13; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_814 = {{4{laggWindow_io_parallelOut_51[15]}},laggWindow_io_parallelOut_51}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_691 = $signed(sumSubLaggs_13) + $signed(_GEN_814); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_815 = {{4{minusOperandLagg_13[15]}},minusOperandLagg_13}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_694 = $signed(_T_691) - $signed(_GEN_815); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_13 = _T_681; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_703 = leadWindow_io_regFull | maybeFullLead_13; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_817 = {{4{leadWindow_io_parallelOut_51[15]}},leadWindow_io_parallelOut_51}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_706 = $signed(sumSubLeads_13) + $signed(_GEN_817); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_818 = {{4{minusOperandLead_13[15]}},minusOperandLead_13}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_709 = $signed(_T_706) - $signed(_GEN_818); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_714 = 7'h37 + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_13 = _T_714 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_720 = endIndex_13 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_721 = _T_92 & _T_720; // @[CFARCoreWithASR.scala 110:64]
-  assign _T_722 = _T_87 ? $signed(laggWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLagg_14 = _T_86 ? $signed(laggWindow_io_parallelOut_59) : $signed(_T_722); // @[Mux.scala 87:16]
-  assign _T_723 = _T_87 ? $signed(leadWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_14 = _T_86 ? $signed(leadWindow_io_parallelOut_59) : $signed(_T_723); // @[Mux.scala 87:16]
-  assign _T_725 = endIndex_13 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_726 = leadWindow_io_cnt > _T_725; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_729 = laggWindow_io_cnt > _T_725; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_14 = _T_729; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_733 = laggWindow_io_regFull | maybeFullLagg_14; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_820 = {{4{laggWindow_io_parallelOut_55[15]}},laggWindow_io_parallelOut_55}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_736 = $signed(sumSubLaggs_14) + $signed(_GEN_820); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_821 = {{4{minusOperandLagg_14[15]}},minusOperandLagg_14}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_739 = $signed(_T_736) - $signed(_GEN_821); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_14 = _T_726; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_748 = leadWindow_io_regFull | maybeFullLead_14; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_823 = {{4{leadWindow_io_parallelOut_55[15]}},leadWindow_io_parallelOut_55}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_751 = $signed(sumSubLeads_14) + $signed(_GEN_823); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_824 = {{4{minusOperandLead_14[15]}},minusOperandLead_14}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_754 = $signed(_T_751) - $signed(_GEN_824); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_759 = 7'h3b + io_subCells; // @[CFARCoreWithASR.scala 103:76]
-  assign endIndex_14 = _T_759 + 7'h1; // @[CFARCoreWithASR.scala 103:94]
-  assign _T_763 = endIndex_14 <= io_windowCells; // @[CFARCoreWithASR.scala 110:76]
-  assign _T_764 = _T_86 & _T_763; // @[CFARCoreWithASR.scala 110:64]
-  assign minusOperandLagg_15 = _T_86 ? $signed(laggWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign minusOperandLead_15 = _T_86 ? $signed(leadWindow_io_parallelOut_63) : $signed(16'sh0); // @[Mux.scala 87:16]
-  assign _T_766 = endIndex_14 - 7'h1; // @[CFARCoreWithASR.scala 132:69]
-  assign _T_767 = leadWindow_io_cnt > _T_766; // @[CFARCoreWithASR.scala 132:57]
-  assign _T_770 = laggWindow_io_cnt > _T_766; // @[CFARCoreWithASR.scala 133:57]
-  assign maybeFullLagg_15 = _T_770; // @[CFARCoreWithASR.scala 133:32]
-  assign _T_774 = laggWindow_io_regFull | maybeFullLagg_15; // @[CFARCoreWithASR.scala 147:35]
-  assign _GEN_826 = {{4{laggWindow_io_parallelOut_59[15]}},laggWindow_io_parallelOut_59}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_777 = $signed(sumSubLaggs_15) + $signed(_GEN_826); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_827 = {{4{minusOperandLagg_15[15]}},minusOperandLagg_15}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_780 = $signed(_T_777) - $signed(_GEN_827); // @[FixedPointTypeClass.scala 30:68]
-  assign maybeFullLead_15 = _T_767; // @[CFARCoreWithASR.scala 132:32]
-  assign _T_789 = leadWindow_io_regFull | maybeFullLead_15; // @[CFARCoreWithASR.scala 172:35]
-  assign _GEN_829 = {{4{leadWindow_io_parallelOut_59[15]}},leadWindow_io_parallelOut_59}; // @[FixedPointTypeClass.scala 20:58]
-  assign _T_792 = $signed(sumSubLeads_15) + $signed(_GEN_829); // @[FixedPointTypeClass.scala 20:58]
-  assign _GEN_830 = {{4{minusOperandLead_15[15]}},minusOperandLead_15}; // @[FixedPointTypeClass.scala 30:68]
-  assign _T_795 = $signed(_T_792) - $signed(_GEN_830); // @[FixedPointTypeClass.scala 30:68]
-  assign _T_801 = io_subCells[6:4] != 3'h0; // @[CircuitMath.scala 37:22]
-  assign _T_804 = io_subCells[6] ? 2'h2 : {{1'd0}, io_subCells[5]}; // @[CircuitMath.scala 32:10]
-  assign _T_808 = io_subCells[2] ? 2'h2 : {{1'd0}, io_subCells[1]}; // @[CircuitMath.scala 32:10]
-  assign _T_809 = io_subCells[3] ? 2'h3 : _T_808; // @[CircuitMath.scala 32:10]
-  assign _T_810 = _T_801 ? _T_804 : _T_809; // @[CircuitMath.scala 38:21]
-  assign _T_811 = {_T_801,_T_810}; // @[Cat.scala 29:58]
-  assign diffInSubSize = _T_811 - 3'h2; // @[CFARCoreWithASR.scala 193:45]
-  assign _T_814 = $signed(sumSubLaggs_0) > $signed(sumSubLeads_0); // @[FixedPointTypeClass.scala 55:59]
-  assign max_0 = _T_814 ? $signed(sumSubLaggs_0) : $signed(sumSubLeads_0); // @[Order.scala 56:31]
-  assign _T_815 = $signed(sumSubLaggs_1) > $signed(sumSubLeads_1); // @[FixedPointTypeClass.scala 55:59]
-  assign max_1 = _T_815 ? $signed(sumSubLaggs_1) : $signed(sumSubLeads_1); // @[Order.scala 56:31]
-  assign _T_816 = $signed(sumSubLaggs_2) > $signed(sumSubLeads_2); // @[FixedPointTypeClass.scala 55:59]
-  assign max_2 = _T_816 ? $signed(sumSubLaggs_2) : $signed(sumSubLeads_2); // @[Order.scala 56:31]
-  assign _T_817 = $signed(sumSubLaggs_3) > $signed(sumSubLeads_3); // @[FixedPointTypeClass.scala 55:59]
-  assign max_3 = _T_817 ? $signed(sumSubLaggs_3) : $signed(sumSubLeads_3); // @[Order.scala 56:31]
-  assign _T_818 = $signed(sumSubLaggs_4) > $signed(sumSubLeads_4); // @[FixedPointTypeClass.scala 55:59]
-  assign max_4 = _T_818 ? $signed(sumSubLaggs_4) : $signed(sumSubLeads_4); // @[Order.scala 56:31]
-  assign _T_819 = $signed(sumSubLaggs_5) > $signed(sumSubLeads_5); // @[FixedPointTypeClass.scala 55:59]
-  assign max_5 = _T_819 ? $signed(sumSubLaggs_5) : $signed(sumSubLeads_5); // @[Order.scala 56:31]
-  assign _T_820 = $signed(sumSubLaggs_6) > $signed(sumSubLeads_6); // @[FixedPointTypeClass.scala 55:59]
-  assign max_6 = _T_820 ? $signed(sumSubLaggs_6) : $signed(sumSubLeads_6); // @[Order.scala 56:31]
-  assign _T_821 = $signed(sumSubLaggs_7) > $signed(sumSubLeads_7); // @[FixedPointTypeClass.scala 55:59]
-  assign max_7 = _T_821 ? $signed(sumSubLaggs_7) : $signed(sumSubLeads_7); // @[Order.scala 56:31]
-  assign _T_822 = $signed(sumSubLaggs_8) > $signed(sumSubLeads_8); // @[FixedPointTypeClass.scala 55:59]
-  assign max_8 = _T_822 ? $signed(sumSubLaggs_8) : $signed(sumSubLeads_8); // @[Order.scala 56:31]
-  assign _T_823 = $signed(sumSubLaggs_9) > $signed(sumSubLeads_9); // @[FixedPointTypeClass.scala 55:59]
-  assign max_9 = _T_823 ? $signed(sumSubLaggs_9) : $signed(sumSubLeads_9); // @[Order.scala 56:31]
-  assign _T_824 = $signed(sumSubLaggs_10) > $signed(sumSubLeads_10); // @[FixedPointTypeClass.scala 55:59]
-  assign max_10 = _T_824 ? $signed(sumSubLaggs_10) : $signed(sumSubLeads_10); // @[Order.scala 56:31]
-  assign _T_825 = $signed(sumSubLaggs_11) > $signed(sumSubLeads_11); // @[FixedPointTypeClass.scala 55:59]
-  assign max_11 = _T_825 ? $signed(sumSubLaggs_11) : $signed(sumSubLeads_11); // @[Order.scala 56:31]
-  assign _T_826 = $signed(sumSubLaggs_12) > $signed(sumSubLeads_12); // @[FixedPointTypeClass.scala 55:59]
-  assign max_12 = _T_826 ? $signed(sumSubLaggs_12) : $signed(sumSubLeads_12); // @[Order.scala 56:31]
-  assign _T_827 = $signed(sumSubLaggs_13) > $signed(sumSubLeads_13); // @[FixedPointTypeClass.scala 55:59]
-  assign max_13 = _T_827 ? $signed(sumSubLaggs_13) : $signed(sumSubLeads_13); // @[Order.scala 56:31]
-  assign _T_828 = $signed(sumSubLaggs_14) > $signed(sumSubLeads_14); // @[FixedPointTypeClass.scala 55:59]
-  assign max_14 = _T_828 ? $signed(sumSubLaggs_14) : $signed(sumSubLeads_14); // @[Order.scala 56:31]
-  assign _T_829 = $signed(sumSubLaggs_15) > $signed(sumSubLeads_15); // @[FixedPointTypeClass.scala 55:59]
-  assign max_15 = _T_829 ? $signed(sumSubLaggs_15) : $signed(sumSubLeads_15); // @[Order.scala 56:31]
-  assign activeSums_0 = _T_97; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_864 = 1'h0 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_127 = ~_T_864 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_128 = _T_864 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_832 = {{1'd0}, _T_864}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_129 = 2'h2 == _GEN_832 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_130 = 2'h3 == _GEN_832 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_834 = {{2'd0}, _T_864}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_131 = 3'h4 == _GEN_834 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_132 = 3'h5 == _GEN_834 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_133 = 3'h6 == _GEN_834 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_134 = 3'h7 == _GEN_834 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_838 = {{3'd0}, _T_864}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_135 = 4'h8 == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_136 = 4'h9 == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_137 = 4'ha == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_138 = 4'hb == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_139 = 4'hc == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_140 = 4'hd == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_141 = 4'he == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_142 = 4'hf == _GEN_838 ? $signed(max_0) : $signed(20'sh0); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_143 = activeSums_0 ? $signed(_GEN_127) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_144 = activeSums_0 ? $signed(_GEN_128) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_145 = activeSums_0 ? $signed(_GEN_129) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_146 = activeSums_0 ? $signed(_GEN_130) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_147 = activeSums_0 ? $signed(_GEN_131) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_148 = activeSums_0 ? $signed(_GEN_132) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_149 = activeSums_0 ? $signed(_GEN_133) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_150 = activeSums_0 ? $signed(_GEN_134) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_151 = activeSums_0 ? $signed(_GEN_135) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_152 = activeSums_0 ? $signed(_GEN_136) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_153 = activeSums_0 ? $signed(_GEN_137) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_154 = activeSums_0 ? $signed(_GEN_138) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_155 = activeSums_0 ? $signed(_GEN_139) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_156 = activeSums_0 ? $signed(_GEN_140) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_157 = activeSums_0 ? $signed(_GEN_141) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_158 = activeSums_0 ? $signed(_GEN_142) : $signed(20'sh0); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_1 = _T_146; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_866 = 1'h1 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_159 = ~_T_866 ? $signed(max_1) : $signed(_GEN_143); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_160 = _T_866 ? $signed(max_1) : $signed(_GEN_144); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_846 = {{1'd0}, _T_866}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_161 = 2'h2 == _GEN_846 ? $signed(max_1) : $signed(_GEN_145); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_162 = 2'h3 == _GEN_846 ? $signed(max_1) : $signed(_GEN_146); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_848 = {{2'd0}, _T_866}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_163 = 3'h4 == _GEN_848 ? $signed(max_1) : $signed(_GEN_147); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_164 = 3'h5 == _GEN_848 ? $signed(max_1) : $signed(_GEN_148); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_165 = 3'h6 == _GEN_848 ? $signed(max_1) : $signed(_GEN_149); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_166 = 3'h7 == _GEN_848 ? $signed(max_1) : $signed(_GEN_150); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_852 = {{3'd0}, _T_866}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_167 = 4'h8 == _GEN_852 ? $signed(max_1) : $signed(_GEN_151); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_168 = 4'h9 == _GEN_852 ? $signed(max_1) : $signed(_GEN_152); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_169 = 4'ha == _GEN_852 ? $signed(max_1) : $signed(_GEN_153); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_170 = 4'hb == _GEN_852 ? $signed(max_1) : $signed(_GEN_154); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_171 = 4'hc == _GEN_852 ? $signed(max_1) : $signed(_GEN_155); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_172 = 4'hd == _GEN_852 ? $signed(max_1) : $signed(_GEN_156); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_173 = 4'he == _GEN_852 ? $signed(max_1) : $signed(_GEN_157); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_174 = 4'hf == _GEN_852 ? $signed(max_1) : $signed(_GEN_158); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_175 = activeSums_1 ? $signed(_GEN_159) : $signed(_GEN_143); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_176 = activeSums_1 ? $signed(_GEN_160) : $signed(_GEN_144); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_177 = activeSums_1 ? $signed(_GEN_161) : $signed(_GEN_145); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_178 = activeSums_1 ? $signed(_GEN_162) : $signed(_GEN_146); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_179 = activeSums_1 ? $signed(_GEN_163) : $signed(_GEN_147); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_180 = activeSums_1 ? $signed(_GEN_164) : $signed(_GEN_148); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_181 = activeSums_1 ? $signed(_GEN_165) : $signed(_GEN_149); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_182 = activeSums_1 ? $signed(_GEN_166) : $signed(_GEN_150); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_183 = activeSums_1 ? $signed(_GEN_167) : $signed(_GEN_151); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_184 = activeSums_1 ? $signed(_GEN_168) : $signed(_GEN_152); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_185 = activeSums_1 ? $signed(_GEN_169) : $signed(_GEN_153); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_186 = activeSums_1 ? $signed(_GEN_170) : $signed(_GEN_154); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_187 = activeSums_1 ? $signed(_GEN_171) : $signed(_GEN_155); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_188 = activeSums_1 ? $signed(_GEN_172) : $signed(_GEN_156); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_189 = activeSums_1 ? $signed(_GEN_173) : $signed(_GEN_157); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_190 = activeSums_1 ? $signed(_GEN_174) : $signed(_GEN_158); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_2 = _T_189; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_868 = 2'h2 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_191 = 2'h0 == _T_868 ? $signed(max_2) : $signed(_GEN_175); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_192 = 2'h1 == _T_868 ? $signed(max_2) : $signed(_GEN_176); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_193 = 2'h2 == _T_868 ? $signed(max_2) : $signed(_GEN_177); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_194 = 2'h3 == _T_868 ? $signed(max_2) : $signed(_GEN_178); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_860 = {{1'd0}, _T_868}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_195 = 3'h4 == _GEN_860 ? $signed(max_2) : $signed(_GEN_179); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_196 = 3'h5 == _GEN_860 ? $signed(max_2) : $signed(_GEN_180); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_197 = 3'h6 == _GEN_860 ? $signed(max_2) : $signed(_GEN_181); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_198 = 3'h7 == _GEN_860 ? $signed(max_2) : $signed(_GEN_182); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_864 = {{2'd0}, _T_868}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_199 = 4'h8 == _GEN_864 ? $signed(max_2) : $signed(_GEN_183); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_200 = 4'h9 == _GEN_864 ? $signed(max_2) : $signed(_GEN_184); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_201 = 4'ha == _GEN_864 ? $signed(max_2) : $signed(_GEN_185); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_202 = 4'hb == _GEN_864 ? $signed(max_2) : $signed(_GEN_186); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_203 = 4'hc == _GEN_864 ? $signed(max_2) : $signed(_GEN_187); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_204 = 4'hd == _GEN_864 ? $signed(max_2) : $signed(_GEN_188); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_205 = 4'he == _GEN_864 ? $signed(max_2) : $signed(_GEN_189); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_206 = 4'hf == _GEN_864 ? $signed(max_2) : $signed(_GEN_190); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_207 = activeSums_2 ? $signed(_GEN_191) : $signed(_GEN_175); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_208 = activeSums_2 ? $signed(_GEN_192) : $signed(_GEN_176); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_209 = activeSums_2 ? $signed(_GEN_193) : $signed(_GEN_177); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_210 = activeSums_2 ? $signed(_GEN_194) : $signed(_GEN_178); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_211 = activeSums_2 ? $signed(_GEN_195) : $signed(_GEN_179); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_212 = activeSums_2 ? $signed(_GEN_196) : $signed(_GEN_180); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_213 = activeSums_2 ? $signed(_GEN_197) : $signed(_GEN_181); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_214 = activeSums_2 ? $signed(_GEN_198) : $signed(_GEN_182); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_215 = activeSums_2 ? $signed(_GEN_199) : $signed(_GEN_183); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_216 = activeSums_2 ? $signed(_GEN_200) : $signed(_GEN_184); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_217 = activeSums_2 ? $signed(_GEN_201) : $signed(_GEN_185); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_218 = activeSums_2 ? $signed(_GEN_202) : $signed(_GEN_186); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_219 = activeSums_2 ? $signed(_GEN_203) : $signed(_GEN_187); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_220 = activeSums_2 ? $signed(_GEN_204) : $signed(_GEN_188); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_221 = activeSums_2 ? $signed(_GEN_205) : $signed(_GEN_189); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_222 = activeSums_2 ? $signed(_GEN_206) : $signed(_GEN_190); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_3 = _T_232; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_870 = 2'h3 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_223 = 2'h0 == _T_870 ? $signed(max_3) : $signed(_GEN_207); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_224 = 2'h1 == _T_870 ? $signed(max_3) : $signed(_GEN_208); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_225 = 2'h2 == _T_870 ? $signed(max_3) : $signed(_GEN_209); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_226 = 2'h3 == _T_870 ? $signed(max_3) : $signed(_GEN_210); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_872 = {{1'd0}, _T_870}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_227 = 3'h4 == _GEN_872 ? $signed(max_3) : $signed(_GEN_211); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_228 = 3'h5 == _GEN_872 ? $signed(max_3) : $signed(_GEN_212); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_229 = 3'h6 == _GEN_872 ? $signed(max_3) : $signed(_GEN_213); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_230 = 3'h7 == _GEN_872 ? $signed(max_3) : $signed(_GEN_214); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_876 = {{2'd0}, _T_870}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_231 = 4'h8 == _GEN_876 ? $signed(max_3) : $signed(_GEN_215); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_232 = 4'h9 == _GEN_876 ? $signed(max_3) : $signed(_GEN_216); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_233 = 4'ha == _GEN_876 ? $signed(max_3) : $signed(_GEN_217); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_234 = 4'hb == _GEN_876 ? $signed(max_3) : $signed(_GEN_218); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_235 = 4'hc == _GEN_876 ? $signed(max_3) : $signed(_GEN_219); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_236 = 4'hd == _GEN_876 ? $signed(max_3) : $signed(_GEN_220); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_237 = 4'he == _GEN_876 ? $signed(max_3) : $signed(_GEN_221); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_238 = 4'hf == _GEN_876 ? $signed(max_3) : $signed(_GEN_222); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_239 = activeSums_3 ? $signed(_GEN_223) : $signed(_GEN_207); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_240 = activeSums_3 ? $signed(_GEN_224) : $signed(_GEN_208); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_241 = activeSums_3 ? $signed(_GEN_225) : $signed(_GEN_209); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_242 = activeSums_3 ? $signed(_GEN_226) : $signed(_GEN_210); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_243 = activeSums_3 ? $signed(_GEN_227) : $signed(_GEN_211); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_244 = activeSums_3 ? $signed(_GEN_228) : $signed(_GEN_212); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_245 = activeSums_3 ? $signed(_GEN_229) : $signed(_GEN_213); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_246 = activeSums_3 ? $signed(_GEN_230) : $signed(_GEN_214); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_247 = activeSums_3 ? $signed(_GEN_231) : $signed(_GEN_215); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_248 = activeSums_3 ? $signed(_GEN_232) : $signed(_GEN_216); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_249 = activeSums_3 ? $signed(_GEN_233) : $signed(_GEN_217); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_250 = activeSums_3 ? $signed(_GEN_234) : $signed(_GEN_218); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_251 = activeSums_3 ? $signed(_GEN_235) : $signed(_GEN_219); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_252 = activeSums_3 ? $signed(_GEN_236) : $signed(_GEN_220); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_253 = activeSums_3 ? $signed(_GEN_237) : $signed(_GEN_221); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_254 = activeSums_3 ? $signed(_GEN_238) : $signed(_GEN_222); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_4 = _T_277; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_872 = 3'h4 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_255 = 3'h0 == _T_872 ? $signed(max_4) : $signed(_GEN_239); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_256 = 3'h1 == _T_872 ? $signed(max_4) : $signed(_GEN_240); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_257 = 3'h2 == _T_872 ? $signed(max_4) : $signed(_GEN_241); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_258 = 3'h3 == _T_872 ? $signed(max_4) : $signed(_GEN_242); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_259 = 3'h4 == _T_872 ? $signed(max_4) : $signed(_GEN_243); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_260 = 3'h5 == _T_872 ? $signed(max_4) : $signed(_GEN_244); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_261 = 3'h6 == _T_872 ? $signed(max_4) : $signed(_GEN_245); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_262 = 3'h7 == _T_872 ? $signed(max_4) : $signed(_GEN_246); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_884 = {{1'd0}, _T_872}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_263 = 4'h8 == _GEN_884 ? $signed(max_4) : $signed(_GEN_247); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_264 = 4'h9 == _GEN_884 ? $signed(max_4) : $signed(_GEN_248); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_265 = 4'ha == _GEN_884 ? $signed(max_4) : $signed(_GEN_249); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_266 = 4'hb == _GEN_884 ? $signed(max_4) : $signed(_GEN_250); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_267 = 4'hc == _GEN_884 ? $signed(max_4) : $signed(_GEN_251); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_268 = 4'hd == _GEN_884 ? $signed(max_4) : $signed(_GEN_252); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_269 = 4'he == _GEN_884 ? $signed(max_4) : $signed(_GEN_253); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_270 = 4'hf == _GEN_884 ? $signed(max_4) : $signed(_GEN_254); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_271 = activeSums_4 ? $signed(_GEN_255) : $signed(_GEN_239); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_272 = activeSums_4 ? $signed(_GEN_256) : $signed(_GEN_240); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_273 = activeSums_4 ? $signed(_GEN_257) : $signed(_GEN_241); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_274 = activeSums_4 ? $signed(_GEN_258) : $signed(_GEN_242); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_275 = activeSums_4 ? $signed(_GEN_259) : $signed(_GEN_243); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_276 = activeSums_4 ? $signed(_GEN_260) : $signed(_GEN_244); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_277 = activeSums_4 ? $signed(_GEN_261) : $signed(_GEN_245); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_278 = activeSums_4 ? $signed(_GEN_262) : $signed(_GEN_246); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_279 = activeSums_4 ? $signed(_GEN_263) : $signed(_GEN_247); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_280 = activeSums_4 ? $signed(_GEN_264) : $signed(_GEN_248); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_281 = activeSums_4 ? $signed(_GEN_265) : $signed(_GEN_249); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_282 = activeSums_4 ? $signed(_GEN_266) : $signed(_GEN_250); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_283 = activeSums_4 ? $signed(_GEN_267) : $signed(_GEN_251); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_284 = activeSums_4 ? $signed(_GEN_268) : $signed(_GEN_252); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_285 = activeSums_4 ? $signed(_GEN_269) : $signed(_GEN_253); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_286 = activeSums_4 ? $signed(_GEN_270) : $signed(_GEN_254); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_5 = _T_322; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_874 = 3'h5 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_287 = 3'h0 == _T_874 ? $signed(max_5) : $signed(_GEN_271); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_288 = 3'h1 == _T_874 ? $signed(max_5) : $signed(_GEN_272); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_289 = 3'h2 == _T_874 ? $signed(max_5) : $signed(_GEN_273); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_290 = 3'h3 == _T_874 ? $signed(max_5) : $signed(_GEN_274); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_291 = 3'h4 == _T_874 ? $signed(max_5) : $signed(_GEN_275); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_292 = 3'h5 == _T_874 ? $signed(max_5) : $signed(_GEN_276); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_293 = 3'h6 == _T_874 ? $signed(max_5) : $signed(_GEN_277); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_294 = 3'h7 == _T_874 ? $signed(max_5) : $signed(_GEN_278); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_892 = {{1'd0}, _T_874}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_295 = 4'h8 == _GEN_892 ? $signed(max_5) : $signed(_GEN_279); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_296 = 4'h9 == _GEN_892 ? $signed(max_5) : $signed(_GEN_280); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_297 = 4'ha == _GEN_892 ? $signed(max_5) : $signed(_GEN_281); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_298 = 4'hb == _GEN_892 ? $signed(max_5) : $signed(_GEN_282); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_299 = 4'hc == _GEN_892 ? $signed(max_5) : $signed(_GEN_283); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_300 = 4'hd == _GEN_892 ? $signed(max_5) : $signed(_GEN_284); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_301 = 4'he == _GEN_892 ? $signed(max_5) : $signed(_GEN_285); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_302 = 4'hf == _GEN_892 ? $signed(max_5) : $signed(_GEN_286); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_303 = activeSums_5 ? $signed(_GEN_287) : $signed(_GEN_271); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_304 = activeSums_5 ? $signed(_GEN_288) : $signed(_GEN_272); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_305 = activeSums_5 ? $signed(_GEN_289) : $signed(_GEN_273); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_306 = activeSums_5 ? $signed(_GEN_290) : $signed(_GEN_274); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_307 = activeSums_5 ? $signed(_GEN_291) : $signed(_GEN_275); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_308 = activeSums_5 ? $signed(_GEN_292) : $signed(_GEN_276); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_309 = activeSums_5 ? $signed(_GEN_293) : $signed(_GEN_277); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_310 = activeSums_5 ? $signed(_GEN_294) : $signed(_GEN_278); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_311 = activeSums_5 ? $signed(_GEN_295) : $signed(_GEN_279); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_312 = activeSums_5 ? $signed(_GEN_296) : $signed(_GEN_280); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_313 = activeSums_5 ? $signed(_GEN_297) : $signed(_GEN_281); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_314 = activeSums_5 ? $signed(_GEN_298) : $signed(_GEN_282); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_315 = activeSums_5 ? $signed(_GEN_299) : $signed(_GEN_283); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_316 = activeSums_5 ? $signed(_GEN_300) : $signed(_GEN_284); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_317 = activeSums_5 ? $signed(_GEN_301) : $signed(_GEN_285); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_318 = activeSums_5 ? $signed(_GEN_302) : $signed(_GEN_286); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_6 = _T_365; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_876 = 3'h6 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_319 = 3'h0 == _T_876 ? $signed(max_6) : $signed(_GEN_303); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_320 = 3'h1 == _T_876 ? $signed(max_6) : $signed(_GEN_304); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_321 = 3'h2 == _T_876 ? $signed(max_6) : $signed(_GEN_305); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_322 = 3'h3 == _T_876 ? $signed(max_6) : $signed(_GEN_306); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_323 = 3'h4 == _T_876 ? $signed(max_6) : $signed(_GEN_307); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_324 = 3'h5 == _T_876 ? $signed(max_6) : $signed(_GEN_308); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_325 = 3'h6 == _T_876 ? $signed(max_6) : $signed(_GEN_309); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_326 = 3'h7 == _T_876 ? $signed(max_6) : $signed(_GEN_310); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_900 = {{1'd0}, _T_876}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_327 = 4'h8 == _GEN_900 ? $signed(max_6) : $signed(_GEN_311); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_328 = 4'h9 == _GEN_900 ? $signed(max_6) : $signed(_GEN_312); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_329 = 4'ha == _GEN_900 ? $signed(max_6) : $signed(_GEN_313); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_330 = 4'hb == _GEN_900 ? $signed(max_6) : $signed(_GEN_314); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_331 = 4'hc == _GEN_900 ? $signed(max_6) : $signed(_GEN_315); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_332 = 4'hd == _GEN_900 ? $signed(max_6) : $signed(_GEN_316); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_333 = 4'he == _GEN_900 ? $signed(max_6) : $signed(_GEN_317); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_334 = 4'hf == _GEN_900 ? $signed(max_6) : $signed(_GEN_318); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_335 = activeSums_6 ? $signed(_GEN_319) : $signed(_GEN_303); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_336 = activeSums_6 ? $signed(_GEN_320) : $signed(_GEN_304); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_337 = activeSums_6 ? $signed(_GEN_321) : $signed(_GEN_305); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_338 = activeSums_6 ? $signed(_GEN_322) : $signed(_GEN_306); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_339 = activeSums_6 ? $signed(_GEN_323) : $signed(_GEN_307); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_340 = activeSums_6 ? $signed(_GEN_324) : $signed(_GEN_308); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_341 = activeSums_6 ? $signed(_GEN_325) : $signed(_GEN_309); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_342 = activeSums_6 ? $signed(_GEN_326) : $signed(_GEN_310); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_343 = activeSums_6 ? $signed(_GEN_327) : $signed(_GEN_311); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_344 = activeSums_6 ? $signed(_GEN_328) : $signed(_GEN_312); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_345 = activeSums_6 ? $signed(_GEN_329) : $signed(_GEN_313); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_346 = activeSums_6 ? $signed(_GEN_330) : $signed(_GEN_314); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_347 = activeSums_6 ? $signed(_GEN_331) : $signed(_GEN_315); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_348 = activeSums_6 ? $signed(_GEN_332) : $signed(_GEN_316); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_349 = activeSums_6 ? $signed(_GEN_333) : $signed(_GEN_317); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_350 = activeSums_6 ? $signed(_GEN_334) : $signed(_GEN_318); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_7 = _T_408; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_878 = 3'h7 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_351 = 3'h0 == _T_878 ? $signed(max_7) : $signed(_GEN_335); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_352 = 3'h1 == _T_878 ? $signed(max_7) : $signed(_GEN_336); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_353 = 3'h2 == _T_878 ? $signed(max_7) : $signed(_GEN_337); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_354 = 3'h3 == _T_878 ? $signed(max_7) : $signed(_GEN_338); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_355 = 3'h4 == _T_878 ? $signed(max_7) : $signed(_GEN_339); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_356 = 3'h5 == _T_878 ? $signed(max_7) : $signed(_GEN_340); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_357 = 3'h6 == _T_878 ? $signed(max_7) : $signed(_GEN_341); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_358 = 3'h7 == _T_878 ? $signed(max_7) : $signed(_GEN_342); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_908 = {{1'd0}, _T_878}; // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_359 = 4'h8 == _GEN_908 ? $signed(max_7) : $signed(_GEN_343); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_360 = 4'h9 == _GEN_908 ? $signed(max_7) : $signed(_GEN_344); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_361 = 4'ha == _GEN_908 ? $signed(max_7) : $signed(_GEN_345); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_362 = 4'hb == _GEN_908 ? $signed(max_7) : $signed(_GEN_346); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_363 = 4'hc == _GEN_908 ? $signed(max_7) : $signed(_GEN_347); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_364 = 4'hd == _GEN_908 ? $signed(max_7) : $signed(_GEN_348); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_365 = 4'he == _GEN_908 ? $signed(max_7) : $signed(_GEN_349); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_366 = 4'hf == _GEN_908 ? $signed(max_7) : $signed(_GEN_350); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_367 = activeSums_7 ? $signed(_GEN_351) : $signed(_GEN_335); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_368 = activeSums_7 ? $signed(_GEN_352) : $signed(_GEN_336); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_369 = activeSums_7 ? $signed(_GEN_353) : $signed(_GEN_337); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_370 = activeSums_7 ? $signed(_GEN_354) : $signed(_GEN_338); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_371 = activeSums_7 ? $signed(_GEN_355) : $signed(_GEN_339); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_372 = activeSums_7 ? $signed(_GEN_356) : $signed(_GEN_340); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_373 = activeSums_7 ? $signed(_GEN_357) : $signed(_GEN_341); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_374 = activeSums_7 ? $signed(_GEN_358) : $signed(_GEN_342); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_375 = activeSums_7 ? $signed(_GEN_359) : $signed(_GEN_343); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_376 = activeSums_7 ? $signed(_GEN_360) : $signed(_GEN_344); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_377 = activeSums_7 ? $signed(_GEN_361) : $signed(_GEN_345); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_378 = activeSums_7 ? $signed(_GEN_362) : $signed(_GEN_346); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_379 = activeSums_7 ? $signed(_GEN_363) : $signed(_GEN_347); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_380 = activeSums_7 ? $signed(_GEN_364) : $signed(_GEN_348); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_381 = activeSums_7 ? $signed(_GEN_365) : $signed(_GEN_349); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_382 = activeSums_7 ? $signed(_GEN_366) : $signed(_GEN_350); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_8 = _T_455; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_880 = 4'h8 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_383 = 4'h0 == _T_880 ? $signed(max_8) : $signed(_GEN_367); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_384 = 4'h1 == _T_880 ? $signed(max_8) : $signed(_GEN_368); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_385 = 4'h2 == _T_880 ? $signed(max_8) : $signed(_GEN_369); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_386 = 4'h3 == _T_880 ? $signed(max_8) : $signed(_GEN_370); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_387 = 4'h4 == _T_880 ? $signed(max_8) : $signed(_GEN_371); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_388 = 4'h5 == _T_880 ? $signed(max_8) : $signed(_GEN_372); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_389 = 4'h6 == _T_880 ? $signed(max_8) : $signed(_GEN_373); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_390 = 4'h7 == _T_880 ? $signed(max_8) : $signed(_GEN_374); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_391 = 4'h8 == _T_880 ? $signed(max_8) : $signed(_GEN_375); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_392 = 4'h9 == _T_880 ? $signed(max_8) : $signed(_GEN_376); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_393 = 4'ha == _T_880 ? $signed(max_8) : $signed(_GEN_377); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_394 = 4'hb == _T_880 ? $signed(max_8) : $signed(_GEN_378); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_395 = 4'hc == _T_880 ? $signed(max_8) : $signed(_GEN_379); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_396 = 4'hd == _T_880 ? $signed(max_8) : $signed(_GEN_380); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_397 = 4'he == _T_880 ? $signed(max_8) : $signed(_GEN_381); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_398 = 4'hf == _T_880 ? $signed(max_8) : $signed(_GEN_382); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_399 = activeSums_8 ? $signed(_GEN_383) : $signed(_GEN_367); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_400 = activeSums_8 ? $signed(_GEN_384) : $signed(_GEN_368); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_401 = activeSums_8 ? $signed(_GEN_385) : $signed(_GEN_369); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_402 = activeSums_8 ? $signed(_GEN_386) : $signed(_GEN_370); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_403 = activeSums_8 ? $signed(_GEN_387) : $signed(_GEN_371); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_404 = activeSums_8 ? $signed(_GEN_388) : $signed(_GEN_372); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_405 = activeSums_8 ? $signed(_GEN_389) : $signed(_GEN_373); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_406 = activeSums_8 ? $signed(_GEN_390) : $signed(_GEN_374); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_407 = activeSums_8 ? $signed(_GEN_391) : $signed(_GEN_375); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_408 = activeSums_8 ? $signed(_GEN_392) : $signed(_GEN_376); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_409 = activeSums_8 ? $signed(_GEN_393) : $signed(_GEN_377); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_410 = activeSums_8 ? $signed(_GEN_394) : $signed(_GEN_378); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_411 = activeSums_8 ? $signed(_GEN_395) : $signed(_GEN_379); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_412 = activeSums_8 ? $signed(_GEN_396) : $signed(_GEN_380); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_413 = activeSums_8 ? $signed(_GEN_397) : $signed(_GEN_381); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_414 = activeSums_8 ? $signed(_GEN_398) : $signed(_GEN_382); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_9 = _T_502; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_882 = 4'h9 >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_415 = 4'h0 == _T_882 ? $signed(max_9) : $signed(_GEN_399); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_416 = 4'h1 == _T_882 ? $signed(max_9) : $signed(_GEN_400); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_417 = 4'h2 == _T_882 ? $signed(max_9) : $signed(_GEN_401); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_418 = 4'h3 == _T_882 ? $signed(max_9) : $signed(_GEN_402); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_419 = 4'h4 == _T_882 ? $signed(max_9) : $signed(_GEN_403); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_420 = 4'h5 == _T_882 ? $signed(max_9) : $signed(_GEN_404); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_421 = 4'h6 == _T_882 ? $signed(max_9) : $signed(_GEN_405); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_422 = 4'h7 == _T_882 ? $signed(max_9) : $signed(_GEN_406); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_423 = 4'h8 == _T_882 ? $signed(max_9) : $signed(_GEN_407); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_424 = 4'h9 == _T_882 ? $signed(max_9) : $signed(_GEN_408); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_425 = 4'ha == _T_882 ? $signed(max_9) : $signed(_GEN_409); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_426 = 4'hb == _T_882 ? $signed(max_9) : $signed(_GEN_410); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_427 = 4'hc == _T_882 ? $signed(max_9) : $signed(_GEN_411); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_428 = 4'hd == _T_882 ? $signed(max_9) : $signed(_GEN_412); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_429 = 4'he == _T_882 ? $signed(max_9) : $signed(_GEN_413); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_430 = 4'hf == _T_882 ? $signed(max_9) : $signed(_GEN_414); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_431 = activeSums_9 ? $signed(_GEN_415) : $signed(_GEN_399); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_432 = activeSums_9 ? $signed(_GEN_416) : $signed(_GEN_400); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_433 = activeSums_9 ? $signed(_GEN_417) : $signed(_GEN_401); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_434 = activeSums_9 ? $signed(_GEN_418) : $signed(_GEN_402); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_435 = activeSums_9 ? $signed(_GEN_419) : $signed(_GEN_403); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_436 = activeSums_9 ? $signed(_GEN_420) : $signed(_GEN_404); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_437 = activeSums_9 ? $signed(_GEN_421) : $signed(_GEN_405); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_438 = activeSums_9 ? $signed(_GEN_422) : $signed(_GEN_406); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_439 = activeSums_9 ? $signed(_GEN_423) : $signed(_GEN_407); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_440 = activeSums_9 ? $signed(_GEN_424) : $signed(_GEN_408); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_441 = activeSums_9 ? $signed(_GEN_425) : $signed(_GEN_409); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_442 = activeSums_9 ? $signed(_GEN_426) : $signed(_GEN_410); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_443 = activeSums_9 ? $signed(_GEN_427) : $signed(_GEN_411); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_444 = activeSums_9 ? $signed(_GEN_428) : $signed(_GEN_412); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_445 = activeSums_9 ? $signed(_GEN_429) : $signed(_GEN_413); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_446 = activeSums_9 ? $signed(_GEN_430) : $signed(_GEN_414); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_10 = _T_545; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_884 = 4'ha >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_447 = 4'h0 == _T_884 ? $signed(max_10) : $signed(_GEN_431); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_448 = 4'h1 == _T_884 ? $signed(max_10) : $signed(_GEN_432); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_449 = 4'h2 == _T_884 ? $signed(max_10) : $signed(_GEN_433); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_450 = 4'h3 == _T_884 ? $signed(max_10) : $signed(_GEN_434); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_451 = 4'h4 == _T_884 ? $signed(max_10) : $signed(_GEN_435); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_452 = 4'h5 == _T_884 ? $signed(max_10) : $signed(_GEN_436); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_453 = 4'h6 == _T_884 ? $signed(max_10) : $signed(_GEN_437); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_454 = 4'h7 == _T_884 ? $signed(max_10) : $signed(_GEN_438); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_455 = 4'h8 == _T_884 ? $signed(max_10) : $signed(_GEN_439); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_456 = 4'h9 == _T_884 ? $signed(max_10) : $signed(_GEN_440); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_457 = 4'ha == _T_884 ? $signed(max_10) : $signed(_GEN_441); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_458 = 4'hb == _T_884 ? $signed(max_10) : $signed(_GEN_442); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_459 = 4'hc == _T_884 ? $signed(max_10) : $signed(_GEN_443); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_460 = 4'hd == _T_884 ? $signed(max_10) : $signed(_GEN_444); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_461 = 4'he == _T_884 ? $signed(max_10) : $signed(_GEN_445); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_462 = 4'hf == _T_884 ? $signed(max_10) : $signed(_GEN_446); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_463 = activeSums_10 ? $signed(_GEN_447) : $signed(_GEN_431); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_464 = activeSums_10 ? $signed(_GEN_448) : $signed(_GEN_432); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_465 = activeSums_10 ? $signed(_GEN_449) : $signed(_GEN_433); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_466 = activeSums_10 ? $signed(_GEN_450) : $signed(_GEN_434); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_467 = activeSums_10 ? $signed(_GEN_451) : $signed(_GEN_435); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_468 = activeSums_10 ? $signed(_GEN_452) : $signed(_GEN_436); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_469 = activeSums_10 ? $signed(_GEN_453) : $signed(_GEN_437); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_470 = activeSums_10 ? $signed(_GEN_454) : $signed(_GEN_438); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_471 = activeSums_10 ? $signed(_GEN_455) : $signed(_GEN_439); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_472 = activeSums_10 ? $signed(_GEN_456) : $signed(_GEN_440); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_473 = activeSums_10 ? $signed(_GEN_457) : $signed(_GEN_441); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_474 = activeSums_10 ? $signed(_GEN_458) : $signed(_GEN_442); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_475 = activeSums_10 ? $signed(_GEN_459) : $signed(_GEN_443); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_476 = activeSums_10 ? $signed(_GEN_460) : $signed(_GEN_444); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_477 = activeSums_10 ? $signed(_GEN_461) : $signed(_GEN_445); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_478 = activeSums_10 ? $signed(_GEN_462) : $signed(_GEN_446); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_11 = _T_588; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_886 = 4'hb >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_479 = 4'h0 == _T_886 ? $signed(max_11) : $signed(_GEN_463); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_480 = 4'h1 == _T_886 ? $signed(max_11) : $signed(_GEN_464); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_481 = 4'h2 == _T_886 ? $signed(max_11) : $signed(_GEN_465); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_482 = 4'h3 == _T_886 ? $signed(max_11) : $signed(_GEN_466); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_483 = 4'h4 == _T_886 ? $signed(max_11) : $signed(_GEN_467); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_484 = 4'h5 == _T_886 ? $signed(max_11) : $signed(_GEN_468); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_485 = 4'h6 == _T_886 ? $signed(max_11) : $signed(_GEN_469); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_486 = 4'h7 == _T_886 ? $signed(max_11) : $signed(_GEN_470); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_487 = 4'h8 == _T_886 ? $signed(max_11) : $signed(_GEN_471); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_488 = 4'h9 == _T_886 ? $signed(max_11) : $signed(_GEN_472); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_489 = 4'ha == _T_886 ? $signed(max_11) : $signed(_GEN_473); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_490 = 4'hb == _T_886 ? $signed(max_11) : $signed(_GEN_474); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_491 = 4'hc == _T_886 ? $signed(max_11) : $signed(_GEN_475); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_492 = 4'hd == _T_886 ? $signed(max_11) : $signed(_GEN_476); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_493 = 4'he == _T_886 ? $signed(max_11) : $signed(_GEN_477); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_494 = 4'hf == _T_886 ? $signed(max_11) : $signed(_GEN_478); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_495 = activeSums_11 ? $signed(_GEN_479) : $signed(_GEN_463); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_496 = activeSums_11 ? $signed(_GEN_480) : $signed(_GEN_464); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_497 = activeSums_11 ? $signed(_GEN_481) : $signed(_GEN_465); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_498 = activeSums_11 ? $signed(_GEN_482) : $signed(_GEN_466); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_499 = activeSums_11 ? $signed(_GEN_483) : $signed(_GEN_467); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_500 = activeSums_11 ? $signed(_GEN_484) : $signed(_GEN_468); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_501 = activeSums_11 ? $signed(_GEN_485) : $signed(_GEN_469); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_502 = activeSums_11 ? $signed(_GEN_486) : $signed(_GEN_470); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_503 = activeSums_11 ? $signed(_GEN_487) : $signed(_GEN_471); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_504 = activeSums_11 ? $signed(_GEN_488) : $signed(_GEN_472); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_505 = activeSums_11 ? $signed(_GEN_489) : $signed(_GEN_473); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_506 = activeSums_11 ? $signed(_GEN_490) : $signed(_GEN_474); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_507 = activeSums_11 ? $signed(_GEN_491) : $signed(_GEN_475); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_508 = activeSums_11 ? $signed(_GEN_492) : $signed(_GEN_476); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_509 = activeSums_11 ? $signed(_GEN_493) : $signed(_GEN_477); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_510 = activeSums_11 ? $signed(_GEN_494) : $signed(_GEN_478); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_12 = _T_633; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_888 = 4'hc >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_511 = 4'h0 == _T_888 ? $signed(max_12) : $signed(_GEN_495); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_512 = 4'h1 == _T_888 ? $signed(max_12) : $signed(_GEN_496); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_513 = 4'h2 == _T_888 ? $signed(max_12) : $signed(_GEN_497); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_514 = 4'h3 == _T_888 ? $signed(max_12) : $signed(_GEN_498); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_515 = 4'h4 == _T_888 ? $signed(max_12) : $signed(_GEN_499); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_516 = 4'h5 == _T_888 ? $signed(max_12) : $signed(_GEN_500); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_517 = 4'h6 == _T_888 ? $signed(max_12) : $signed(_GEN_501); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_518 = 4'h7 == _T_888 ? $signed(max_12) : $signed(_GEN_502); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_519 = 4'h8 == _T_888 ? $signed(max_12) : $signed(_GEN_503); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_520 = 4'h9 == _T_888 ? $signed(max_12) : $signed(_GEN_504); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_521 = 4'ha == _T_888 ? $signed(max_12) : $signed(_GEN_505); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_522 = 4'hb == _T_888 ? $signed(max_12) : $signed(_GEN_506); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_523 = 4'hc == _T_888 ? $signed(max_12) : $signed(_GEN_507); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_524 = 4'hd == _T_888 ? $signed(max_12) : $signed(_GEN_508); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_525 = 4'he == _T_888 ? $signed(max_12) : $signed(_GEN_509); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_526 = 4'hf == _T_888 ? $signed(max_12) : $signed(_GEN_510); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_527 = activeSums_12 ? $signed(_GEN_511) : $signed(_GEN_495); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_528 = activeSums_12 ? $signed(_GEN_512) : $signed(_GEN_496); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_529 = activeSums_12 ? $signed(_GEN_513) : $signed(_GEN_497); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_530 = activeSums_12 ? $signed(_GEN_514) : $signed(_GEN_498); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_531 = activeSums_12 ? $signed(_GEN_515) : $signed(_GEN_499); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_532 = activeSums_12 ? $signed(_GEN_516) : $signed(_GEN_500); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_533 = activeSums_12 ? $signed(_GEN_517) : $signed(_GEN_501); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_534 = activeSums_12 ? $signed(_GEN_518) : $signed(_GEN_502); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_535 = activeSums_12 ? $signed(_GEN_519) : $signed(_GEN_503); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_536 = activeSums_12 ? $signed(_GEN_520) : $signed(_GEN_504); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_537 = activeSums_12 ? $signed(_GEN_521) : $signed(_GEN_505); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_538 = activeSums_12 ? $signed(_GEN_522) : $signed(_GEN_506); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_539 = activeSums_12 ? $signed(_GEN_523) : $signed(_GEN_507); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_540 = activeSums_12 ? $signed(_GEN_524) : $signed(_GEN_508); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_541 = activeSums_12 ? $signed(_GEN_525) : $signed(_GEN_509); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_542 = activeSums_12 ? $signed(_GEN_526) : $signed(_GEN_510); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_13 = _T_678; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_890 = 4'hd >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_543 = 4'h0 == _T_890 ? $signed(max_13) : $signed(_GEN_527); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_544 = 4'h1 == _T_890 ? $signed(max_13) : $signed(_GEN_528); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_545 = 4'h2 == _T_890 ? $signed(max_13) : $signed(_GEN_529); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_546 = 4'h3 == _T_890 ? $signed(max_13) : $signed(_GEN_530); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_547 = 4'h4 == _T_890 ? $signed(max_13) : $signed(_GEN_531); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_548 = 4'h5 == _T_890 ? $signed(max_13) : $signed(_GEN_532); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_549 = 4'h6 == _T_890 ? $signed(max_13) : $signed(_GEN_533); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_550 = 4'h7 == _T_890 ? $signed(max_13) : $signed(_GEN_534); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_551 = 4'h8 == _T_890 ? $signed(max_13) : $signed(_GEN_535); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_552 = 4'h9 == _T_890 ? $signed(max_13) : $signed(_GEN_536); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_553 = 4'ha == _T_890 ? $signed(max_13) : $signed(_GEN_537); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_554 = 4'hb == _T_890 ? $signed(max_13) : $signed(_GEN_538); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_555 = 4'hc == _T_890 ? $signed(max_13) : $signed(_GEN_539); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_556 = 4'hd == _T_890 ? $signed(max_13) : $signed(_GEN_540); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_557 = 4'he == _T_890 ? $signed(max_13) : $signed(_GEN_541); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_558 = 4'hf == _T_890 ? $signed(max_13) : $signed(_GEN_542); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_559 = activeSums_13 ? $signed(_GEN_543) : $signed(_GEN_527); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_560 = activeSums_13 ? $signed(_GEN_544) : $signed(_GEN_528); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_561 = activeSums_13 ? $signed(_GEN_545) : $signed(_GEN_529); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_562 = activeSums_13 ? $signed(_GEN_546) : $signed(_GEN_530); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_563 = activeSums_13 ? $signed(_GEN_547) : $signed(_GEN_531); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_564 = activeSums_13 ? $signed(_GEN_548) : $signed(_GEN_532); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_565 = activeSums_13 ? $signed(_GEN_549) : $signed(_GEN_533); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_566 = activeSums_13 ? $signed(_GEN_550) : $signed(_GEN_534); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_567 = activeSums_13 ? $signed(_GEN_551) : $signed(_GEN_535); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_568 = activeSums_13 ? $signed(_GEN_552) : $signed(_GEN_536); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_569 = activeSums_13 ? $signed(_GEN_553) : $signed(_GEN_537); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_570 = activeSums_13 ? $signed(_GEN_554) : $signed(_GEN_538); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_571 = activeSums_13 ? $signed(_GEN_555) : $signed(_GEN_539); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_572 = activeSums_13 ? $signed(_GEN_556) : $signed(_GEN_540); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_573 = activeSums_13 ? $signed(_GEN_557) : $signed(_GEN_541); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_574 = activeSums_13 ? $signed(_GEN_558) : $signed(_GEN_542); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_14 = _T_721; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_892 = 4'he >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_575 = 4'h0 == _T_892 ? $signed(max_14) : $signed(_GEN_559); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_576 = 4'h1 == _T_892 ? $signed(max_14) : $signed(_GEN_560); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_577 = 4'h2 == _T_892 ? $signed(max_14) : $signed(_GEN_561); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_578 = 4'h3 == _T_892 ? $signed(max_14) : $signed(_GEN_562); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_579 = 4'h4 == _T_892 ? $signed(max_14) : $signed(_GEN_563); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_580 = 4'h5 == _T_892 ? $signed(max_14) : $signed(_GEN_564); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_581 = 4'h6 == _T_892 ? $signed(max_14) : $signed(_GEN_565); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_582 = 4'h7 == _T_892 ? $signed(max_14) : $signed(_GEN_566); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_583 = 4'h8 == _T_892 ? $signed(max_14) : $signed(_GEN_567); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_584 = 4'h9 == _T_892 ? $signed(max_14) : $signed(_GEN_568); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_585 = 4'ha == _T_892 ? $signed(max_14) : $signed(_GEN_569); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_586 = 4'hb == _T_892 ? $signed(max_14) : $signed(_GEN_570); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_587 = 4'hc == _T_892 ? $signed(max_14) : $signed(_GEN_571); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_588 = 4'hd == _T_892 ? $signed(max_14) : $signed(_GEN_572); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_589 = 4'he == _T_892 ? $signed(max_14) : $signed(_GEN_573); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_590 = 4'hf == _T_892 ? $signed(max_14) : $signed(_GEN_574); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_591 = activeSums_14 ? $signed(_GEN_575) : $signed(_GEN_559); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_592 = activeSums_14 ? $signed(_GEN_576) : $signed(_GEN_560); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_593 = activeSums_14 ? $signed(_GEN_577) : $signed(_GEN_561); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_594 = activeSums_14 ? $signed(_GEN_578) : $signed(_GEN_562); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_595 = activeSums_14 ? $signed(_GEN_579) : $signed(_GEN_563); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_596 = activeSums_14 ? $signed(_GEN_580) : $signed(_GEN_564); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_597 = activeSums_14 ? $signed(_GEN_581) : $signed(_GEN_565); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_598 = activeSums_14 ? $signed(_GEN_582) : $signed(_GEN_566); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_599 = activeSums_14 ? $signed(_GEN_583) : $signed(_GEN_567); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_600 = activeSums_14 ? $signed(_GEN_584) : $signed(_GEN_568); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_601 = activeSums_14 ? $signed(_GEN_585) : $signed(_GEN_569); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_602 = activeSums_14 ? $signed(_GEN_586) : $signed(_GEN_570); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_603 = activeSums_14 ? $signed(_GEN_587) : $signed(_GEN_571); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_604 = activeSums_14 ? $signed(_GEN_588) : $signed(_GEN_572); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_605 = activeSums_14 ? $signed(_GEN_589) : $signed(_GEN_573); // @[CFARCoreWithASR.scala 200:32]
-  assign _GEN_606 = activeSums_14 ? $signed(_GEN_590) : $signed(_GEN_574); // @[CFARCoreWithASR.scala 200:32]
-  assign activeSums_15 = _T_764; // @[CFARCoreWithASR.scala 110:29]
-  assign _T_894 = 4'hf >> diffInSubSize; // @[CFARCoreWithASR.scala 201:29]
-  assign _GEN_607 = 4'h0 == _T_894 ? $signed(max_15) : $signed(_GEN_591); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_608 = 4'h1 == _T_894 ? $signed(max_15) : $signed(_GEN_592); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_609 = 4'h2 == _T_894 ? $signed(max_15) : $signed(_GEN_593); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_610 = 4'h3 == _T_894 ? $signed(max_15) : $signed(_GEN_594); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_611 = 4'h4 == _T_894 ? $signed(max_15) : $signed(_GEN_595); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_612 = 4'h5 == _T_894 ? $signed(max_15) : $signed(_GEN_596); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_613 = 4'h6 == _T_894 ? $signed(max_15) : $signed(_GEN_597); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_614 = 4'h7 == _T_894 ? $signed(max_15) : $signed(_GEN_598); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_615 = 4'h8 == _T_894 ? $signed(max_15) : $signed(_GEN_599); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_616 = 4'h9 == _T_894 ? $signed(max_15) : $signed(_GEN_600); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_617 = 4'ha == _T_894 ? $signed(max_15) : $signed(_GEN_601); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_618 = 4'hb == _T_894 ? $signed(max_15) : $signed(_GEN_602); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_619 = 4'hc == _T_894 ? $signed(max_15) : $signed(_GEN_603); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_620 = 4'hd == _T_894 ? $signed(max_15) : $signed(_GEN_604); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_621 = 4'he == _T_894 ? $signed(max_15) : $signed(_GEN_605); // @[CFARCoreWithASR.scala 202:27]
-  assign _GEN_622 = 4'hf == _T_894 ? $signed(max_15) : $signed(_GEN_606); // @[CFARCoreWithASR.scala 202:27]
-  assign _T_908 = io_windowCells >> _T_811; // @[CFARCoreWithASR.scala 209:46]
-  assign clutterRepr = $signed(minCircuit_io_out) >>> _T_811; // @[FixedPointTypeClass.scala 118:51]
-  assign _T_924 = cntIn + 9'h1; // @[CFARCoreWithASR.scala 216:20]
-  assign _T_926 = latency - 9'h1; // @[CFARCoreWithASR.scala 218:28]
-  assign _T_927 = cntIn == _T_926; // @[CFARCoreWithASR.scala 218:15]
-  assign _T_929 = _T_927 & _T_114; // @[CFARCoreWithASR.scala 218:35]
-  assign _GEN_640 = _T_929 | initialInDone; // @[CFARCoreWithASR.scala 218:52]
-  assign _T_930 = io_out_ready & io_out_valid; // @[Decoupled.scala 40:37]
-  assign _T_931 = io_lastOut & _T_930; // @[CFARCoreWithASR.scala 222:20]
-  assign _T_934 = cntOut + 9'h1; // @[CFARCoreWithASR.scala 226:22]
-  assign _T_936 = io_fftWin - 10'h1; // @[CFARCoreWithASR.scala 228:31]
-  assign _GEN_916 = {{1'd0}, cntOut}; // @[CFARCoreWithASR.scala 228:16]
-  assign _T_937 = _GEN_916 == _T_936; // @[CFARCoreWithASR.scala 228:16]
-  assign _T_939 = _T_937 & _T_930; // @[CFARCoreWithASR.scala 228:38]
-  assign _T_942 = _T_939 | _T_931; // @[CFARCoreWithASR.scala 228:55]
-  assign _GEN_644 = io_lastIn | flushing; // @[CFARCoreWithASR.scala 232:20]
-  assign leftThr = $signed(sumSubLaggs_0) >>> io_divSum; // @[FixedPointTypeClass.scala 118:51]
-  assign rightThr = $signed(sumSubLeads_0) >>> io_divSum; // @[FixedPointTypeClass.scala 118:51]
-  assign _T_944 = $signed(leftThr) > $signed(rightThr); // @[FixedPointTypeClass.scala 55:59]
-  assign greatestOf = _T_944 ? $signed(leftThr) : $signed(rightThr); // @[CFARCoreWithASR.scala 289:23]
-  assign _T_945 = $signed(leftThr) < $signed(rightThr); // @[FixedPointTypeClass.scala 53:59]
-  assign smallestOf = _T_945 ? $signed(leftThr) : $signed(rightThr); // @[CFARCoreWithASR.scala 290:23]
-  assign _T_948 = $signed(rightThr) + $signed(leftThr); // @[FixedPointTypeClass.scala 20:58]
-  assign _T_949 = _T_948[19:1]; // @[FixedPointTypeClass.scala 117:50]
-  assign _T_950 = 2'h3 == io_cfarMode; // @[Mux.scala 68:19]
-  assign _T_951 = _T_950 ? $signed(clutterRepr) : $signed(smallestOf); // @[Mux.scala 68:16]
-  assign _T_952 = 2'h2 == io_cfarMode; // @[Mux.scala 68:19]
-  assign _T_953 = _T_952 ? $signed(smallestOf) : $signed(_T_951); // @[Mux.scala 68:16]
-  assign _T_954 = 2'h1 == io_cfarMode; // @[Mux.scala 68:19]
-  assign _T_955 = _T_954 ? $signed(greatestOf) : $signed(_T_953); // @[Mux.scala 68:16]
-  assign _T_956 = 2'h0 == io_cfarMode; // @[Mux.scala 68:19]
-  assign thrByModes = _T_956 ? $signed({{1{_T_949[18]}},_T_949}) : $signed(_T_955); // @[Mux.scala 68:16]
-  assign _T_957 = ~laggWindow_io_regFull; // @[CFARCoreWithASR.scala 300:9]
-  assign _T_958 = laggWindow_io_out_ready & laggWindow_io_out_valid; // @[Decoupled.scala 40:37]
-  assign _T_959 = _T_957 & _T_958; // @[CFARCoreWithASR.scala 300:34]
-  assign _GEN_651 = _T_959 | enableRightThr; // @[CFARCoreWithASR.scala 300:63]
-  assign _T_960 = laggWindow_io_regFull & leadWindow_io_regFull; // @[CFARCoreWithASR.scala 313:50]
-  assign _T_961 = ~leadWindow_io_regFull; // @[CFARCoreWithASR.scala 315:60]
-  assign _T_962 = enableRightThr | _T_961; // @[CFARCoreWithASR.scala 315:57]
-  assign _T_963 = enableRightThr ? $signed(rightThr) : $signed(leftThr); // @[CFARCoreWithASR.scala 315:87]
-  assign _T_964 = _T_962 ? $signed(_T_963) : $signed(thrByModes); // @[CFARCoreWithASR.scala 315:41]
-  assign thrWithoutScaling = _T_960 ? $signed(thrByModes) : $signed(_T_964); // @[CFARCoreWithASR.scala 313:27]
-  assign _GEN_917 = {{4{io_thresholdScaler[15]}},io_thresholdScaler}; // @[FixedPointTypeClass.scala 211:35]
-  assign threshold = _T_966[35:13]; // @[FixedPointTypeClass.scala 153:43]
-  assign _T_967 = io_guardCells == 4'h0; // @[CFARCoreWithASR.scala 394:53]
-  assign _T_969 = io_windowCells - 7'h1; // @[CFARCoreWithASR.scala 394:103]
-  assign _T_972 = io_guardCells - 4'h1; // @[CFARCoreWithASR.scala 394:150]
-  assign _GEN_655 = laggWindow_io_parallelOut_0; // @[CFARCoreWithASR.scala 394:38]
-  assign _GEN_719 = laggGuard_io_parallelOut_0; // @[CFARCoreWithASR.scala 394:38]
-  assign _T_977 = $signed(cutDelayed) > $signed(leftNeighb); // @[FixedPointTypeClass.scala 55:59]
-  assign _T_978 = $signed(cutDelayed) > $signed(rightNeighb); // @[FixedPointTypeClass.scala 55:59]
-  assign isLocalMax = _T_977 & _T_978; // @[CFARCoreWithASR.scala 396:44]
-  assign _GEN_918 = {$signed(cutDelayed), 1'h0}; // @[FixedPointTypeClass.scala 55:59]
-  assign _GEN_919 = {{6{_GEN_918[16]}},_GEN_918}; // @[FixedPointTypeClass.scala 55:59]
-  assign isPeak = $signed(_GEN_919) > $signed(threshold); // @[FixedPointTypeClass.scala 55:59]
-  assign _T_979 = ~initialInDone; // @[CFARCoreWithASR.scala 418:20]
-  assign _T_980 = ~flushingDelayed; // @[CFARCoreWithASR.scala 418:54]
-  assign _T_981 = io_out_ready & _T_980; // @[CFARCoreWithASR.scala 418:51]
-  assign _T_987 = flushingDelayed & _T_986; // @[CFARCoreWithASR.scala 419:121]
-  assign _T_989 = isPeak & isLocalMax; // @[CFARCoreWithASR.scala 430:65]
-  assign _T_995 = flushingDelayed & _T_994; // @[CFARCoreWithASR.scala 435:121]
-  assign io_in_ready = _T_979 | _T_981; // @[CFARCoreWithASR.scala 44:20 CFARCoreWithASR.scala 418:17]
-  assign io_out_valid = Queue_io_deq_valid; // @[CFARCoreWithASR.scala 446:18]
-  assign io_out_bits_peak = Queue_io_deq_bits_peak; // @[CFARCoreWithASR.scala 443:22]
-  assign io_out_bits_cut = Queue_io_deq_bits_cut; // @[CFARCoreWithASR.scala 442:27]
-  assign io_out_bits_threshold = Queue_io_deq_bits_threshold; // @[CFARCoreWithASR.scala 444:27]
-  assign io_lastOut = Queue_1_io_deq_bits; // @[CFARCoreWithASR.scala 439:16]
-  assign io_fftBin = cntOut; // @[CFARCoreWithASR.scala 447:15]
+  assign _GEN_41 = {{3'd0}, io_guardCells}; // @[CFARCoreWithMem.scala 32:32]
+  assign _T = io_windowCells + _GEN_41; // @[CFARCoreWithMem.scala 32:32]
+  assign latency = _T + 8'h1; // @[CFARCoreWithMem.scala 32:49]
+  assign _T_1 = 7'h2 * io_windowCells; // @[CFARCoreWithMem.scala 33:26]
+  assign _T_2 = 4'h2 * io_guardCells; // @[CFARCoreWithMem.scala 33:49]
+  assign _GEN_42 = {{3'd0}, _T_2}; // @[CFARCoreWithMem.scala 33:43]
+  assign _T_4 = _T_1 + _GEN_42; // @[CFARCoreWithMem.scala 33:43]
+  assign _T_6 = _T_4 + 9'h1; // @[CFARCoreWithMem.scala 33:65]
+  assign _GEN_43 = {{1'd0}, _T_6}; // @[CFARCoreWithMem.scala 33:20]
+  assign _T_7 = io_fftWin > _GEN_43; // @[CFARCoreWithMem.scala 33:20]
+  assign _T_9 = _T_7 | reset; // @[CFARCoreWithMem.scala 33:9]
+  assign _T_10 = ~_T_9; // @[CFARCoreWithMem.scala 33:9]
+  assign _T_11 = io_guardCells > 4'h0; // @[CFARCoreWithMem.scala 34:24]
+  assign _T_13 = _T_11 | reset; // @[CFARCoreWithMem.scala 34:9]
+  assign _T_14 = ~_T_13; // @[CFARCoreWithMem.scala 34:9]
+  assign _T_21 = io_in_ready & io_in_valid; // @[Decoupled.scala 40:37]
+  assign _T_23 = cntIn + 9'h1; // @[CFARCoreWithMem.scala 75:20]
+  assign _T_25 = latency - 9'h1; // @[CFARCoreWithMem.scala 77:28]
+  assign _T_26 = cntIn == _T_25; // @[CFARCoreWithMem.scala 77:15]
+  assign _T_28 = _T_26 & _T_21; // @[CFARCoreWithMem.scala 77:35]
+  assign _GEN_2 = _T_28 | initialInDone; // @[CFARCoreWithMem.scala 77:52]
+  assign _T_29 = io_out_ready & io_out_valid; // @[Decoupled.scala 40:37]
+  assign _T_30 = io_lastOut & _T_29; // @[CFARCoreWithMem.scala 81:20]
+  assign _T_33 = cntOut + 9'h1; // @[CFARCoreWithMem.scala 85:22]
+  assign _T_35 = io_fftWin - 10'h1; // @[CFARCoreWithMem.scala 87:31]
+  assign _GEN_44 = {{1'd0}, cntOut}; // @[CFARCoreWithMem.scala 87:16]
+  assign _T_36 = _GEN_44 == _T_35; // @[CFARCoreWithMem.scala 87:16]
+  assign _T_38 = _T_36 & _T_29; // @[CFARCoreWithMem.scala 87:38]
+  assign _T_41 = _T_38 | _T_30; // @[CFARCoreWithMem.scala 87:55]
+  assign _T_42 = io_lastIn & io_in_valid; // @[CFARCoreWithMem.scala 93:19]
+  assign _GEN_6 = _T_42 | flushing; // @[CFARCoreWithMem.scala 93:35]
+  assign _GEN_9 = io_lastOut | lastCut; // @[CFARCoreWithMem.scala 101:21]
+  assign _T_43 = leadWindow_io_memEmpty; // @[CFARCoreWithMem.scala 106:32]
+  assign _T_47 = laggWindow_io_out_ready & laggWindow_io_out_valid; // @[Decoupled.scala 40:37]
+  assign _GEN_45 = {{4{laggWindow_io_in_bits[15]}},laggWindow_io_in_bits}; // @[FixedPointTypeClass.scala 20:58]
+  assign _T_50 = $signed(sumlagg) + $signed(_GEN_45); // @[FixedPointTypeClass.scala 20:58]
+  assign _GEN_46 = {{4{laggWindow_io_out_bits[15]}},laggWindow_io_out_bits}; // @[FixedPointTypeClass.scala 30:68]
+  assign _T_53 = $signed(_T_50) - $signed(_GEN_46); // @[FixedPointTypeClass.scala 30:68]
+  assign _T_59 = leadWindow_io_in_ready & leadWindow_io_in_valid; // @[Decoupled.scala 40:37]
+  assign _T_60 = leadWindow_io_out_ready & leadWindow_io_out_valid; // @[Decoupled.scala 40:37]
+  assign _GEN_48 = {{4{leadWindow_io_in_bits[15]}},leadWindow_io_in_bits}; // @[FixedPointTypeClass.scala 20:58]
+  assign _T_63 = $signed(sumlead) + $signed(_GEN_48); // @[FixedPointTypeClass.scala 20:58]
+  assign _GEN_49 = {{4{leadWindow_io_out_bits[15]}},leadWindow_io_out_bits}; // @[FixedPointTypeClass.scala 30:68]
+  assign _T_66 = $signed(_T_63) - $signed(_GEN_49); // @[FixedPointTypeClass.scala 30:68]
+  assign leftThr = $signed(sumlagg) >>> io_divSum; // @[FixedPointTypeClass.scala 118:51]
+  assign rightThr = $signed(sumlead) >>> io_divSum; // @[FixedPointTypeClass.scala 118:51]
+  assign _T_70 = $signed(leftThr) > $signed(rightThr); // @[FixedPointTypeClass.scala 55:59]
+  assign greatestOf = _T_70 ? $signed(leftThr) : $signed(rightThr); // @[CFARCoreWithMem.scala 143:23]
+  assign _T_71 = $signed(leftThr) < $signed(rightThr); // @[FixedPointTypeClass.scala 53:59]
+  assign smallestOf = _T_71 ? $signed(leftThr) : $signed(rightThr); // @[CFARCoreWithMem.scala 144:23]
+  assign _T_74 = $signed(rightThr) + $signed(leftThr); // @[FixedPointTypeClass.scala 20:58]
+  assign _T_75 = _T_74[19:1]; // @[FixedPointTypeClass.scala 117:50]
+  assign _T_78 = 2'h1 == io_cfarMode; // @[Mux.scala 68:19]
+  assign _T_79 = _T_78 ? $signed(greatestOf) : $signed(smallestOf); // @[Mux.scala 68:16]
+  assign _T_80 = 2'h0 == io_cfarMode; // @[Mux.scala 68:19]
+  assign thrByModes = _T_80 ? $signed({{1{_T_75[18]}},_T_75}) : $signed(_T_79); // @[Mux.scala 68:16]
+  assign _T_81 = ~laggWindow_io_memFull; // @[CFARCoreWithMem.scala 152:9]
+  assign _T_83 = _T_81 & _T_47; // @[CFARCoreWithMem.scala 152:34]
+  assign _GEN_21 = _T_83 | enableRightThr; // @[CFARCoreWithMem.scala 152:63]
+  assign _T_84 = ~leadWindow_io_memFull; // @[CFARCoreWithMem.scala 172:33]
+  assign _T_86 = _T_84 & _T_81; // @[CFARCoreWithMem.scala 172:56]
+  assign _T_90 = laggWindow_io_memFull & _T_84; // @[CFARCoreWithMem.scala 174:57]
+  assign _T_91 = enableRightThr ? $signed(rightThr) : $signed(thrByModes); // @[CFARCoreWithMem.scala 177:36]
+  assign _T_92 = _T_90 ? $signed(leftThr) : $signed(_T_91); // @[CFARCoreWithMem.scala 174:34]
+  assign thrWithoutScaling = _T_86 ? $signed(20'sh0) : $signed(_T_92); // @[CFARCoreWithMem.scala 172:32]
+  assign _GEN_51 = {{4{io_thresholdScaler[15]}},io_thresholdScaler}; // @[FixedPointTypeClass.scala 211:35]
+  assign threshold = _T_94[35:13]; // @[FixedPointTypeClass.scala 153:43]
+  assign _T_96 = io_guardCells - 4'h1; // @[CFARCoreWithMem.scala 197:74]
+  assign _GEN_25 = laggGuard_io_parallelOut_0; // @[Reg.scala 16:23]
+  assign _T_98 = $signed(cutDelayed) > $signed(leftNeighb); // @[FixedPointTypeClass.scala 55:59]
+  assign _T_99 = $signed(cutDelayed) > $signed(rightNeighb); // @[FixedPointTypeClass.scala 55:59]
+  assign isLocalMax = _T_98 & _T_99; // @[CFARCoreWithMem.scala 199:44]
+  assign _GEN_52 = {$signed(cutDelayed), 1'h0}; // @[FixedPointTypeClass.scala 55:59]
+  assign _GEN_53 = {{6{_GEN_52[16]}},_GEN_52}; // @[FixedPointTypeClass.scala 55:59]
+  assign isPeak = $signed(_GEN_53) > $signed(threshold); // @[FixedPointTypeClass.scala 55:59]
+  assign _T_100 = ~initialInDone; // @[CFARCoreWithMem.scala 216:20]
+  assign _T_101 = ~flushingDelayed; // @[CFARCoreWithMem.scala 216:54]
+  assign _T_102 = io_out_ready & _T_101; // @[CFARCoreWithMem.scala 216:51]
+  assign _T_108 = flushingDelayed & _T_107; // @[CFARCoreWithMem.scala 218:123]
+  assign _T_110 = isPeak & isLocalMax; // @[CFARCoreWithMem.scala 223:63]
+  assign _T_122 = flushingDelayed & _T_121; // @[CFARCoreWithMem.scala 231:123]
+  assign io_in_ready = _T_100 | _T_102; // @[CFARCoreWithMem.scala 41:20 CFARCoreWithMem.scala 216:17]
+  assign io_out_valid = Queue_io_deq_valid; // @[CFARCoreWithMem.scala 241:18]
+  assign io_out_bits_peak = Queue_io_deq_bits_peak; // @[CFARCoreWithMem.scala 239:22]
+  assign io_out_bits_cut = Queue_io_deq_bits_cut; // @[CFARCoreWithMem.scala 238:27]
+  assign io_out_bits_threshold = Queue_io_deq_bits_threshold; // @[CFARCoreWithMem.scala 240:27]
+  assign io_lastOut = Queue_2_io_deq_bits; // @[CFARCoreWithMem.scala 235:16]
+  assign io_fftBin = cntOut; // @[CFARCoreWithMem.scala 242:15]
   assign laggWindow_clock = clock;
   assign laggWindow_reset = reset;
-  assign laggWindow_io_depth = io_windowCells; // @[CFARCoreWithASR.scala 45:23]
-  assign laggWindow_io_in_valid = io_in_valid; // @[CFARCoreWithASR.scala 44:20]
-  assign laggWindow_io_in_bits = io_in_bits; // @[CFARCoreWithASR.scala 44:20]
-  assign laggWindow_io_lastIn = io_lastIn; // @[CFARCoreWithASR.scala 46:24]
-  assign laggWindow_io_out_ready = laggGuard_io_in_ready; // @[CFARCoreWithASR.scala 59:19]
+  assign laggWindow_io_depth = io_windowCells; // @[CFARCoreWithMem.scala 42:23]
+  assign laggWindow_io_in_valid = io_in_valid; // @[CFARCoreWithMem.scala 41:20]
+  assign laggWindow_io_in_bits = io_in_bits; // @[CFARCoreWithMem.scala 41:20]
+  assign laggWindow_io_lastIn = io_lastIn; // @[CFARCoreWithMem.scala 43:24]
+  assign laggWindow_io_out_ready = laggGuard_io_in_ready; // @[CFARCoreWithMem.scala 46:19]
   assign laggGuard_clock = clock;
   assign laggGuard_reset = reset;
-  assign laggGuard_io_depth = io_guardCells; // @[CFARCoreWithASR.scala 61:23]
-  assign laggGuard_io_in_valid = laggWindow_io_out_valid; // @[CFARCoreWithASR.scala 59:19]
-  assign laggGuard_io_in_bits = laggWindow_io_out_bits; // @[CFARCoreWithASR.scala 59:19]
-  assign laggGuard_io_lastIn = laggWindow_io_lastOut; // @[CFARCoreWithASR.scala 60:23]
-  assign laggGuard_io_out_ready = cellUnderTest_io_in_ready; // @[CFARCoreWithASR.scala 64:23]
+  assign laggGuard_io_depth = io_guardCells; // @[CFARCoreWithMem.scala 48:23]
+  assign laggGuard_io_in_valid = laggWindow_io_out_valid; // @[CFARCoreWithMem.scala 46:19]
+  assign laggGuard_io_in_bits = laggWindow_io_out_bits; // @[CFARCoreWithMem.scala 46:19]
+  assign laggGuard_io_lastIn = laggWindow_io_lastOut; // @[CFARCoreWithMem.scala 47:23]
+  assign laggGuard_io_out_ready = cellUnderTest_io_in_ready; // @[CFARCoreWithMem.scala 51:23]
   assign cellUnderTest_clock = clock;
   assign cellUnderTest_reset = reset;
-  assign cellUnderTest_io_in_valid = laggGuard_io_out_valid; // @[CFARCoreWithASR.scala 64:23]
-  assign cellUnderTest_io_in_bits = laggGuard_io_out_bits; // @[CFARCoreWithASR.scala 64:23]
-  assign cellUnderTest_io_lastIn = laggGuard_io_lastOut; // @[CFARCoreWithASR.scala 65:27]
-  assign cellUnderTest_io_out_ready = leadWindow_io_regFull ? leadWindow_io_in_ready : io_out_ready; // @[CFARCoreWithASR.scala 69:19 CFARCoreWithASR.scala 83:30]
+  assign cellUnderTest_io_in_valid = laggGuard_io_out_valid; // @[CFARCoreWithMem.scala 51:23]
+  assign cellUnderTest_io_in_bits = laggGuard_io_out_bits; // @[CFARCoreWithMem.scala 51:23]
+  assign cellUnderTest_io_lastIn = laggGuard_io_lastOut; // @[CFARCoreWithMem.scala 52:27]
+  assign cellUnderTest_io_out_ready = leadWindow_io_memFull ? leadWindow_io_in_ready : io_out_ready; // @[CFARCoreWithMem.scala 56:19 CFARCoreWithMem.scala 71:30]
   assign leadGuard_clock = clock;
   assign leadGuard_reset = reset;
-  assign leadGuard_io_depth = io_guardCells; // @[CFARCoreWithASR.scala 70:22]
-  assign leadGuard_io_in_valid = cellUnderTest_io_out_valid; // @[CFARCoreWithASR.scala 69:19]
-  assign leadGuard_io_in_bits = cellUnderTest_io_out_bits; // @[CFARCoreWithASR.scala 69:19]
-  assign leadGuard_io_lastIn = cellUnderTest_io_lastOut; // @[CFARCoreWithASR.scala 71:23]
-  assign leadGuard_io_out_ready = leadWindow_io_in_ready; // @[CFARCoreWithASR.scala 72:26 CFARCoreWithASR.scala 76:20]
+  assign leadGuard_io_depth = io_guardCells; // @[CFARCoreWithMem.scala 57:22]
+  assign leadGuard_io_in_valid = cellUnderTest_io_out_valid; // @[CFARCoreWithMem.scala 56:19]
+  assign leadGuard_io_in_bits = cellUnderTest_io_out_bits; // @[CFARCoreWithMem.scala 56:19]
+  assign leadGuard_io_lastIn = cellUnderTest_io_lastOut; // @[CFARCoreWithMem.scala 58:23]
+  assign leadGuard_io_out_ready = leadWindow_io_in_ready; // @[CFARCoreWithMem.scala 61:26 CFARCoreWithMem.scala 65:20]
   assign leadWindow_clock = clock;
   assign leadWindow_reset = reset;
-  assign leadWindow_io_depth = io_windowCells; // @[CFARCoreWithASR.scala 75:23]
-  assign leadWindow_io_in_valid = leadGuard_io_out_valid; // @[CFARCoreWithASR.scala 76:20]
-  assign leadWindow_io_in_bits = leadGuard_io_out_bits; // @[CFARCoreWithASR.scala 76:20]
-  assign leadWindow_io_lastIn = leadGuard_io_lastOut; // @[CFARCoreWithASR.scala 84:24]
-  assign leadWindow_io_out_ready = io_out_ready; // @[CFARCoreWithASR.scala 79:27]
-  assign minCircuit_clock = clock;
-  assign minCircuit_io_in_0 = activeSums_15 ? $signed(_GEN_607) : $signed(_GEN_591); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_1 = activeSums_15 ? $signed(_GEN_608) : $signed(_GEN_592); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_2 = activeSums_15 ? $signed(_GEN_609) : $signed(_GEN_593); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_3 = activeSums_15 ? $signed(_GEN_610) : $signed(_GEN_594); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_4 = activeSums_15 ? $signed(_GEN_611) : $signed(_GEN_595); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_5 = activeSums_15 ? $signed(_GEN_612) : $signed(_GEN_596); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_6 = activeSums_15 ? $signed(_GEN_613) : $signed(_GEN_597); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_7 = activeSums_15 ? $signed(_GEN_614) : $signed(_GEN_598); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_8 = activeSums_15 ? $signed(_GEN_615) : $signed(_GEN_599); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_9 = activeSums_15 ? $signed(_GEN_616) : $signed(_GEN_600); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_10 = activeSums_15 ? $signed(_GEN_617) : $signed(_GEN_601); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_11 = activeSums_15 ? $signed(_GEN_618) : $signed(_GEN_602); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_12 = activeSums_15 ? $signed(_GEN_619) : $signed(_GEN_603); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_13 = activeSums_15 ? $signed(_GEN_620) : $signed(_GEN_604); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_14 = activeSums_15 ? $signed(_GEN_621) : $signed(_GEN_605); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_in_15 = activeSums_15 ? $signed(_GEN_622) : $signed(_GEN_606); // @[CFARCoreWithASR.scala 208:20]
-  assign minCircuit_io_inSize = _T_908[4:0]; // @[CFARCoreWithASR.scala 209:28]
+  assign leadWindow_io_depth = io_windowCells; // @[CFARCoreWithMem.scala 64:23]
+  assign leadWindow_io_in_valid = leadGuard_io_out_valid; // @[CFARCoreWithMem.scala 65:20]
+  assign leadWindow_io_in_bits = leadGuard_io_out_bits; // @[CFARCoreWithMem.scala 65:20]
+  assign leadWindow_io_lastIn = leadGuard_io_lastOut; // @[CFARCoreWithMem.scala 72:24]
+  assign leadWindow_io_out_ready = io_out_ready; // @[CFARCoreWithMem.scala 69:27]
   assign Queue_clock = clock;
   assign Queue_reset = reset;
-  assign Queue_io_enq_valid = _T_985 | _T_987; // @[CFARCoreWithASR.scala 419:28]
-  assign Queue_io_enq_bits_peak = io_peakGrouping ? _T_989 : isPeak; // @[CFARCoreWithASR.scala 430:34]
-  assign Queue_io_enq_bits_cut = cutDelayed; // @[CFARCoreWithASR.scala 422:37]
-  assign _GEN_921 = threshold[22:1]; // @[CFARCoreWithASR.scala 423:37]
-  assign Queue_io_enq_bits_threshold = _GEN_921[15:0]; // @[CFARCoreWithASR.scala 423:37]
-  assign Queue_io_deq_ready = io_out_ready; // @[CFARCoreWithASR.scala 432:28]
-  assign Queue_1_clock = clock;
-  assign Queue_1_reset = reset;
-  assign Queue_1_io_enq_valid = _T_993 | _T_995; // @[CFARCoreWithASR.scala 435:28]
-  assign Queue_1_io_enq_bits = lastOut; // @[CFARCoreWithASR.scala 436:27]
-  assign Queue_1_io_deq_ready = io_out_ready; // @[CFARCoreWithASR.scala 438:28]
+  assign Queue_io_enq_valid = _T_106 | _T_108; // @[CFARCoreWithMem.scala 218:28]
+  assign Queue_io_enq_bits_peak = io_peakGrouping ? _T_110 : isPeak; // @[CFARCoreWithMem.scala 223:32]
+  assign Queue_io_enq_bits_cut = cutDelayed; // @[CFARCoreWithMem.scala 221:37]
+  assign _GEN_55 = threshold[22:1]; // @[CFARCoreWithMem.scala 222:37]
+  assign Queue_io_enq_bits_threshold = _GEN_55[15:0]; // @[CFARCoreWithMem.scala 222:37]
+  assign Queue_io_deq_ready = io_out_ready; // @[CFARCoreWithMem.scala 224:28]
+  assign Queue_2_clock = clock;
+  assign Queue_2_reset = reset;
+  assign Queue_2_io_enq_valid = _T_120 | _T_122; // @[CFARCoreWithMem.scala 231:28]
+  assign Queue_2_io_enq_bits = lastOut; // @[CFARCoreWithMem.scala 232:27]
+  assign Queue_2_io_deq_ready = io_out_ready; // @[CFARCoreWithMem.scala 234:28]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -19368,577 +14519,142 @@ initial begin
     `endif
   `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  flushing = _RAND_0[0:0];
+  lastCut = _RAND_0[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
-  cntIn = _RAND_1[8:0];
+  flushing = _RAND_1[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {1{`RANDOM}};
-  cntOut = _RAND_2[8:0];
+  cntIn = _RAND_2[8:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_3 = {1{`RANDOM}};
-  initialInDone = _RAND_3[0:0];
+  cntOut = _RAND_3[8:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_4 = {1{`RANDOM}};
-  lastOut = _RAND_4[0:0];
+  initialInDone = _RAND_4[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_5 = {1{`RANDOM}};
-  sumSubLaggs_0 = _RAND_5[19:0];
+  sumlagg = _RAND_5[19:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_6 = {1{`RANDOM}};
-  sumSubLaggs_1 = _RAND_6[19:0];
+  sumlead = _RAND_6[19:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_7 = {1{`RANDOM}};
-  sumSubLaggs_2 = _RAND_7[19:0];
+  lastOut = _RAND_7[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_8 = {1{`RANDOM}};
-  sumSubLaggs_3 = _RAND_8[19:0];
+  flushingDelayed = _RAND_8[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_9 = {1{`RANDOM}};
-  sumSubLaggs_4 = _RAND_9[19:0];
+  enableRightThr = _RAND_9[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
-  _RAND_10 = {1{`RANDOM}};
-  sumSubLaggs_5 = _RAND_10[19:0];
+  _RAND_10 = {2{`RANDOM}};
+  _T_94 = _RAND_10[35:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_11 = {1{`RANDOM}};
-  sumSubLaggs_6 = _RAND_11[19:0];
+  cutDelayed = _RAND_11[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_12 = {1{`RANDOM}};
-  sumSubLaggs_7 = _RAND_12[19:0];
+  leftNeighb = _RAND_12[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_13 = {1{`RANDOM}};
-  sumSubLaggs_8 = _RAND_13[19:0];
+  rightNeighb = _RAND_13[15:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_14 = {1{`RANDOM}};
-  sumSubLaggs_9 = _RAND_14[19:0];
+  _T_106 = _RAND_14[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_15 = {1{`RANDOM}};
-  sumSubLaggs_10 = _RAND_15[19:0];
+  _T_107 = _RAND_15[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_16 = {1{`RANDOM}};
-  sumSubLaggs_11 = _RAND_16[19:0];
+  _T_120 = _RAND_16[0:0];
   `endif // RANDOMIZE_REG_INIT
   `ifdef RANDOMIZE_REG_INIT
   _RAND_17 = {1{`RANDOM}};
-  sumSubLaggs_12 = _RAND_17[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_18 = {1{`RANDOM}};
-  sumSubLaggs_13 = _RAND_18[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_19 = {1{`RANDOM}};
-  sumSubLaggs_14 = _RAND_19[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_20 = {1{`RANDOM}};
-  sumSubLaggs_15 = _RAND_20[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_21 = {1{`RANDOM}};
-  sumSubLeads_0 = _RAND_21[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_22 = {1{`RANDOM}};
-  sumSubLeads_1 = _RAND_22[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_23 = {1{`RANDOM}};
-  sumSubLeads_2 = _RAND_23[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_24 = {1{`RANDOM}};
-  sumSubLeads_3 = _RAND_24[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_25 = {1{`RANDOM}};
-  sumSubLeads_4 = _RAND_25[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_26 = {1{`RANDOM}};
-  sumSubLeads_5 = _RAND_26[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_27 = {1{`RANDOM}};
-  sumSubLeads_6 = _RAND_27[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_28 = {1{`RANDOM}};
-  sumSubLeads_7 = _RAND_28[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_29 = {1{`RANDOM}};
-  sumSubLeads_8 = _RAND_29[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_30 = {1{`RANDOM}};
-  sumSubLeads_9 = _RAND_30[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_31 = {1{`RANDOM}};
-  sumSubLeads_10 = _RAND_31[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_32 = {1{`RANDOM}};
-  sumSubLeads_11 = _RAND_32[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_33 = {1{`RANDOM}};
-  sumSubLeads_12 = _RAND_33[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_34 = {1{`RANDOM}};
-  sumSubLeads_13 = _RAND_34[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_35 = {1{`RANDOM}};
-  sumSubLeads_14 = _RAND_35[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_36 = {1{`RANDOM}};
-  sumSubLeads_15 = _RAND_36[19:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_37 = {1{`RANDOM}};
-  flushingDelayed = _RAND_37[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_38 = {1{`RANDOM}};
-  enableRightThr = _RAND_38[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_39 = {2{`RANDOM}};
-  _T_966 = _RAND_39[35:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_40 = {1{`RANDOM}};
-  cutDelayed = _RAND_40[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_41 = {1{`RANDOM}};
-  leftNeighb = _RAND_41[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_42 = {1{`RANDOM}};
-  rightNeighb = _RAND_42[15:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_43 = {1{`RANDOM}};
-  _T_985 = _RAND_43[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_44 = {1{`RANDOM}};
-  _T_986 = _RAND_44[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_45 = {1{`RANDOM}};
-  _T_993 = _RAND_45[0:0];
-  `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_46 = {1{`RANDOM}};
-  _T_994 = _RAND_46[0:0];
+  _T_121 = _RAND_17[0:0];
   `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if (reset) begin
+      lastCut <= 1'h0;
+    end else if (_T_43) begin
+      lastCut <= 1'h0;
+    end else begin
+      lastCut <= _GEN_9;
+    end
+    if (reset) begin
       flushing <= 1'h0;
-    end else if (lastOut) begin
+    end else if (io_lastOut) begin
       flushing <= 1'h0;
     end else begin
-      flushing <= _GEN_644;
+      flushing <= _GEN_6;
     end
     if (reset) begin
       cntIn <= 9'h0;
-    end else if (_T_931) begin
+    end else if (_T_30) begin
       cntIn <= 9'h0;
-    end else if (_T_114) begin
-      cntIn <= _T_924;
+    end else if (_T_21) begin
+      cntIn <= _T_23;
     end
     if (reset) begin
       cntOut <= 9'h0;
-    end else if (_T_942) begin
+    end else if (_T_41) begin
       cntOut <= 9'h0;
-    end else if (_T_930) begin
-      cntOut <= _T_934;
+    end else if (_T_29) begin
+      cntOut <= _T_33;
     end
     if (reset) begin
       initialInDone <= 1'h0;
-    end else if (lastOut) begin
+    end else if (io_lastOut) begin
       initialInDone <= 1'h0;
     end else begin
-      initialInDone <= _GEN_640;
+      initialInDone <= _GEN_2;
+    end
+    if (reset) begin
+      sumlagg <= 20'sh0;
+    end else if (io_lastOut) begin
+      sumlagg <= 20'sh0;
+    end else if (_T_21) begin
+      if (laggWindow_io_memFull) begin
+        if (_T_47) begin
+          sumlagg <= _T_53;
+        end
+      end else begin
+        sumlagg <= _T_50;
+      end
+    end
+    if (reset) begin
+      sumlead <= 20'sh0;
+    end else if (lastCut) begin
+      sumlead <= 20'sh0;
+    end else if (_T_59) begin
+      if (leadWindow_io_memFull) begin
+        if (_T_60) begin
+          sumlead <= _T_66;
+        end
+      end else begin
+        sumlead <= _T_63;
+      end
     end
     lastOut <= cellUnderTest_io_lastOut;
-    if (reset) begin
-      sumSubLaggs_0 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_0 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_115) begin
-        sumSubLaggs_0 <= _T_121;
-      end else begin
-        sumSubLaggs_0 <= _T_118;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_1 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_1 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_156) begin
-        sumSubLaggs_1 <= _T_162;
-      end else if (maybeFullLagg_0) begin
-        sumSubLaggs_1 <= _T_159;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_2 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_2 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_201) begin
-        sumSubLaggs_2 <= _T_207;
-      end else if (maybeFullLagg_1) begin
-        sumSubLaggs_2 <= _T_204;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_3 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_3 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_242) begin
-        sumSubLaggs_3 <= _T_248;
-      end else if (maybeFullLagg_2) begin
-        sumSubLaggs_3 <= _T_245;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_4 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_4 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_291) begin
-        sumSubLaggs_4 <= _T_297;
-      end else if (maybeFullLagg_3) begin
-        sumSubLaggs_4 <= _T_294;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_5 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_5 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_332) begin
-        sumSubLaggs_5 <= _T_338;
-      end else if (maybeFullLagg_4) begin
-        sumSubLaggs_5 <= _T_335;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_6 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_6 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_377) begin
-        sumSubLaggs_6 <= _T_383;
-      end else if (maybeFullLagg_5) begin
-        sumSubLaggs_6 <= _T_380;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_7 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_7 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_418) begin
-        sumSubLaggs_7 <= _T_424;
-      end else if (maybeFullLagg_6) begin
-        sumSubLaggs_7 <= _T_421;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_8 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_8 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_471) begin
-        sumSubLaggs_8 <= _T_477;
-      end else if (maybeFullLagg_7) begin
-        sumSubLaggs_8 <= _T_474;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_9 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_9 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_512) begin
-        sumSubLaggs_9 <= _T_518;
-      end else if (maybeFullLagg_8) begin
-        sumSubLaggs_9 <= _T_515;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_10 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_10 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_557) begin
-        sumSubLaggs_10 <= _T_563;
-      end else if (maybeFullLagg_9) begin
-        sumSubLaggs_10 <= _T_560;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_11 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_11 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_598) begin
-        sumSubLaggs_11 <= _T_604;
-      end else if (maybeFullLagg_10) begin
-        sumSubLaggs_11 <= _T_601;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_12 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_12 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_647) begin
-        sumSubLaggs_12 <= _T_653;
-      end else if (maybeFullLagg_11) begin
-        sumSubLaggs_12 <= _T_650;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_13 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_13 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_688) begin
-        sumSubLaggs_13 <= _T_694;
-      end else if (maybeFullLagg_12) begin
-        sumSubLaggs_13 <= _T_691;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_14 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_14 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_733) begin
-        sumSubLaggs_14 <= _T_739;
-      end else if (maybeFullLagg_13) begin
-        sumSubLaggs_14 <= _T_736;
-      end
-    end
-    if (reset) begin
-      sumSubLaggs_15 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLaggs_15 <= 20'sh0;
-    end else if (_T_114) begin
-      if (_T_774) begin
-        sumSubLaggs_15 <= _T_780;
-      end else if (maybeFullLagg_14) begin
-        sumSubLaggs_15 <= _T_777;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_0 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_0 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_130) begin
-        sumSubLeads_0 <= _T_136;
-      end else begin
-        sumSubLeads_0 <= _T_133;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_1 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_1 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_171) begin
-        sumSubLeads_1 <= _T_177;
-      end else if (maybeFullLead_0) begin
-        sumSubLeads_1 <= _T_174;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_2 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_2 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_216) begin
-        sumSubLeads_2 <= _T_222;
-      end else if (maybeFullLead_1) begin
-        sumSubLeads_2 <= _T_219;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_3 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_3 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_257) begin
-        sumSubLeads_3 <= _T_263;
-      end else if (maybeFullLead_2) begin
-        sumSubLeads_3 <= _T_260;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_4 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_4 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_306) begin
-        sumSubLeads_4 <= _T_312;
-      end else if (maybeFullLead_3) begin
-        sumSubLeads_4 <= _T_309;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_5 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_5 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_347) begin
-        sumSubLeads_5 <= _T_353;
-      end else if (maybeFullLead_4) begin
-        sumSubLeads_5 <= _T_350;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_6 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_6 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_392) begin
-        sumSubLeads_6 <= _T_398;
-      end else if (maybeFullLead_5) begin
-        sumSubLeads_6 <= _T_395;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_7 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_7 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_433) begin
-        sumSubLeads_7 <= _T_439;
-      end else if (maybeFullLead_6) begin
-        sumSubLeads_7 <= _T_436;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_8 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_8 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_486) begin
-        sumSubLeads_8 <= _T_492;
-      end else if (maybeFullLead_7) begin
-        sumSubLeads_8 <= _T_489;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_9 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_9 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_527) begin
-        sumSubLeads_9 <= _T_533;
-      end else if (maybeFullLead_8) begin
-        sumSubLeads_9 <= _T_530;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_10 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_10 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_572) begin
-        sumSubLeads_10 <= _T_578;
-      end else if (maybeFullLead_9) begin
-        sumSubLeads_10 <= _T_575;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_11 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_11 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_613) begin
-        sumSubLeads_11 <= _T_619;
-      end else if (maybeFullLead_10) begin
-        sumSubLeads_11 <= _T_616;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_12 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_12 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_662) begin
-        sumSubLeads_12 <= _T_668;
-      end else if (maybeFullLead_11) begin
-        sumSubLeads_12 <= _T_665;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_13 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_13 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_703) begin
-        sumSubLeads_13 <= _T_709;
-      end else if (maybeFullLead_12) begin
-        sumSubLeads_13 <= _T_706;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_14 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_14 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_748) begin
-        sumSubLeads_14 <= _T_754;
-      end else if (maybeFullLead_13) begin
-        sumSubLeads_14 <= _T_751;
-      end
-    end
-    if (reset) begin
-      sumSubLeads_15 <= 20'sh0;
-    end else if (io_lastOut) begin
-      sumSubLeads_15 <= 20'sh0;
-    end else if (_T_129) begin
-      if (_T_789) begin
-        sumSubLeads_15 <= _T_795;
-      end else if (maybeFullLead_14) begin
-        sumSubLeads_15 <= _T_792;
-      end
-    end
     if (reset) begin
       flushingDelayed <= 1'h0;
     end else if (io_lastOut) begin
@@ -19951,172 +14667,38 @@ end // initial
     end else if (io_lastOut) begin
       enableRightThr <= 1'h0;
     end else begin
-      enableRightThr <= _GEN_651;
+      enableRightThr <= _GEN_21;
     end
-    _T_966 <= $signed(thrWithoutScaling) * $signed(_GEN_917);
+    _T_94 <= $signed(thrWithoutScaling) * $signed(_GEN_51);
     cutDelayed <= cellUnderTest_io_out_bits;
-    if (_T_967) begin
-      if (6'h3f == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_63;
-      end else if (6'h3e == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_62;
-      end else if (6'h3d == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_61;
-      end else if (6'h3c == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_60;
-      end else if (6'h3b == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_59;
-      end else if (6'h3a == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_58;
-      end else if (6'h39 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_57;
-      end else if (6'h38 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_56;
-      end else if (6'h37 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_55;
-      end else if (6'h36 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_54;
-      end else if (6'h35 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_53;
-      end else if (6'h34 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_52;
-      end else if (6'h33 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_51;
-      end else if (6'h32 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_50;
-      end else if (6'h31 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_49;
-      end else if (6'h30 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_48;
-      end else if (6'h2f == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_47;
-      end else if (6'h2e == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_46;
-      end else if (6'h2d == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_45;
-      end else if (6'h2c == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_44;
-      end else if (6'h2b == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_43;
-      end else if (6'h2a == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_42;
-      end else if (6'h29 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_41;
-      end else if (6'h28 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_40;
-      end else if (6'h27 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_39;
-      end else if (6'h26 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_38;
-      end else if (6'h25 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_37;
-      end else if (6'h24 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_36;
-      end else if (6'h23 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_35;
-      end else if (6'h22 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_34;
-      end else if (6'h21 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_33;
-      end else if (6'h20 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_32;
-      end else if (6'h1f == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_31;
-      end else if (6'h1e == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_30;
-      end else if (6'h1d == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_29;
-      end else if (6'h1c == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_28;
-      end else if (6'h1b == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_27;
-      end else if (6'h1a == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_26;
-      end else if (6'h19 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_25;
-      end else if (6'h18 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_24;
-      end else if (6'h17 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_23;
-      end else if (6'h16 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_22;
-      end else if (6'h15 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_21;
-      end else if (6'h14 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_20;
-      end else if (6'h13 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_19;
-      end else if (6'h12 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_18;
-      end else if (6'h11 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_17;
-      end else if (6'h10 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_16;
-      end else if (6'hf == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_15;
-      end else if (6'he == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_14;
-      end else if (6'hd == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_13;
-      end else if (6'hc == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_12;
-      end else if (6'hb == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_11;
-      end else if (6'ha == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_10;
-      end else if (6'h9 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_9;
-      end else if (6'h8 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_8;
-      end else if (6'h7 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_7;
-      end else if (6'h6 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_6;
-      end else if (6'h5 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_5;
-      end else if (6'h4 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_4;
-      end else if (6'h3 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_3;
-      end else if (6'h2 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_2;
-      end else if (6'h1 == _T_969[5:0]) begin
-        leftNeighb <= laggWindow_io_parallelOut_1;
-      end else begin
-        leftNeighb <= _GEN_655;
-      end
-    end else if (3'h7 == _T_972[2:0]) begin
+    if (3'h7 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_7;
-    end else if (3'h6 == _T_972[2:0]) begin
+    end else if (3'h6 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_6;
-    end else if (3'h5 == _T_972[2:0]) begin
+    end else if (3'h5 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_5;
-    end else if (3'h4 == _T_972[2:0]) begin
+    end else if (3'h4 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_4;
-    end else if (3'h3 == _T_972[2:0]) begin
+    end else if (3'h3 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_3;
-    end else if (3'h2 == _T_972[2:0]) begin
+    end else if (3'h2 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_2;
-    end else if (3'h1 == _T_972[2:0]) begin
+    end else if (3'h1 == _T_96[2:0]) begin
       leftNeighb <= laggGuard_io_parallelOut_1;
     end else begin
-      leftNeighb <= _GEN_719;
+      leftNeighb <= _GEN_25;
     end
-    if (_T_967) begin
-      rightNeighb <= leadWindow_io_parallelOut_0;
-    end else begin
-      rightNeighb <= leadGuard_io_parallelOut_0;
-    end
-    _T_985 <= initialInDone & _T_114;
-    _T_986 <= io_out_ready;
-    _T_993 <= initialInDone & _T_114;
-    _T_994 <= io_out_ready;
+    rightNeighb <= laggGuard_io_parallelOut_0;
+    _T_106 <= initialInDone & _T_21;
+    _T_107 <= io_out_ready;
+    _T_120 <= initialInDone & _T_21;
+    _T_121 <= io_out_ready;
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_T_3) begin
-          $fwrite(32'h80000002,"Assertion failed: Number of window cells must be larger than number of sub cells\n    at CFARCoreWithASR.scala:20 assert(io.windowCells >= io.subCells.get, \"Number of window cells must be larger than number of sub cells\")\n"); // @[CFARCoreWithASR.scala 20:9]
+        if (_T_10) begin
+          $fwrite(32'h80000002,"Assertion failed: FFT size must be larger than total number of shifting cells inside CFAR core\n    at CFARCoreWithMem.scala:33 assert(io.fftWin > 2.U * io.windowCells + 2.U * io.guardCells + 1.U, \"FFT size must be larger than total number of shifting cells inside CFAR core\")\n"); // @[CFARCoreWithMem.scala 33:9]
         end
     `ifdef PRINTF_COND
       end
@@ -20126,8 +14708,8 @@ end // initial
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_T_3) begin
-          $fatal; // @[CFARCoreWithASR.scala 20:9]
+        if (_T_10) begin
+          $fatal; // @[CFARCoreWithMem.scala 33:9]
         end
     `ifdef STOP_COND
       end
@@ -20138,7 +14720,7 @@ end // initial
       if (`PRINTF_COND) begin
     `endif
         if (_T_14) begin
-          $fwrite(32'h80000002,"Assertion failed: FFT size must be larger than total number of shifting cells inside CFAR core\n    at CFARCoreWithASR.scala:38 assert(io.fftWin > 2.U * io.windowCells + 2.U * io.guardCells + 1.U, \"FFT size must be larger than total number of shifting cells inside CFAR core\")\n"); // @[CFARCoreWithASR.scala 38:9]
+          $fwrite(32'h80000002,"Assertion failed: Number of guard cells should be greater than 0\n    at CFARCoreWithMem.scala:34 assert(io.guardCells > 0.U, \"Number of guard cells should be greater than 0\")\n"); // @[CFARCoreWithMem.scala 34:9]
         end
     `ifdef PRINTF_COND
       end
@@ -20149,7 +14731,7 @@ end // initial
       if (`STOP_COND) begin
     `endif
         if (_T_14) begin
-          $fatal; // @[CFARCoreWithASR.scala 38:9]
+          $fatal; // @[CFARCoreWithMem.scala 34:9]
         end
     `ifdef STOP_COND
       end
@@ -20171,7 +14753,6 @@ module CFARCore(
   input  [1:0]  io_cfarMode,
   input  [6:0]  io_windowCells,
   input  [3:0]  io_guardCells,
-  input  [6:0]  io_subCells,
   input         io_out_ready,
   output        io_out_valid,
   output        io_out_bits_peak,
@@ -20180,28 +14761,27 @@ module CFARCore(
   output        io_lastOut,
   output [8:0]  io_fftBin
 );
-  wire  cfarCore_clock; // @[CFARcore.scala 64:94]
-  wire  cfarCore_reset; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_in_ready; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_in_valid; // @[CFARcore.scala 64:94]
-  wire [15:0] cfarCore_io_in_bits; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_lastIn; // @[CFARcore.scala 64:94]
-  wire [9:0] cfarCore_io_fftWin; // @[CFARcore.scala 64:94]
-  wire [15:0] cfarCore_io_thresholdScaler; // @[CFARcore.scala 64:94]
-  wire [2:0] cfarCore_io_divSum; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_peakGrouping; // @[CFARcore.scala 64:94]
-  wire [1:0] cfarCore_io_cfarMode; // @[CFARcore.scala 64:94]
-  wire [6:0] cfarCore_io_windowCells; // @[CFARcore.scala 64:94]
-  wire [3:0] cfarCore_io_guardCells; // @[CFARcore.scala 64:94]
-  wire [6:0] cfarCore_io_subCells; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_out_ready; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_out_valid; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_out_bits_peak; // @[CFARcore.scala 64:94]
-  wire [15:0] cfarCore_io_out_bits_cut; // @[CFARcore.scala 64:94]
-  wire [15:0] cfarCore_io_out_bits_threshold; // @[CFARcore.scala 64:94]
-  wire  cfarCore_io_lastOut; // @[CFARcore.scala 64:94]
-  wire [8:0] cfarCore_io_fftBin; // @[CFARcore.scala 64:94]
-  CFARCoreWithASR cfarCore ( // @[CFARcore.scala 64:94]
+  wire  cfarCore_clock; // @[CFARcore.scala 64:206]
+  wire  cfarCore_reset; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_in_ready; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_in_valid; // @[CFARcore.scala 64:206]
+  wire [15:0] cfarCore_io_in_bits; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_lastIn; // @[CFARcore.scala 64:206]
+  wire [9:0] cfarCore_io_fftWin; // @[CFARcore.scala 64:206]
+  wire [15:0] cfarCore_io_thresholdScaler; // @[CFARcore.scala 64:206]
+  wire [2:0] cfarCore_io_divSum; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_peakGrouping; // @[CFARcore.scala 64:206]
+  wire [1:0] cfarCore_io_cfarMode; // @[CFARcore.scala 64:206]
+  wire [6:0] cfarCore_io_windowCells; // @[CFARcore.scala 64:206]
+  wire [3:0] cfarCore_io_guardCells; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_out_ready; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_out_valid; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_out_bits_peak; // @[CFARcore.scala 64:206]
+  wire [15:0] cfarCore_io_out_bits_cut; // @[CFARcore.scala 64:206]
+  wire [15:0] cfarCore_io_out_bits_threshold; // @[CFARcore.scala 64:206]
+  wire  cfarCore_io_lastOut; // @[CFARcore.scala 64:206]
+  wire [8:0] cfarCore_io_fftBin; // @[CFARcore.scala 64:206]
+  CFARCoreWithMem cfarCore ( // @[CFARcore.scala 64:206]
     .clock(cfarCore_clock),
     .reset(cfarCore_reset),
     .io_in_ready(cfarCore_io_in_ready),
@@ -20215,7 +14795,6 @@ module CFARCore(
     .io_cfarMode(cfarCore_io_cfarMode),
     .io_windowCells(cfarCore_io_windowCells),
     .io_guardCells(cfarCore_io_guardCells),
-    .io_subCells(cfarCore_io_subCells),
     .io_out_ready(cfarCore_io_out_ready),
     .io_out_valid(cfarCore_io_out_valid),
     .io_out_bits_peak(cfarCore_io_out_bits_peak),
@@ -20243,7 +14822,6 @@ module CFARCore(
   assign cfarCore_io_cfarMode = io_cfarMode; // @[CFARcore.scala 83:24]
   assign cfarCore_io_windowCells = io_windowCells; // @[CFARcore.scala 84:27]
   assign cfarCore_io_guardCells = io_guardCells; // @[CFARcore.scala 85:26]
-  assign cfarCore_io_subCells = io_subCells; // @[CFARcore.scala 93:30]
   assign cfarCore_io_out_ready = io_out_ready; // @[CFARcore.scala 95:19]
 endmodule
 module AXI4CFARBlock(
@@ -20291,7 +14869,6 @@ module AXI4CFARBlock(
   wire [1:0] cfar_io_cfarMode; // @[CFARDspBlock.scala 66:22]
   wire [6:0] cfar_io_windowCells; // @[CFARDspBlock.scala 66:22]
   wire [3:0] cfar_io_guardCells; // @[CFARDspBlock.scala 66:22]
-  wire [6:0] cfar_io_subCells; // @[CFARDspBlock.scala 66:22]
   wire  cfar_io_out_ready; // @[CFARDspBlock.scala 66:22]
   wire  cfar_io_out_valid; // @[CFARDspBlock.scala 66:22]
   wire  cfar_io_out_bits_peak; // @[CFARDspBlock.scala 66:22]
@@ -20325,17 +14902,15 @@ module AXI4CFARBlock(
   reg [31:0] _RAND_5;
   reg [2:0] _T_6; // @[CFARDspBlock.scala 111:27]
   reg [31:0] _RAND_6;
-  reg [6:0] subWindowSize; // @[CFARDspBlock.scala 118:34]
-  reg [31:0] _RAND_7;
   wire [41:0] _T_11; // @[Cat.scala 29:58]
   wire  _T_13; // @[RegisterRouter.scala 40:39]
   wire  _T_14; // @[RegisterRouter.scala 40:26]
   wire  _T_15; // @[RegisterRouter.scala 42:29]
   wire  _T_58_ready; // @[RegisterRouter.scala 59:16 Decoupled.scala 290:17]
   wire [29:0] _T_22; // @[RegisterRouter.scala 48:19]
-  wire [2:0] _T_312; // @[Cat.scala 29:58]
+  wire [2:0] _T_287; // @[Cat.scala 29:58]
   wire [5:0] _T_62; // @[RegisterRouter.scala 59:16]
-  wire  _T_74; // @[RegisterRouter.scala 59:16]
+  wire  _T_70; // @[RegisterRouter.scala 59:16]
   wire  _T_16; // @[RegisterRouter.scala 42:26]
   wire [1:0] _T_25; // @[OneHot.scala 65:12]
   wire [1:0] _T_27; // @[Misc.scala 200:81]
@@ -20360,69 +14935,66 @@ module AXI4CFARBlock(
   wire  _T_52; // @[Misc.scala 213:29]
   wire [3:0] _T_55; // @[Cat.scala 29:58]
   wire [3:0] _T_57; // @[RegisterRouter.scala 54:25]
+  wire [7:0] _T_86; // @[Bitwise.scala 72:12]
   wire [7:0] _T_88; // @[Bitwise.scala 72:12]
   wire [7:0] _T_90; // @[Bitwise.scala 72:12]
   wire [7:0] _T_92; // @[Bitwise.scala 72:12]
-  wire [7:0] _T_94; // @[Bitwise.scala 72:12]
-  wire [31:0] _T_97; // @[Cat.scala 29:58]
-  wire  _T_116; // @[RegisterRouter.scala 59:16]
-  wire  _T_331; // @[RegisterRouter.scala 59:16]
-  wire [7:0] _T_313; // @[OneHot.scala 58:35]
-  wire  _T_378; // @[RegisterRouter.scala 59:16]
+  wire [31:0] _T_95; // @[Cat.scala 29:58]
+  wire  _T_114; // @[RegisterRouter.scala 59:16]
+  wire  _T_306; // @[RegisterRouter.scala 59:16]
+  wire [7:0] _T_288; // @[OneHot.scala 58:35]
+  wire  _T_353; // @[RegisterRouter.scala 59:16]
+  wire  _T_355; // @[RegisterRouter.scala 59:16]
+  wire  _T_356; // @[RegisterRouter.scala 59:16]
+  wire  _T_121; // @[RegisterRouter.scala 59:16]
+  wire  _T_137; // @[RegisterRouter.scala 59:16]
   wire  _T_380; // @[RegisterRouter.scala 59:16]
   wire  _T_381; // @[RegisterRouter.scala 59:16]
-  wire  _T_123; // @[RegisterRouter.scala 59:16]
-  wire  _T_139; // @[RegisterRouter.scala 59:16]
-  wire  _T_405; // @[RegisterRouter.scala 59:16]
-  wire  _T_406; // @[RegisterRouter.scala 59:16]
-  wire  _T_146; // @[RegisterRouter.scala 59:16]
-  wire  _T_162; // @[RegisterRouter.scala 59:16]
+  wire  _T_144; // @[RegisterRouter.scala 59:16]
+  wire  _T_160; // @[RegisterRouter.scala 59:16]
+  wire  _T_360; // @[RegisterRouter.scala 59:16]
+  wire  _T_361; // @[RegisterRouter.scala 59:16]
+  wire  _T_167; // @[RegisterRouter.scala 59:16]
+  wire  _T_183; // @[RegisterRouter.scala 59:16]
   wire  _T_385; // @[RegisterRouter.scala 59:16]
   wire  _T_386; // @[RegisterRouter.scala 59:16]
-  wire  _T_169; // @[RegisterRouter.scala 59:16]
-  wire  _T_185; // @[RegisterRouter.scala 59:16]
-  wire  _T_410; // @[RegisterRouter.scala 59:16]
-  wire  _T_411; // @[RegisterRouter.scala 59:16]
-  wire  _T_192; // @[RegisterRouter.scala 59:16]
-  wire  _T_390; // @[RegisterRouter.scala 59:16]
-  wire  _T_391; // @[RegisterRouter.scala 59:16]
-  wire  _T_215; // @[RegisterRouter.scala 59:16]
-  wire  _T_231; // @[RegisterRouter.scala 59:16]
-  wire  _T_415; // @[RegisterRouter.scala 59:16]
-  wire  _T_416; // @[RegisterRouter.scala 59:16]
-  wire  _T_238; // @[RegisterRouter.scala 59:16]
-  wire  _T_254; // @[RegisterRouter.scala 59:16]
-  wire  _T_395; // @[RegisterRouter.scala 59:16]
-  wire  _T_396; // @[RegisterRouter.scala 59:16]
-  wire  _T_261; // @[RegisterRouter.scala 59:16]
-  wire  _T_400; // @[RegisterRouter.scala 59:16]
-  wire  _T_401; // @[RegisterRouter.scala 59:16]
-  wire  _T_284; // @[RegisterRouter.scala 59:16]
+  wire  _T_190; // @[RegisterRouter.scala 59:16]
+  wire  _T_365; // @[RegisterRouter.scala 59:16]
+  wire  _T_366; // @[RegisterRouter.scala 59:16]
+  wire  _T_213; // @[RegisterRouter.scala 59:16]
+  wire  _T_229; // @[RegisterRouter.scala 59:16]
+  wire  _T_370; // @[RegisterRouter.scala 59:16]
+  wire  _T_371; // @[RegisterRouter.scala 59:16]
+  wire  _T_236; // @[RegisterRouter.scala 59:16]
+  wire  _T_252; // @[RegisterRouter.scala 59:16]
+  wire  _T_375; // @[RegisterRouter.scala 59:16]
+  wire  _T_376; // @[RegisterRouter.scala 59:16]
+  wire  _T_259; // @[RegisterRouter.scala 59:16]
+  wire  _GEN_40; // @[MuxLiteral.scala 48:10]
   wire  _GEN_41; // @[MuxLiteral.scala 48:10]
   wire  _GEN_42; // @[MuxLiteral.scala 48:10]
   wire  _GEN_43; // @[MuxLiteral.scala 48:10]
   wire  _GEN_44; // @[MuxLiteral.scala 48:10]
   wire  _GEN_45; // @[MuxLiteral.scala 48:10]
+  wire  _GEN_55; // @[MuxLiteral.scala 48:10]
   wire  _GEN_46; // @[MuxLiteral.scala 48:10]
-  wire  _GEN_47; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_0; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  wire [15:0] _T_498_0; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  wire [15:0] _GEN_48; // @[MuxLiteral.scala 48:10]
+  wire [15:0] _T_498_2; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
   wire [15:0] _GEN_49; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_2; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  wire [15:0] _T_498_3; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
   wire [15:0] _GEN_50; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_3; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  wire [15:0] _T_498_4; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
   wire [15:0] _GEN_51; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_4; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  wire [15:0] _T_498_5; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
   wire [15:0] _GEN_52; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_5; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  wire [15:0] _T_498_6; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
   wire [15:0] _GEN_53; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_6; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
   wire [15:0] _GEN_54; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_523_7; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  wire [15:0] _GEN_55; // @[MuxLiteral.scala 48:10]
-  wire [15:0] _T_525; // @[RegisterRouter.scala 59:16]
-  wire  _T_526_bits_read; // @[Decoupled.scala 308:19 Decoupled.scala 309:14]
-  wire  _T_526_valid; // @[Decoupled.scala 308:19 Decoupled.scala 310:15]
-  wire  _T_529; // @[RegisterRouter.scala 65:29]
+  wire [15:0] _T_500; // @[RegisterRouter.scala 59:16]
+  wire  _T_501_bits_read; // @[Decoupled.scala 308:19 Decoupled.scala 309:14]
+  wire  _T_501_valid; // @[Decoupled.scala 308:19 Decoupled.scala 310:15]
+  wire  _T_504; // @[RegisterRouter.scala 65:29]
   CFARCore cfar ( // @[CFARDspBlock.scala 66:22]
     .clock(cfar_clock),
     .reset(cfar_reset),
@@ -20437,7 +15009,6 @@ module AXI4CFARBlock(
     .io_cfarMode(cfar_io_cfarMode),
     .io_windowCells(cfar_io_windowCells),
     .io_guardCells(cfar_io_guardCells),
-    .io_subCells(cfar_io_subCells),
     .io_out_ready(cfar_io_out_ready),
     .io_out_valid(cfar_io_out_valid),
     .io_out_bits_peak(cfar_io_out_bits_peak),
@@ -20466,9 +15037,9 @@ module AXI4CFARBlock(
   assign _T_15 = ~auto_mem_in_ar_valid; // @[RegisterRouter.scala 42:29]
   assign _T_58_ready = Queue_io_enq_ready; // @[RegisterRouter.scala 59:16 Decoupled.scala 290:17]
   assign _T_22 = auto_mem_in_ar_valid ? auto_mem_in_ar_bits_addr : auto_mem_in_aw_bits_addr; // @[RegisterRouter.scala 48:19]
-  assign _T_312 = {_T_22[4],_T_22[3],_T_22[2]}; // @[Cat.scala 29:58]
+  assign _T_287 = {_T_22[4],_T_22[3],_T_22[2]}; // @[Cat.scala 29:58]
   assign _T_62 = _T_22[7:2] & 6'h38; // @[RegisterRouter.scala 59:16]
-  assign _T_74 = _T_62 == 6'h0; // @[RegisterRouter.scala 59:16]
+  assign _T_70 = _T_62 == 6'h0; // @[RegisterRouter.scala 59:16]
   assign _T_16 = _T_58_ready & _T_15; // @[RegisterRouter.scala 42:26]
   assign _T_25 = 2'h1 << auto_mem_in_ar_bits_size[0]; // @[OneHot.scala 65:12]
   assign _T_27 = _T_25 | 2'h1; // @[Misc.scala 200:81]
@@ -20493,75 +15064,72 @@ module AXI4CFARBlock(
   assign _T_52 = _T_37 | _T_51; // @[Misc.scala 213:29]
   assign _T_55 = {_T_52,_T_49,_T_46,_T_43}; // @[Cat.scala 29:58]
   assign _T_57 = auto_mem_in_ar_valid ? _T_55 : auto_mem_in_w_bits_strb; // @[RegisterRouter.scala 54:25]
-  assign _T_88 = _T_57[0] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
-  assign _T_90 = _T_57[1] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
-  assign _T_92 = _T_57[2] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
-  assign _T_94 = _T_57[3] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
-  assign _T_97 = {_T_94,_T_92,_T_90,_T_88}; // @[Cat.scala 29:58]
-  assign _T_116 = _T_97[9:0] == 10'h3ff; // @[RegisterRouter.scala 59:16]
-  assign _T_331 = _T_14 & _T_58_ready; // @[RegisterRouter.scala 59:16]
-  assign _T_313 = 8'h1 << _T_312; // @[OneHot.scala 58:35]
-  assign _T_378 = _T_331 & _T_15; // @[RegisterRouter.scala 59:16]
-  assign _T_380 = _T_378 & _T_313[0]; // @[RegisterRouter.scala 59:16]
-  assign _T_381 = _T_380 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_123 = _T_381 & _T_116; // @[RegisterRouter.scala 59:16]
-  assign _T_139 = _T_97[3:0] == 4'hf; // @[RegisterRouter.scala 59:16]
-  assign _T_405 = _T_378 & _T_313[5]; // @[RegisterRouter.scala 59:16]
-  assign _T_406 = _T_405 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_146 = _T_406 & _T_139; // @[RegisterRouter.scala 59:16]
-  assign _T_162 = _T_97[15:0] == 16'hffff; // @[RegisterRouter.scala 59:16]
-  assign _T_385 = _T_378 & _T_313[1]; // @[RegisterRouter.scala 59:16]
-  assign _T_386 = _T_385 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_169 = _T_386 & _T_162; // @[RegisterRouter.scala 59:16]
-  assign _T_185 = _T_97[2:0] == 3'h7; // @[RegisterRouter.scala 59:16]
-  assign _T_410 = _T_378 & _T_313[6]; // @[RegisterRouter.scala 59:16]
-  assign _T_411 = _T_410 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_192 = _T_411 & _T_185; // @[RegisterRouter.scala 59:16]
-  assign _T_390 = _T_378 & _T_313[2]; // @[RegisterRouter.scala 59:16]
-  assign _T_391 = _T_390 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_215 = _T_391 & _T_97[0]; // @[RegisterRouter.scala 59:16]
-  assign _T_231 = _T_97[6:0] == 7'h7f; // @[RegisterRouter.scala 59:16]
-  assign _T_415 = _T_378 & _T_313[7]; // @[RegisterRouter.scala 59:16]
-  assign _T_416 = _T_415 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_238 = _T_416 & _T_231; // @[RegisterRouter.scala 59:16]
-  assign _T_254 = _T_97[1:0] == 2'h3; // @[RegisterRouter.scala 59:16]
-  assign _T_395 = _T_378 & _T_313[3]; // @[RegisterRouter.scala 59:16]
-  assign _T_396 = _T_395 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_261 = _T_396 & _T_254; // @[RegisterRouter.scala 59:16]
-  assign _T_400 = _T_378 & _T_313[4]; // @[RegisterRouter.scala 59:16]
-  assign _T_401 = _T_400 & _T_74; // @[RegisterRouter.scala 59:16]
-  assign _T_284 = _T_401 & _T_231; // @[RegisterRouter.scala 59:16]
-  assign _GEN_41 = 3'h1 == _T_312 ? _T_74 : _T_74; // @[MuxLiteral.scala 48:10]
-  assign _GEN_42 = 3'h2 == _T_312 ? _T_74 : _GEN_41; // @[MuxLiteral.scala 48:10]
-  assign _GEN_43 = 3'h3 == _T_312 ? _T_74 : _GEN_42; // @[MuxLiteral.scala 48:10]
-  assign _GEN_44 = 3'h4 == _T_312 ? _T_74 : _GEN_43; // @[MuxLiteral.scala 48:10]
-  assign _GEN_45 = 3'h5 == _T_312 ? _T_74 : _GEN_44; // @[MuxLiteral.scala 48:10]
-  assign _GEN_46 = 3'h6 == _T_312 ? _T_74 : _GEN_45; // @[MuxLiteral.scala 48:10]
-  assign _GEN_47 = 3'h7 == _T_312 ? _T_74 : _GEN_46; // @[MuxLiteral.scala 48:10]
-  assign _T_523_0 = {{6'd0}, fftWin}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_49 = 3'h1 == _T_312 ? thresholdScaler : _T_523_0; // @[MuxLiteral.scala 48:10]
-  assign _T_523_2 = {{15'd0}, peakGrouping}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_50 = 3'h2 == _T_312 ? _T_523_2 : _GEN_49; // @[MuxLiteral.scala 48:10]
-  assign _T_523_3 = {{14'd0}, cfarMode}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_51 = 3'h3 == _T_312 ? _T_523_3 : _GEN_50; // @[MuxLiteral.scala 48:10]
-  assign _T_523_4 = {{9'd0}, windowCells}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_52 = 3'h4 == _T_312 ? _T_523_4 : _GEN_51; // @[MuxLiteral.scala 48:10]
-  assign _T_523_5 = {{12'd0}, guardCells}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_53 = 3'h5 == _T_312 ? _T_523_5 : _GEN_52; // @[MuxLiteral.scala 48:10]
-  assign _T_523_6 = {{13'd0}, _T_6}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_54 = 3'h6 == _T_312 ? _T_523_6 : _GEN_53; // @[MuxLiteral.scala 48:10]
-  assign _T_523_7 = {{9'd0}, subWindowSize}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
-  assign _GEN_55 = 3'h7 == _T_312 ? _T_523_7 : _GEN_54; // @[MuxLiteral.scala 48:10]
-  assign _T_525 = _GEN_47 ? _GEN_55 : 16'h0; // @[RegisterRouter.scala 59:16]
-  assign _T_526_bits_read = Queue_io_deq_bits_read; // @[Decoupled.scala 308:19 Decoupled.scala 309:14]
-  assign _T_526_valid = Queue_io_deq_valid; // @[Decoupled.scala 308:19 Decoupled.scala 310:15]
-  assign _T_529 = ~_T_526_bits_read; // @[RegisterRouter.scala 65:29]
+  assign _T_86 = _T_57[0] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  assign _T_88 = _T_57[1] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  assign _T_90 = _T_57[2] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  assign _T_92 = _T_57[3] ? 8'hff : 8'h0; // @[Bitwise.scala 72:12]
+  assign _T_95 = {_T_92,_T_90,_T_88,_T_86}; // @[Cat.scala 29:58]
+  assign _T_114 = _T_95[9:0] == 10'h3ff; // @[RegisterRouter.scala 59:16]
+  assign _T_306 = _T_14 & _T_58_ready; // @[RegisterRouter.scala 59:16]
+  assign _T_288 = 8'h1 << _T_287; // @[OneHot.scala 58:35]
+  assign _T_353 = _T_306 & _T_15; // @[RegisterRouter.scala 59:16]
+  assign _T_355 = _T_353 & _T_288[0]; // @[RegisterRouter.scala 59:16]
+  assign _T_356 = _T_355 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_121 = _T_356 & _T_114; // @[RegisterRouter.scala 59:16]
+  assign _T_137 = _T_95[3:0] == 4'hf; // @[RegisterRouter.scala 59:16]
+  assign _T_380 = _T_353 & _T_288[5]; // @[RegisterRouter.scala 59:16]
+  assign _T_381 = _T_380 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_144 = _T_381 & _T_137; // @[RegisterRouter.scala 59:16]
+  assign _T_160 = _T_95[15:0] == 16'hffff; // @[RegisterRouter.scala 59:16]
+  assign _T_360 = _T_353 & _T_288[1]; // @[RegisterRouter.scala 59:16]
+  assign _T_361 = _T_360 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_167 = _T_361 & _T_160; // @[RegisterRouter.scala 59:16]
+  assign _T_183 = _T_95[2:0] == 3'h7; // @[RegisterRouter.scala 59:16]
+  assign _T_385 = _T_353 & _T_288[6]; // @[RegisterRouter.scala 59:16]
+  assign _T_386 = _T_385 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_190 = _T_386 & _T_183; // @[RegisterRouter.scala 59:16]
+  assign _T_365 = _T_353 & _T_288[2]; // @[RegisterRouter.scala 59:16]
+  assign _T_366 = _T_365 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_213 = _T_366 & _T_95[0]; // @[RegisterRouter.scala 59:16]
+  assign _T_229 = _T_95[1:0] == 2'h3; // @[RegisterRouter.scala 59:16]
+  assign _T_370 = _T_353 & _T_288[3]; // @[RegisterRouter.scala 59:16]
+  assign _T_371 = _T_370 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_236 = _T_371 & _T_229; // @[RegisterRouter.scala 59:16]
+  assign _T_252 = _T_95[6:0] == 7'h7f; // @[RegisterRouter.scala 59:16]
+  assign _T_375 = _T_353 & _T_288[4]; // @[RegisterRouter.scala 59:16]
+  assign _T_376 = _T_375 & _T_70; // @[RegisterRouter.scala 59:16]
+  assign _T_259 = _T_376 & _T_252; // @[RegisterRouter.scala 59:16]
+  assign _GEN_40 = 3'h1 == _T_287 ? _T_70 : _T_70; // @[MuxLiteral.scala 48:10]
+  assign _GEN_41 = 3'h2 == _T_287 ? _T_70 : _GEN_40; // @[MuxLiteral.scala 48:10]
+  assign _GEN_42 = 3'h3 == _T_287 ? _T_70 : _GEN_41; // @[MuxLiteral.scala 48:10]
+  assign _GEN_43 = 3'h4 == _T_287 ? _T_70 : _GEN_42; // @[MuxLiteral.scala 48:10]
+  assign _GEN_44 = 3'h5 == _T_287 ? _T_70 : _GEN_43; // @[MuxLiteral.scala 48:10]
+  assign _GEN_45 = 3'h6 == _T_287 ? _T_70 : _GEN_44; // @[MuxLiteral.scala 48:10]
+  assign _GEN_55 = 3'h7 == _T_287; // @[MuxLiteral.scala 48:10]
+  assign _GEN_46 = _GEN_55 | _GEN_45; // @[MuxLiteral.scala 48:10]
+  assign _T_498_0 = {{6'd0}, fftWin}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  assign _GEN_48 = 3'h1 == _T_287 ? thresholdScaler : _T_498_0; // @[MuxLiteral.scala 48:10]
+  assign _T_498_2 = {{15'd0}, peakGrouping}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  assign _GEN_49 = 3'h2 == _T_287 ? _T_498_2 : _GEN_48; // @[MuxLiteral.scala 48:10]
+  assign _T_498_3 = {{14'd0}, cfarMode}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  assign _GEN_50 = 3'h3 == _T_287 ? _T_498_3 : _GEN_49; // @[MuxLiteral.scala 48:10]
+  assign _T_498_4 = {{9'd0}, windowCells}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  assign _GEN_51 = 3'h4 == _T_287 ? _T_498_4 : _GEN_50; // @[MuxLiteral.scala 48:10]
+  assign _T_498_5 = {{12'd0}, guardCells}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  assign _GEN_52 = 3'h5 == _T_287 ? _T_498_5 : _GEN_51; // @[MuxLiteral.scala 48:10]
+  assign _T_498_6 = {{13'd0}, _T_6}; // @[MuxLiteral.scala 48:48 MuxLiteral.scala 48:48]
+  assign _GEN_53 = 3'h6 == _T_287 ? _T_498_6 : _GEN_52; // @[MuxLiteral.scala 48:10]
+  assign _GEN_54 = 3'h7 == _T_287 ? 16'h0 : _GEN_53; // @[MuxLiteral.scala 48:10]
+  assign _T_500 = _GEN_46 ? _GEN_54 : 16'h0; // @[RegisterRouter.scala 59:16]
+  assign _T_501_bits_read = Queue_io_deq_bits_read; // @[Decoupled.scala 308:19 Decoupled.scala 309:14]
+  assign _T_501_valid = Queue_io_deq_valid; // @[Decoupled.scala 308:19 Decoupled.scala 310:15]
+  assign _T_504 = ~_T_501_bits_read; // @[RegisterRouter.scala 65:29]
   assign auto_mem_in_aw_ready = _T_16 & auto_mem_in_w_valid; // @[LazyModule.scala 173:31]
   assign auto_mem_in_w_ready = _T_16 & auto_mem_in_aw_valid; // @[LazyModule.scala 173:31]
-  assign auto_mem_in_b_valid = _T_526_valid & _T_529; // @[LazyModule.scala 173:31]
+  assign auto_mem_in_b_valid = _T_501_valid & _T_504; // @[LazyModule.scala 173:31]
   assign auto_mem_in_b_bits_id = Queue_io_deq_bits_extra; // @[LazyModule.scala 173:31]
   assign auto_mem_in_ar_ready = Queue_io_enq_ready; // @[LazyModule.scala 173:31]
-  assign auto_mem_in_r_valid = _T_526_valid & _T_526_bits_read; // @[LazyModule.scala 173:31]
+  assign auto_mem_in_r_valid = _T_501_valid & _T_501_bits_read; // @[LazyModule.scala 173:31]
   assign auto_mem_in_r_bits_id = Queue_io_deq_bits_extra; // @[LazyModule.scala 173:31]
   assign auto_mem_in_r_bits_data = Queue_io_deq_bits_data; // @[LazyModule.scala 173:31]
   assign auto_master_out_valid = cfar_io_out_valid; // @[LazyModule.scala 173:49]
@@ -20580,15 +15148,14 @@ module AXI4CFARBlock(
   assign cfar_io_cfarMode = cfarMode; // @[CFARDspBlock.scala 132:25]
   assign cfar_io_windowCells = windowCells; // @[CFARDspBlock.scala 133:25]
   assign cfar_io_guardCells = guardCells; // @[CFARDspBlock.scala 134:25]
-  assign cfar_io_subCells = subWindowSize; // @[CFARDspBlock.scala 122:28]
   assign cfar_io_out_ready = auto_master_out_ready; // @[CFARDspBlock.scala 162:24]
   assign Queue_clock = clock;
   assign Queue_reset = reset;
   assign Queue_io_enq_valid = auto_mem_in_ar_valid | _T_13; // @[Decoupled.scala 288:22]
   assign Queue_io_enq_bits_read = auto_mem_in_ar_valid; // @[Decoupled.scala 289:21]
-  assign Queue_io_enq_bits_data = {{16'd0}, _T_525}; // @[Decoupled.scala 289:21]
+  assign Queue_io_enq_bits_data = {{16'd0}, _T_500}; // @[Decoupled.scala 289:21]
   assign Queue_io_enq_bits_extra = auto_mem_in_ar_valid ? auto_mem_in_ar_bits_id : auto_mem_in_aw_bits_id; // @[Decoupled.scala 289:21]
-  assign Queue_io_deq_ready = _T_526_bits_read ? auto_mem_in_r_ready : auto_mem_in_b_ready; // @[Decoupled.scala 311:15]
+  assign Queue_io_deq_ready = _T_501_bits_read ? auto_mem_in_r_ready : auto_mem_in_b_ready; // @[Decoupled.scala 311:15]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -20648,53 +15215,44 @@ initial begin
   _RAND_6 = {1{`RANDOM}};
   _T_6 = _RAND_6[2:0];
   `endif // RANDOMIZE_REG_INIT
-  `ifdef RANDOMIZE_REG_INIT
-  _RAND_7 = {1{`RANDOM}};
-  subWindowSize = _RAND_7[6:0];
-  `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if (reset) begin
       fftWin <= 10'h200;
-    end else if (_T_123) begin
+    end else if (_T_121) begin
       fftWin <= auto_mem_in_w_bits_data[9:0];
     end
     if (reset) begin
       thresholdScaler <= 16'h0;
-    end else if (_T_169) begin
+    end else if (_T_167) begin
       thresholdScaler <= auto_mem_in_w_bits_data[15:0];
     end
     if (reset) begin
       peakGrouping <= 1'h0;
-    end else if (_T_215) begin
+    end else if (_T_213) begin
       peakGrouping <= auto_mem_in_w_bits_data[0];
     end
     if (reset) begin
       cfarMode <= 2'h0;
-    end else if (_T_261) begin
+    end else if (_T_236) begin
       cfarMode <= auto_mem_in_w_bits_data[1:0];
     end
     if (reset) begin
       windowCells <= 7'h40;
-    end else if (_T_284) begin
+    end else if (_T_259) begin
       windowCells <= auto_mem_in_w_bits_data[6:0];
     end
     if (reset) begin
       guardCells <= 4'h8;
-    end else if (_T_146) begin
+    end else if (_T_144) begin
       guardCells <= auto_mem_in_w_bits_data[3:0];
     end
     if (reset) begin
       _T_6 <= 3'h0;
-    end else if (_T_192) begin
+    end else if (_T_190) begin
       _T_6 <= auto_mem_in_w_bits_data[2:0];
-    end
-    if (reset) begin
-      subWindowSize <= 7'h0;
-    end else if (_T_238) begin
-      subWindowSize <= auto_mem_in_w_bits_data[6:0];
     end
   end
 endmodule
@@ -20972,7 +15530,7 @@ end // initial
     `endif // SYNTHESIS
   end
 endmodule
-module Queue_8(
+module Queue_11(
   input         clock,
   input         reset,
   output        io_enq_ready,
@@ -21142,7 +15700,7 @@ module AXI4StreamBuffer(
   wire  Queue_io_deq_valid; // @[Decoupled.scala 287:21]
   wire [31:0] Queue_io_deq_bits_data; // @[Decoupled.scala 287:21]
   wire  Queue_io_deq_bits_last; // @[Decoupled.scala 287:21]
-  Queue_8 Queue ( // @[Decoupled.scala 287:21]
+  Queue_11 Queue ( // @[Decoupled.scala 287:21]
     .clock(Queue_clock),
     .reset(Queue_reset),
     .io_enq_ready(Queue_io_enq_ready),
@@ -21165,7 +15723,7 @@ module AXI4StreamBuffer(
   assign Queue_io_enq_bits_last = auto_in_bits_last; // @[Decoupled.scala 289:21]
   assign Queue_io_deq_ready = auto_out_ready; // @[Decoupled.scala 311:15]
 endmodule
-module Queue_9(
+module Queue_12(
   input         clock,
   input         reset,
   output        io_enq_ready,
@@ -21335,7 +15893,7 @@ module AXI4StreamBuffer_1(
   wire  Queue_io_deq_valid; // @[Decoupled.scala 287:21]
   wire [15:0] Queue_io_deq_bits_data; // @[Decoupled.scala 287:21]
   wire  Queue_io_deq_bits_last; // @[Decoupled.scala 287:21]
-  Queue_9 Queue ( // @[Decoupled.scala 287:21]
+  Queue_12 Queue ( // @[Decoupled.scala 287:21]
     .clock(Queue_clock),
     .reset(Queue_reset),
     .io_enq_ready(Queue_io_enq_ready),
@@ -21358,7 +15916,7 @@ module AXI4StreamBuffer_1(
   assign Queue_io_enq_bits_last = auto_in_bits_last; // @[Decoupled.scala 289:21]
   assign Queue_io_deq_ready = auto_out_ready; // @[Decoupled.scala 311:15]
 endmodule
-module Queue_11(
+module Queue_14(
   input         clock,
   input         reset,
   output        io_enq_ready,
@@ -21528,7 +16086,7 @@ module AXI4StreamBuffer_3(
   wire  Queue_io_deq_valid; // @[Decoupled.scala 287:21]
   wire [47:0] Queue_io_deq_bits_data; // @[Decoupled.scala 287:21]
   wire  Queue_io_deq_bits_last; // @[Decoupled.scala 287:21]
-  Queue_11 Queue ( // @[Decoupled.scala 287:21]
+  Queue_14 Queue ( // @[Decoupled.scala 287:21]
     .clock(Queue_clock),
     .reset(Queue_reset),
     .io_enq_ready(Queue_io_enq_ready),
