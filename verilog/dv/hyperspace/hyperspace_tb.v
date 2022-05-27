@@ -7,12 +7,6 @@
 `define INPUT_SIZE 2048
 `define OUTPUT_SIZE 1536
 
-`define RANDOMIZE_GARBAGE_ASSIGN
-`define RANDOMIZE_INVALID_ASSIGN
-`define RANDOMIZE_REG_INIT
-`define RANDOMIZE_MEM_INIT
-`define RANDOM
-
 module hyperspace_tb;
     // declare file for writing data
     integer file;
@@ -58,7 +52,7 @@ module hyperspace_tb;
     assign mprj_io[37:30] = {in_data[0], in_data[1], in_data[2], in_data[3], in_data[4], in_data[5], in_data[6], in_data[7]};
 
     // toggle clock
-    always #500 clock <= (clock === 1'b0);
+    always #12.5 clock <= (clock === 1'b0);
 
     // Read input data
     initial $readmemh("./../../../HyperSpace/test_run_dir/AXI4HyperSpace/input_data.txt", inputData);
@@ -160,13 +154,11 @@ module hyperspace_tb;
 
     initial begin
         RSTB <= 1'b0;
-        #40000;
-        RSTB <= 1'b1; // Release reset
-        #300000;
+        #2000;
+        RSTB <= 1'b1;   // Release reset
     end
 
-    // Power-up sequence
-    initial begin
+    initial begin        // Power-up sequence
         power1 <= 1'b0;
         power2 <= 1'b0;
         power3 <= 1'b0;
