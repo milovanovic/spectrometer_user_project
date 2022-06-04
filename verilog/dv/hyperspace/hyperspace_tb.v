@@ -52,6 +52,47 @@ module hyperspace_tb;
     reg [15:0] outputDataCnt = 16'b0;
     reg [15:0] inputDataCnt = 16'b0;
 
+    // pull pins
+    pulldown(mprj_io[37]);
+    pulldown(mprj_io[36]);
+    pulldown(mprj_io[35]);
+    pulldown(mprj_io[34]);
+    pulldown(mprj_io[33]);
+    pulldown(mprj_io[32]);
+    pulldown(mprj_io[31]);
+    pulldown(mprj_io[30]);
+    pulldown(mprj_io[29]);
+    pulldown(mprj_io[28]);
+    pulldown(mprj_io[27]);
+    pulldown(mprj_io[26]);
+    pulldown(mprj_io[25]);
+    pulldown(mprj_io[24]);
+    pulldown(mprj_io[23]);
+    pulldown(mprj_io[22]);
+    pulldown(mprj_io[21]);
+    pulldown(mprj_io[20]);
+    pulldown(mprj_io[19]);
+    pulldown(mprj_io[18]);
+    pulldown(mprj_io[17]);
+    pulldown(mprj_io[16]);
+    pulldown(mprj_io[15]);
+    pulldown(mprj_io[14]);
+    pulldown(mprj_io[13]);
+    pulldown(mprj_io[12]);
+    pulldown(mprj_io[11]);
+    pulldown(mprj_io[10]);
+    pulldown(mprj_io[9]);
+    pulldown(mprj_io[8]);
+
+    pulldown(mprj_io[7]);
+    pulldown(mprj_io[6]);
+    pulldown(mprj_io[5]);
+    pulldown(mprj_io[4]);
+    pullup(mprj_io[3]);
+    pullup(mprj_io[2]);
+    pullup(mprj_io[1]);
+    pullup(mprj_io[0]);
+
     // Flash SPI CSB toggle
     assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 
