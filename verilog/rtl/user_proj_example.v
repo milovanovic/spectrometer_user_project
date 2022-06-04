@@ -1,16 +1,3 @@
-// SPDX-FileCopyrightText: 2020 Efabless Corporation
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 // SPDX-License-Identifier: Apache-2.0
 
 `default_nettype none
@@ -44,7 +31,17 @@ module user_proj_example (
     output [`MPRJ_IO_PADS-1:0] io_oeb,
 
     // IRQ
-    output [2:0] irq
+    output [2:0] irq,
+
+    // SRAM
+    output  [7:0] R0_addr,
+    output        R0_clk,
+    output        R0_en,
+    input  [31:0] R0_data,
+    output  [7:0] W0_addr,
+    output        W0_en,
+    output        W0_clk,
+    output [31:0] W0_data
 );
 // AXI write address channel signals
     wire        w_o_axi_awvalid;   // Write address valid
@@ -102,7 +99,7 @@ module user_proj_example (
 
 // Assign inStream signals
     assign io_oeb[37:28] = 10'h3ff; //fix pins to inputs
-    assign io_out[37:28] = 10'h333; // drive unused outputs
+    assign io_out[37:28] = 10'h000; // drive unused outputs
     assign io_oeb[27]    = 1'b0;    //fix pin to output
 
     assign io_out[27]           = w_inStream_ready;
@@ -111,18 +108,18 @@ module user_proj_example (
     assign w_inStream_data[7:0] = {io_in[30], io_in[31], io_in[32], io_in[33], io_in[34], io_in[35], io_in[36], io_in[37]};
 
 // Assign outStream signals
-    assign io_oeb[18]   = 1'b1;      // fix pin to input
-    assign io_out[18]   = 1'b1;      // drive unused outputs  
-    assign io_oeb[17:0] = 18'h00000; // fix pins to outputs
+    assign io_oeb[26]   = 1'b1;      // fix pin to input
+    assign io_out[26]   = 1'b1;      // drive unused outputs  
+    assign io_oeb[25:8] = 18'h00000; // fix pins to outputs
 
-    assign w_outStream_ready = io_in[18];
-    assign io_out[17]        = w_outStream_valid;
-    assign io_out[16]        = w_outStream_last;
-    assign io_out[15:0]      = w_outStream_data[15:0];
+    assign w_outStream_ready = io_in[26];
+    assign io_out[25]        = w_outStream_valid;
+    assign io_out[24]        = w_outStream_last;
+    assign io_out[23:8]      = w_outStream_data[15:0];
 
 // Drive remaining io pins
-    assign io_out[26:19] = 8'h66;
-    assign io_oeb[26:19] = 8'hFF;
+    assign io_out[7:0] = 8'h00;
+    assign io_oeb[7:0] = 8'hFF;
 
 // Drive LA with zeroes
     assign la_data_out = {128{1'b0}};
@@ -248,7 +245,16 @@ module user_proj_example (
         .out_0_ready(w_outStream_ready),
         .out_0_valid(w_outStream_valid),
         .out_0_bits_data(w_outStream_data),
-        .out_0_bits_last(w_outStream_last)
+        .out_0_bits_last(w_outStream_last),
+    // SRAM
+        .sram_R0_addr(R0_addr),    // [7:0]
+        .sram_R0_clk(R0_clk),
+        .sram_R0_en(R0_en),
+        .sram_R0_data(R0_data),    // [31:0]
+        .sram_W0_addr(W0_addr),    // [7:0]
+        .sram_W0_en(W0_en),
+        .sram_W0_clk(W0_clk),
+        .sram_W0_data(W0_data)     // [31:0]
     );
 endmodule
 `default_nettype wire

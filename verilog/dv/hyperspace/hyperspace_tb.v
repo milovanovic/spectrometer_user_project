@@ -56,10 +56,10 @@ module hyperspace_tb;
     assign mprj_io[3] = (CSB == 1'b1) ? 1'b1 : 1'bz;
 
     // Assign wires to input and output stream
-    assign mprj_io[18] = out_ready;
-    assign out_valid   = mprj_io[17];
-    assign out_last    = mprj_io[16];
-    assign out_data    = mprj_io[15:0];
+    assign mprj_io[26] = out_ready;
+    assign out_valid   = mprj_io[25];
+    assign out_last    = mprj_io[24];
+    assign out_data    = mprj_io[23:8];
 
     assign in_ready    = mprj_io[27];
     assign mprj_io[28] = in_valid;

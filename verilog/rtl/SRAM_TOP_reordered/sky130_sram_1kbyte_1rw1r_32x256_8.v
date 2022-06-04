@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // OpenRAM SRAM model
 // Words: 256
 // Word size: 32
