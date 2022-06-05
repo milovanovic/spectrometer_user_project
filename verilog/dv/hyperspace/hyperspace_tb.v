@@ -108,7 +108,7 @@ module hyperspace_tb;
     assign mprj_io[37:30] = {in_data[0], in_data[1], in_data[2], in_data[3], in_data[4], in_data[5], in_data[6], in_data[7]};
 
     // toggle clock
-    always #12.5 clock <= (clock === 1'b0);
+    always #25 clock <= (clock === 1'b0);
 
     // Read input data
     initial $readmemh("./../../../HyperSpace/test_run_dir/AXI4HyperSpace/input_data.txt", inputData);
@@ -135,24 +135,24 @@ module hyperspace_tb;
         if(CSB == 1'b0) begin
             if (in_ready == 1'b1) begin
                 if (inputDataCnt < `INPUT_SIZE) begin
-                    #2
+                    #8
                     in_valid = 1'b1;
                     in_data <= inputData[inputDataCnt];
                 end
                 else begin
-                    #2
+                    #8
                     in_valid = 1'b0;
                     in_data <= 0;
                 end
                 if (in_valid == 1'b1) inputDataCnt <= inputDataCnt + 1'b1;
                 if (inputDataCnt == `INPUT_SIZE-1) begin
-                    #2 in_last = 1'b1;
+                    #8 in_last = 1'b1;
                 end
                 else begin
-                    #2 in_last = 1'b0;
+                    #8 in_last = 1'b0;
                 end
             end
-            else #2 in_valid = 1'b0;
+            else #8 in_valid = 1'b0;
         end
     end
 
@@ -218,9 +218,9 @@ module hyperspace_tb;
     initial begin
         RSTB <= 1'b0;
         CSB  <= 1'b1;    // Force CSB high
-        #2000;
+        #8000;
         RSTB <= 1'b1;    // Release reset
-        #450000;
+        #1800000;
         CSB = 1'b0;      // CSB can be released
     end
 
@@ -229,13 +229,13 @@ module hyperspace_tb;
         power2 <= 1'b0;
         power3 <= 1'b0;
         power4 <= 1'b0;
-        #100;
+        #400;
         power1 <= 1'b1;
-        #100;
+        #400;
         power2 <= 1'b1;
-        #100;
+        #400;
         power3 <= 1'b1;
-        #100;
+        #400;
         power4 <= 1'b1;
     end
 
