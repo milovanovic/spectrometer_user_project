@@ -33,20 +33,37 @@ set ::env(DESIGN_NAME) user_project_wrapper
 # User Configurations
 
 ## Source Verilog Files
+# set ::env(VERILOG_FILES) "\
+# 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
+# 	$script_dir/../../verilog/rtl/sram/SRAM_depth_256_width_32_mem_ext.v
+# 	$script_dir/../../verilog/rtl/sram/user_project_wrapper_wrapper.v"
+
+# set ::env(VERILOG_FILES) "\
+# 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
+# 	$script_dir/../../verilog/rtl/pins_reordered/skidbuffer.v \
+# 	$script_dir/../../verilog/rtl/pins_reordered/wbm2axisp.v \
+# 	$script_dir/../../verilog/rtl/pins_reordered/SRAM_depth_256_width_32_mem_ext.v \
+# 	$script_dir/../../verilog/rtl/pins_reordered/AXI4HyperSpace.v \
+# 	$script_dir/../../verilog/rtl/pins_reordered/user_proj_example.v
+# 	$script_dir/../../verilog/rtl/pins_reordered/user_project_wrapper.v"
+
 set ::env(VERILOG_FILES) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/user_project_wrapper.v"
+	$script_dir/../../verilog/rtl/FINAL/skidbuffer.v \
+	$script_dir/../../verilog/rtl/FINAL/wbm2axisp.v \
+	$script_dir/../../verilog/rtl/FINAL/AXI4HyperSpace.v \
+	$script_dir/../../verilog/rtl/FINAL/user_proj_example.v
+	$script_dir/../../verilog/rtl/FINAL/user_project_wrapper.v"
 
 ## Clock configurations
-set ::env(CLOCK_PORT) "user_clock2"
-set ::env(CLOCK_NET) "mprj.clk"
+set ::env(CLOCK_PORT) "wb_clk_i"
+#set ::env(CLOCK_NET) {sram.clk0 sram.clk1}
 
-set ::env(CLOCK_PERIOD) "10"
+set ::env(CLOCK_PERIOD) "100"
 
 ## Internal Macros
 ### Macro PDN Connections
-set ::env(FP_PDN_MACRO_HOOKS) "\
-	mprj vccd1 vssd1"
+set ::env(FP_PDN_MACRO_HOOKS) "sram vccd1 vssd1"
 
 ### Macro Placement
 set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
@@ -54,13 +71,15 @@ set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
 ### Black-box verilog and views
 set ::env(VERILOG_FILES_BLACKBOX) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/user_proj_example.v"
+	$script_dir/../../verilog/rtl/SRAM_TOP_reordered/sky130_sram_1kbyte_1rw1r_32x256_8.v"
+
+set PDK_ROOT $script_dir/../../pdk
 
 set ::env(EXTRA_LEFS) "\
-	$script_dir/../../lef/user_proj_example.lef"
+	$PDK_ROOT/volare/sky130/versions/7519dfb04400f224f140749cda44ee7de6f5e095/sky130B/libs.ref/sky130_sram_macros/lef/sky130_sram_1kbyte_1rw1r_32x256_8.lef"
 
 set ::env(EXTRA_GDS_FILES) "\
-	$script_dir/../../gds/user_proj_example.gds"
+	$PDK_ROOT/volare/sky130/versions/7519dfb04400f224f140749cda44ee7de6f5e095/sky130B/libs.ref/sky130_sram_macros/gds/sky130_sram_1kbyte_1rw1r_32x256_8.gds"
 
 # set ::env(GLB_RT_MAXLAYER) 5
 set ::env(RT_MAX_LAYER) {met4}
@@ -69,18 +88,79 @@ set ::env(RT_MAX_LAYER) {met4}
 # any issue with pdn connections will be flagged with LVS so it is not a critical check.
 set ::env(FP_PDN_CHECK_NODES) 0
 
-# The following is because there are no std cells in the example wrapper project.
-set ::env(SYNTH_TOP_LEVEL) 1
-set ::env(PL_RANDOM_GLB_PLACEMENT) 1
+set ::env(LVS_CONNECT_BY_LABEL) 1
 
-set ::env(PL_RESIZER_DESIGN_OPTIMIZATIONS) 0
-set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) 0
-set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 0
-set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
+set ::env(GLB_RT_ALLOW_CONGESTION) "1"
 
-set ::env(FP_PDN_ENABLE_RAILS) 0
+set ::env(GLB_RT_ADJUSTMENT) 0.5
+
+set ::env(PL_TARGET_DENSITY) 0.25
+
+# use 8 cores
+set ::env(ROUTING_CORES) 16
+
+# bail early on problems
+#set ::env(DRT_OPT_ITERS) 30
+
+# do not run DRC with SRAM
+set ::env(MAGIC_DRC_USE_GDS) 0
+set ::env(RUN_MAGIC_DRC) 0
+set ::env(QUIT_ON_MAGIC_DRC) 0
+
+#set ::env(SYNTH_STRATEGY) {AREA 2}
 
 set ::env(DIODE_INSERTION_STRATEGY) 0
-set ::env(FILL_INSERTION) 0
-set ::env(TAP_DECAP_INSERTION) 0
-set ::env(CLOCK_TREE_SYNTH) 0
+#set ::env(GLB_RT_ANT_ITERS) 10000
+
+set ::env(GLB_RESIZER_TIMING_OPTIMIZATIONS) 1
+
+#set ::env(GLB_RESIZER_ALLOW_SETUP_VIOS) {1}
+set ::env(PL_RESIZER_HOLD_MAX_BUFFER_PERCENT) {90}
+set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) {0.5}
+set ::env(PL_RESIZER_SETUP_MAX_BUFFER_PERCENT) {90}
+set ::env(PL_RESIZER_SETUP_SLACK_MARGIN) {0.5}
+
+set ::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT) {90}
+set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) {0.5}
+set ::env(GLB_RESIZER_SETUP_MAX_BUFFER_PERCENT) {90}
+set ::env(GLB_RESIZER_SETUP_SLACK_MARGIN) {0.5}
+
+# set ::env(GLB_RT_OBS)  "li1  0    0   2920    3520,
+#        met1 1344.0 1475.5 1823.78 1873.0,
+#        met2 1344.0 1475.5 1823.78 1873.0,
+#        met3 1344.0 1475.5 1823.78 1873.0,
+#        met4 1344.0 1475.5 1823.78 1873.0"
+
+#set ::env(SYNTH_SIZING/SYNTH_BUFFERING) 1
+#set ::env(SYNTH_SIZING) 1
+
+#
+# The following is because there are no std cells in the example wrapper project.
+# set ::env(SYNTH_TOP_LEVEL) 1
+# set ::env(PL_RANDOM_GLB_PLACEMENT) 1
+#
+# set ::env(PL_RESIZER_DESIGN_OPTIMIZATIONS) 0
+# set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) 0
+# set ::env(PL_RESIZER_BUFFER_INPUT_PORTS) 0
+# set ::env(PL_RESIZER_BUFFER_OUTPUT_PORTS) 0
+#
+# set ::env(FP_PDN_ENABLE_RAILS) 0
+#
+# set ::env(DIODE_INSERTION_STRATEGY) 0
+# set ::env(FILL_INSERTION) 0
+# set ::env(TAP_DECAP_INSERTION) 0
+# set ::env(CLOCK_TREE_SYNTH) 0
+
+# sky130/openlane/sky130_fd_sc_hd/config.tcl
+#set ::env(FILL_CELL) {sky130_fd_sc_hd__fill_}
+#set ::env(DECAP_CELL) "sky130_ef_sc_hd__decap_12 sky130_fd_sc_hd__decap_8 sky130_fd_sc_hd__decap_6 sky130_fd_sc_hd__decap_4 sky130_fd_sc_hd__decap_3"
+#set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hd__tap* sky130_fd_sc_hd__decap* sky130_ef_sc_hd__decap* sky130_fd_sc_hd__fill*"
+
+# sky130/netgen/sky130_setup.tcl
+#     if {[regexp {sky130_ef_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+	#property "-circuit1 $cell" parallel enable
+    #}
+#        if {[regexp {sky130_ef_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+#	property "-circuit2 $cell" parallel enable
+#    }
+
