@@ -4,12 +4,15 @@ A HYbride ParametErizable Radar Signal Processing ACcElerator (HYPERSPACE) versi
 
 HYPERSPACE consists of an instance produced by a digital HYPERSPACE generator designed in Chisel hardware design language. Caravel is connected to the HYPERSPACE via Wishbone to AXI4 bridge. Block diagram of the HYPERSPACE is given below:
 
-
+![Global block scheme of the HYPERSPACE](./HyperSpace/doc/HyperSpace.svg)
 
 This directory contains following HYPERSPACE directories:
 
 * `HyperSpace` -  contains digital HYPERSPACE generator with built in test structures designed in [Chisel](http://www.chisel-lang.org) HDL.
 *  `HyperSpace/generators` - DSP generators used to generate HYPERSPACE
+     * [FFT](https://github.com/milovanovic/sdf-fft)
+     * [Magnitude](https://github.com/milovanovic/logMagMux)
+     * [CFAR](https://github.com/milovanovic/cfar)
 *  `HyperSpace/Makefile` - have targets for verilog and test generation
 * `verilog/dv/hyperspace` - contains verilog testbenches for HYPERSPACE integrated with Caravel
 * `verilog/rtl` - contains `user_project_wrapper.v` which is the top level verilog file for HYPERSPACE
