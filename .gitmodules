@@ -1,4 +1,4 @@
 [submodule "HyperSpace"]
 	path = HyperSpace
-	url = git@github.com:pznikola/HyperSpace.git
+	url = https://github.com/milovanovic/MPW-SIX
 	branch = main
