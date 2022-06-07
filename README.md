@@ -2,7 +2,7 @@
 
 A HYbride ParametErizable Radar Signal Processing ACcElerator (HYPERSPACE) version 0.5.
 
-HYPERSPACE consists of an instance produced by a digital HYPERSPACE generator designed in Chisel hardware design language. Caravel is connected to the HYPERSPACE via Wishbone to AXI4 bridge. Block diagram of the HYPERSPACE is given below:
+HYPERSPACE consists of an instance produced by a digital HYPERSPACE generator designed in Chisel hardware design language. Caravel is connected to the HYPERSPACE via Wishbone to AXI4 bridge. Block diagram of the HYPERSPACE is given below.
 
 ![Global block scheme of the HYPERSPACE](./HyperSpace/doc/HyperSpace.svg)
 
