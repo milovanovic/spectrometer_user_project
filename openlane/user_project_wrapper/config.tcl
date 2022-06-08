@@ -77,9 +77,9 @@ set ::env(LVS_CONNECT_BY_LABEL) 1
 
 set ::env(GLB_RT_ALLOW_CONGESTION) "1"
 
-set ::env(GLB_RT_ADJUSTMENT) 0.5
+set ::env(GLB_RT_ADJUSTMENT) 0.6
 
-set ::env(PL_TARGET_DENSITY) 0.25
+set ::env(PL_TARGET_DENSITY) 0.3
 
 set ::env(ROUTING_CORES) 16
 
@@ -90,24 +90,29 @@ set ::env(QUIT_ON_MAGIC_DRC) 0
 
 #set ::env(SYNTH_STRATEGY) {AREA 2}
 
-set ::env(DIODE_INSERTION_STRATEGY) 0
+set ::env(DIODE_INSERTION_STRATEGY) 3
 #set ::env(GLB_RT_ANT_ITERS) 10000
 
 set ::env(GLB_RESIZER_TIMING_OPTIMIZATIONS) 1
+set ::env(PL_RESIZER_TIMING_OPTIMIZATIONS) 1
 
 #set ::env(GLB_RESIZER_ALLOW_SETUP_VIOS) {1}
-set ::env(PL_RESIZER_HOLD_MAX_BUFFER_PERCENT) {90}
-set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) {0.5}
+set ::env(PL_RESIZER_HOLD_MAX_BUFFER_PERCENT) {95}
+set ::env(PL_RESIZER_HOLD_SLACK_MARGIN) {0.6}
 set ::env(PL_RESIZER_SETUP_MAX_BUFFER_PERCENT) {90}
-set ::env(PL_RESIZER_SETUP_SLACK_MARGIN) {0.5}
+set ::env(PL_RESIZER_SETUP_SLACK_MARGIN) {0.3}
 
-set ::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT) {90}
-set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) {0.5}
+set ::env(GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT) {95}
+set ::env(GLB_RESIZER_HOLD_SLACK_MARGIN) {0.6}
 set ::env(GLB_RESIZER_SETUP_MAX_BUFFER_PERCENT) {90}
-set ::env(GLB_RESIZER_SETUP_SLACK_MARGIN) {0.5}
+set ::env(GLB_RESIZER_SETUP_SLACK_MARGIN) {0.3}
 
-set ::env(GLB_RT_OBS) "met3 1344.0 1475.5 1823.78 1873.0,
-                       met4 1344.0 1475.5 1823.78 1873.0"
+set ::env(GLB_RT_OBS)        "met3 1344.0 1475.5 1823.78 1873.0,
+                              met4 1344.0 1475.5 1823.78 1873.0"
+
+set ::env(FILL_CELL) "sky130_fd_sc_hd__fill*"
+set ::env(DECAP_CELL) "sky130_ef_sc_hd__decap_12 sky130_fd_sc_hd__decap_8 sky130_fd_sc_hd__decap_6 sky130_fd_sc_hd__decap_4 sky130_fd_sc_hd__decap_3"
+set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hd__tap* sky130_fd_sc_hd__decap* sky130_ef_sc_hd__decap* sky130_fd_sc_hd__fill*"
 
 #set ::env(SYNTH_SIZING/SYNTH_BUFFERING) 1
 #set ::env(SYNTH_SIZING) 1
