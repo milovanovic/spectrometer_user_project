@@ -1,0 +1,10 @@
+test_run_dir/
+generated-rtl/
+*.fir
+*.v
+*.conf
+*.json
+*.zip
+
+target/
+project/

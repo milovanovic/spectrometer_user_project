@@ -78,10 +78,19 @@ module user_project_wrapper #(
     output [2:0] user_irq
 );
 
+    // SRAM wires
+    wire  [7:0] sram_R0_addr;
+    wire        sram_R0_clk;
+    wire        sram_R0_en;
+    wire [31:0] sram_R0_data;
+    wire  [7:0] sram_W0_addr;
+    wire        sram_W0_en;
+    wire        sram_W0_clk;
+    wire [31:0] sram_W0_data;
+
 /*--------------------------------------*/
 /* User project is instantiated  here   */
 /*--------------------------------------*/
-
 user_proj_example mprj (
 `ifdef USE_POWER_PINS
 	.vccd1(vccd1),	// User area 1 1.8V power
@@ -115,8 +124,52 @@ user_proj_example mprj (
     .io_oeb(io_oeb),
 
     // IRQ
-    .irq(user_irq)
+    .irq(user_irq),
+
+    // SRAM
+    .R0_addr(sram_R0_addr),    // [7:0]
+    .R0_clk(sram_R0_clk),
+    .R0_en(sram_R0_en),
+    .R0_data(sram_R0_data),    // [31:0]
+    .W0_addr(sram_W0_addr),    // [7:0]
+    .W0_en(sram_W0_en),
+    .W0_clk(sram_W0_clk),
+    .W0_data(sram_W0_data)     // [31:0]
 );
+
+// verilator lint_off BLKANDNBLK
+    reg  [31:0] r0_data_temp;
+    reg r_R0_en;
+
+    reg  [31:0] r_R0_data;
+    wire [31:0] w_R0_data;
+
+    assign sram_R0_data = r0_data_temp;
+// SRAM
+  always @(posedge sram_R0_clk) begin
+    r_R0_en <= sram_R0_en;
+    if (r_R0_en == 1'b1) r_R0_data <= w_R0_data;
+  end
+
+  always @(*) begin
+    if (r_R0_en == 1'b0) r0_data_temp = r_R0_data;
+    else r0_data_temp = w_R0_data;
+  end
+
+  sky130_sram_1kbyte_1rw1r_32x256_8 #(.VERBOSE(0)) sram (
+    .clk0  (sram_W0_clk),    // input  - clock
+    .csb0  (!sram_W0_en),    // input  - active low chip select
+    .web0  (!sram_W0_en),    // input  - active low write control
+    .wmask0(4'b1111),        // input  - write mask
+    .addr0 (sram_W0_addr),   // input  - addr
+    .din0  (sram_W0_data),   // input  - data
+    .dout0 (),               // output - data
+    .clk1  (sram_R0_clk),    // input  - clock
+    .csb1  (!sram_R0_en),    // input  - active low chip select
+    .addr1 (sram_R0_addr),   // input  - addr
+    .dout1 (w_R0_data)       // output - data
+  );
+// verilator lint_on BLKANDNBLK
 
 endmodule	// user_project_wrapper
 
