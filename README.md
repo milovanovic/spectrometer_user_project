@@ -65,16 +65,16 @@ $ make lint
 ## RTL and GL tests
 In order to run RTL test, inside top directory run:
 ```sh
-$ make verify-hyperspace-rtl # Test for Cell averaging CFAR
+$ make verify-hyperspace-rtl # Test for Cell averaging (CA) CFAR
 ```
 ```sh
-$ make verify-hyperspace_random-rtl # Test for Cell averaging CFAR with random in_valid
+$ make verify-hyperspace_random-rtl # Test for Cell averaging (CA) CFAR with random in_valid
 ```
 ```sh
-$ make verify-hyperspaceGO-rtl # Test for Greatest Of CFAR
+$ make verify-hyperspaceGO-rtl # Test for Greatest of (GO) CFAR
 ```
 ```sh
-$ make verify-hyperspaceSO-rtl # Test for Smallest OF CFAR
+$ make verify-hyperspaceSO-rtl # Test for Smallest of (SO) CFAR
 ```
 In order to run GL test, you need to first uncompress GL netlists with:
 ```sh
@@ -82,16 +82,16 @@ $ make uncompress
 ```
 and then run:
 ```sh
-$ make verify-hyperspace-gl # Test for Cell averaging CFAR
+$ make verify-hyperspace-gl # Test for Cell Averaging (CA) CFAR
 ```
 ```sh
-$ make verify-hyperspace_random-gl # Test for Cell averaging CFAR with random in_valid
+$ make verify-hyperspace_random-gl # Test for Cell Averaging (CA) CFAR with random in_valid
 ```
 ```sh
-$ make verify-hyperspaceGO-gl # Test for Greatest Of CFAR
+$ make verify-hyperspaceGO-gl # Test for Greatest of (GO) CFAR
 ```
 ```sh
-$ make verify-hyperspaceSO-gl # Test for Smallest OF CFAR
+$ make verify-hyperspaceSO-gl # Test for Smallest of (SO) CFAR
 ```
 
 ## Address space for HYPERSPACE
