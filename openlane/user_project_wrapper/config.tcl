@@ -45,7 +45,7 @@ set ::env(VERILOG_FILES) "\
 set ::env(CLOCK_PORT) "wb_clk_i"
 #set ::env(CLOCK_NET) {sram.clk0 sram.clk1}
 
-set ::env(CLOCK_PERIOD) "51.5"
+set ::env(CLOCK_PERIOD) "52.5"
 
 ## Internal Macros
 ### Macro PDN Connections
