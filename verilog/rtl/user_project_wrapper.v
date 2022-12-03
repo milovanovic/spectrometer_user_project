@@ -156,7 +156,7 @@ user_proj_example mprj (
     else r0_data_temp = w_R0_data;
   end
 
-  sky130_sram_1kbyte_1rw1r_32x256_8 #(.VERBOSE(0)) sram (
+  sky130_sram_1kbyte_1rw1r_32x256_8 sram (
     .clk0  (sram_W0_clk),    // input  - clock
     .csb0  (!sram_W0_en),    // input  - active low chip select
     .web0  (!sram_W0_en),    // input  - active low write control
